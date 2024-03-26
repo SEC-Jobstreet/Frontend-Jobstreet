@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 
 import store from "./store/store";
 import App from "./App";
+import LoginButton from "./LoginButton";
 import reportWebVitals from "./reportWebVitals";
 
 import "./index.css";
@@ -11,6 +12,7 @@ import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <LoginButton />
     <Provider store={store}>
       <App />
     </Provider>
