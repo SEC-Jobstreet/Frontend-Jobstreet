@@ -18,7 +18,9 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your login logic here
+
+    console.log(`Email: ${email}, Password: ${password}`);
+    alert(`Email: ${email}, Password: ${password}`);
   };
 
   return (
@@ -58,6 +60,7 @@ function Login() {
                 onChange={handleEmailChange}
                 className="mb-3"
                 isInvalid={
+                  email &&
                   !email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)
                 }
               />
@@ -76,7 +79,7 @@ function Login() {
                 value={password}
                 onChange={handlePasswordChange}
                 className="mb-3"
-                isInvalid={password.length < 7}
+                isInvalid={password && password.length < 7}
               />
               <Form.Control.Feedback
                 type="invalid"
