@@ -1,0 +1,22 @@
+.wrapper {
+  display: grid;
+  margin: 2.4rem auto;
+  max-width: 1300px !important;
+  width: calc(100vw - 100px) !important;
+  grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+  column-gap: 1.6rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.68rem;
+}
