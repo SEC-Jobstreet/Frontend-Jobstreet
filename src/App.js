@@ -1,9 +1,17 @@
+import { useTranslation } from "react-i18next";
+
 import Counter from "./components/counter/counter";
+import i18n from "./config/i18n";
 import logo from "./logo.svg";
 
 import "./App.css";
 
 function App() {
+  const { t } = useTranslation();
+
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
   return (
     <div className="App">
       <header className="App-header">
@@ -21,6 +29,25 @@ function App() {
         </a>
       </header>
       <Counter />
+
+      <div>
+        <h2>{t("welcome")}</h2>
+        <p>{t("description")}</p>
+        <button
+          type="button"
+          onClick={() => changeLanguage("en")}
+          style={{ whiteSpace: "pre-line" }}
+        >
+          English
+        </button>
+        <button
+          type="button"
+          onClick={() => changeLanguage("vi")}
+          style={{ whiteSpace: "pre-line" }}
+        >
+          Vietnamese
+        </button>
+      </div>
     </div>
   );
 }
