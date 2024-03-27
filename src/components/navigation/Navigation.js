@@ -4,7 +4,7 @@ import {
   IoNotificationsOutline,
   IoPersonOutline,
 } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Navigation.scss";
 
@@ -17,6 +17,8 @@ function Navigation() {
   const [isLogin, setIsLogin] = useState(
     localStorage.getItem("isLogin") === "true"
   );
+
+  const navigate = useNavigate();
 
   const handleOnClickLoginButton = () => {
     if (email !== "user@gmail.com") setMessage("Email không chính xác");
@@ -35,6 +37,7 @@ function Navigation() {
   const handleOnClickLogoutButton = () => {
     localStorage.setItem("isLogin", false);
     setIsLogin(false);
+    navigate("/");
   };
 
   return (
