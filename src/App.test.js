@@ -1,6 +1,9 @@
+import React from 'react';
 import { fireEvent, render } from "@testing-library/react";
-
+import { axe, toHaveNoViolations } from 'jest-axe';
 import App from "./App";
+
+expect.extend(toHaveNoViolations);
 
 describe("User authentication", () => {
   test("User can log in", () => {
@@ -31,4 +34,12 @@ describe("User authentication", () => {
     // expect logout button showed
     expect(queryByTestId(`logout`)).toBeInTheDocument();
   });
+  // New accessibility test
+  it('should not have any accessibility violations', async () => {
+    const { container } = render(<App />);
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 });
+
+
