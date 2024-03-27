@@ -11,7 +11,7 @@ function Navigation() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShowLoginBox, setIsShowLoginBox] = useState(false);
-  const [isShowLoginForm, setIsShowLoginForm] = useState(false);
+  const [isShowLoginForm, setIsShowLoginForm] = useState(true);
   const [message, setMessage] = useState("");
   const [isLogin, setIsLogin] = useState(
     localStorage.getItem("isLogin") === "true"
@@ -87,12 +87,14 @@ function Navigation() {
                       <h3>Ứng viên tìm việc đăng nhập</h3>
                       <div className="login-form">
                         <input
+                          data-testid="email-input"
                           type="email"
                           value={email}
                           placeholder="Nhập email của bạn"
                           onChange={(event) => setEmail(event.target.value)}
                         />
                         <input
+                          data-testid="password-input"
                           type="password"
                           value={password}
                           placeholder="Nhập mật khẩu"
@@ -103,6 +105,7 @@ function Navigation() {
                         </div>
                         <button
                           className="above-button"
+                          data-testid="login"
                           type="button"
                           onClick={handleOnClickLoginButton}
                         >
@@ -169,6 +172,7 @@ function Navigation() {
               <button
                 className="nav-button"
                 type="button"
+                data-testid="logout"
                 onClick={handleOnClickLogoutButton}
               >
                 Thoát

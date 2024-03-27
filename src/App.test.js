@@ -1,9 +1,23 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 
 import App from "./App";
 
-test("renders learn react link", () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("User authentication", () => {
+  test("User can log in", () => {
+    const { queryByTestId } = render(<App />);
+    let user = {
+      username: "user@gmail.com",
+      password: "123456",
+    };
+    const emailInputField = queryByTestId(`email-input`);
+    fireEvent.change(emailInputField, { target: { value: user.username } });
+
+    const passwordInputField = queryByTestId(`password-input`);
+    fireEvent.change(passwordInputField, { target: { value: user.password } });
+
+    const loginButton = queryByTestId("login");
+    fireEvent.click(loginButton);
+
+    expect(queryByTestId(`logout`)).toBeInTheDocument();
+  });
 });
