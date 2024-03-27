@@ -1,27 +1,31 @@
-import Counter from "./components/counter/counter";
-import logo from "./logo.svg";
+import React from "react";
 
-import "./App.css";
+// import UploadFiles from "./components/UploadFileComponent";
+import BarChartComponent from "./components/BarChartComponent";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
-    <div className="App">
+    <div className="container" style={{ width: "600px" }}>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Biểu Đồ Bình Chọn</h1>
+        <p>Hãy xem số lượng bình chọn theo tháng dưới đây.</p>
       </header>
-      <Counter />
+      <div className="App-body">
+        <BarChartComponent />
+      </div>
+      <footer className="App-footer">
+        <p>Biểu đồ được cung cấp bởi React ChartJS-2.</p>
+      </footer>
     </div>
+    // <div className="container" style={{ width: "600px" }}>
+    //   <div style={{ margin: "20px 0" }}>
+    //     <h4>Sơ yếu lý lịch</h4>
+    //   </div>
+
+    //   <UploadFiles />
+    // </div>
   );
 }
 
