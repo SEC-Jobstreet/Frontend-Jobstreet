@@ -2,9 +2,17 @@ import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import axios from "axios";
 
+import PendingDialog from "./PendingDialog";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Employee({ employee, setemployee }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [response, setRespone] = useState("");
+  const [error, setError] = useState("");
+  const [pending, setPending] = useState(false);
+
   const handleClose = () => {
     setemployee(false);
   };
@@ -13,12 +21,13 @@ function Employee({ employee, setemployee }) {
     event.stopPropagation(); // Prevent the event from bubbling up to the modal
   };
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
-    await axios.post("/login", { email, password });
+    try {
+      setRespone(await axios.post("/login", { email, password }));
+    } catch (err) {
+      setError(err);
+    }
   };
   return (
     <div>
@@ -62,6 +71,7 @@ function Employee({ employee, setemployee }) {
                   variant="success"
                   onClick={(event) => {
                     handleButtonClicked(event);
+                    setPending(true);
                     handleClose();
                   }}
                   style={{ width: "100%" }}
@@ -88,15 +98,23 @@ function Employee({ employee, setemployee }) {
           <div>
             <p>
               Bằng cách đăng nhập vào tài khoản của bạn, bạn đồng ý với
-              <a href="/"> Các điều khoản và điều kiện sử dụng </a>
+              <a href="/terms"> Các điều khoản và điều kiện sử dụng </a>
               và
-              <a href="/"> Chính Sách Bảo Mật </a>
+              <a href="/policy"> Chính Sách Bảo Mật </a>
               của JobStreet.
             </p>
             <p>Bạn chưa có tài khoản JobStreet? Đăng ký dùng,</p>
           </div>
         </Modal.Body>
       </Modal>
+      <PendingDialog
+        showModal={pending}
+        setShowModal={setPending}
+        response={response}
+        setResponse={setRespone}
+        error={error}
+        setError={setError}
+      />
     </div>
   );
 }

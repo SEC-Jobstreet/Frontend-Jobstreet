@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
-import Employee from "./components/dialogs/Employee";
+import Employee from "./Employee";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
