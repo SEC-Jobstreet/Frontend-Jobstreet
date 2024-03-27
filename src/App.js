@@ -1,7 +1,9 @@
-// import Counter from "./components/counter/counter";
-// import logo from "./logo.svg";
+import Navigation from "./components/navigation/Navigation";
+import Theme from "./components/theme/Theme";
 import Search from "./pages/Search";
 
+// import Counter from "./components/counter/counter";
+// import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -23,6 +25,8 @@ function App() {
         </a>
       </header>
       <Counter /> */}
+      <Navigation />
+      <Theme />
       <Search />
     </div>
   );

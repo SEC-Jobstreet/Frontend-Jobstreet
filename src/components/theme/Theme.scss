@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+.theme-container {
+  font-family: "Inter";
+  height: 100vh;
+
+  .title-container {
+    .theme-title {
+      display: block;
+      font-size: 240px;
+      text-align: center;
+      margin-top: 90px;
+      padding-top: 48px;
+      margin-bottom: 60px;
+    }
+  }
+
+  .content-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 80px;
+
+    .toggle-icon {
+      width: fit-content;
+      font-size: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &.rotate-180deg {
+        transform: rotate(180deg);
+      }
+    }
+
+    .theme-name {
+      width: 33%;
+      font-size: 120px;
+      font-weight: 900;
+      opacity: 0.4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.selected-theme {
+        opacity: 1;
+      }
+
+      &.light {
+        justify-content: flex-end;
+      }
+
+      &.dark {
+        justify-content: flex-start;
+      }
+    }
+  }
+}
