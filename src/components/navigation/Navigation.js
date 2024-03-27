@@ -4,6 +4,7 @@ import {
   IoNotificationsOutline,
   IoPersonOutline,
 } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 import "./Navigation.scss";
 
@@ -40,9 +41,9 @@ function Navigation() {
     <header>
       <div className="navigation-container">
         <div className="nav-left-content">
-          <a href="/" title="JobStreet">
+          <Link to="/" title="JobStreet">
             JobStreet
-          </a>
+          </Link>
         </div>
         <div className="nav-right-content">
           {!isLogin ? (
@@ -108,10 +109,9 @@ function Navigation() {
                         >
                           Đăng nhập
                         </button>
-
-                        <a className="below-button" href="/">
+                        <Link className="below-button" to="/forgot-password">
                           Quên mật khẩu
-                        </a>
+                        </Link>
                       </div>
                       <div className="privacy-statement">
                         <p>
@@ -146,25 +146,25 @@ function Navigation() {
                 <i>
                   <IoPersonOutline />
                 </i>
-                <a className="nav-link" href="/">
+                <Link className="nav-link" to="/profile">
                   Hồ sơ cá nhân
-                </a>
+                </Link>
               </span>
               <span>
                 <i>
                   <IoNotificationsOutline />
                 </i>
-                <a className="nav-link" href="/">
+                <Link className="nav-link" to="/announcement">
                   Thông báo việc
-                </a>
+                </Link>
               </span>
               <span>
                 <i>
                   <IoBookmarkOutline />
                 </i>
-                <a className="nav-link" href="/">
+                <Link className="nav-link" to="/my-jobs">
                   Việc của tôi
-                </a>
+                </Link>
               </span>
               <button
                 className="nav-button"
