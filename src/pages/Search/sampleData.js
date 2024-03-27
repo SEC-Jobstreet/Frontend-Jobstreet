@@ -7,8 +7,12 @@ const sampleJob = {
   jobAstract:
     "Quản lý hồ sơ, thông tin quá trình học tập của học sinh và lớp học - Chuẩn bị sách vở, dụng cụ cho giáo viên và học sinh - Chăm sóc học...",
   listedDate: "7 giờ trước",
+  link: "/#",
 };
 
-const SearchResult = new Array(2000).fill({ ...sampleJob });
+const SearchResult = Array.from({ length: 5000 }, (_, index) => ({
+  ...sampleJob,
+  id: index + 1,
+}));
 
 export { SearchResult, sampleJob };
