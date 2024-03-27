@@ -5,7 +5,7 @@ import App from "./App";
 describe("User authentication", () => {
   test("User can log in", () => {
     const { queryByTestId } = render(<App />);
-    let user = {
+    const user = {
       username: "user@gmail.com",
       password: "123456",
     };
