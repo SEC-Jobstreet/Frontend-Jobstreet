@@ -20,16 +20,29 @@
     grid-area: auto;
     line-height: 25.6px;
     padding: 16px;
+    display: none;
+  }
+  
+  .login-widget.active {
+    display: block; 
   }
   
   input.form-control {
     background-position: right 12px center;
     background-repeat: no-repeat;
     padding: 12px 34px 12px 12px;
-    border: 1px solid #ced4da;
+    border: 1px solid #a4a4a4;
     border-radius: 4px;
     color: #1c1c1c;
-    font-size: 14px;
+    font-size: 16px;
+  }
+
+  input.form-control:focus {
+    border: 1px solid #15a449; 
+  }
+
+  input.form-control:focus::placeholder {
+    color: #c8c8c8;
   }
   
   input.form-control.email {
@@ -100,6 +113,11 @@
   .branded-links a{
     text-decoration: none;
     color: #15a449;
+  }
+
+  .branded-links a:hover{
+    text-decoration: underline;
+    text-decoration-color: #15a449;
   }
 
   .login-title.sign-up{

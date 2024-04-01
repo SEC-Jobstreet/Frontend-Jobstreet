@@ -1,18 +1,30 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import "./style.css";
 
-function Login() {
+function Login({ onClose = () => {}, show = false }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle the form submission
   };
+  const loginRef = useRef();
+  const handleClickOutside = (event) => {
+    if (loginRef.current && !loginRef.current.contains(event.target)) {
+      onClose(); // Close the login form
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   return (
-    <div className="login-widget">
+    <div className={`login-widget ${show ? "active" : ""}`} ref={loginRef}>
       <div className="login-container">
         <h3 className="login-title">Ứng viên tìm việc đăng nhập</h3>
         <form onSubmit={handleSubmit}>
