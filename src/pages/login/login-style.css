@@ -152,6 +152,18 @@ input.form-control.password {
     color: #494949;
 }
 
+p{
+    color: #1c1c1c;
+    line-height: 25.6px;
+    font-size: 16px;
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.mb-24{
+    margin-bottom: 24px !important;
+}
+
 /* Responsive styles */
 @media only screen and (max-width: 768px) {
     .login-widget {

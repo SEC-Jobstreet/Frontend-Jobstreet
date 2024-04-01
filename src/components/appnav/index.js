@@ -3,7 +3,7 @@ import { Button, Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import Login from "../../pages/login";
+import Login from "../../pages/login/login";
 import { logoutAccout, selectUser } from "../../store/user";
 
 import "./appnav.css";

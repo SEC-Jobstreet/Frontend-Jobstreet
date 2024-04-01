@@ -3,9 +3,9 @@ import { Route, Routes } from "react-router-dom";
 
 import Account from "../../pages/account/account";
 import Homepage from "../../pages/homepage";
-import Login from "../../pages/login";
+import Login from "../../pages/login/login";
 import NotFound from "../../pages/notfound";
-import Register from "../../pages/register";
+import Register from "../../pages/register/register";
 import { selectUser } from "../../store/user";
 import DeletionConfirmation from "../deletioncomfirmation";
 import JobsAlerts from "../jobalerts";
