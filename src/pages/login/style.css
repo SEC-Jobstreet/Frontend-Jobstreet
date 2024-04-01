@@ -21,6 +21,7 @@ body {
     line-height: 25.6px;
     padding: 16px;
     display: none;
+    z-index: 15;
 }
 
 .login-widget.active {
