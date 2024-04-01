@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "./style.css";
 
@@ -11,17 +11,31 @@ function Login({ onClose = () => {}, show = false }) {
     // Handle the form submission
   };
   const loginRef = useRef();
+  const [shouldAddListener, setShouldAddListener] = useState(
+    window.innerWidth >= 768
+  );
   const handleClickOutside = (event) => {
     if (loginRef.current && !loginRef.current.contains(event.target)) {
       onClose(); // Close the login form
     }
   };
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    const updateListener = () => {
+      setShouldAddListener(window.innerWidth >= 768);
+    };
+    window.addEventListener("resize", updateListener);
+
+    if (shouldAddListener) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
     return () => {
+      window.removeEventListener("resize", updateListener);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onClose]);
+  }, [shouldAddListener, onClose]);
 
   return (
     <div className={`login-widget ${show ? "active" : ""}`} ref={loginRef}>
