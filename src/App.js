@@ -1,6 +1,5 @@
 import NavBar from "./components/appnav";
 import AppRouter from "./components/approuter";
-import Register from "./pages/register";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,7 +9,6 @@ function App() {
     <div className="App">
       <NavBar />
       <AppRouter />
-      <Register />
     </div>
   );
 }

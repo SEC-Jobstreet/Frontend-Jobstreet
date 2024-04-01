@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./style.css";
 
@@ -14,11 +15,18 @@ function Login({ onClose = () => {}, show = false }) {
   const [shouldAddListener, setShouldAddListener] = useState(
     window.innerWidth >= 768
   );
+  const navigate = useNavigate();
+
   const handleClickOutside = (event) => {
     if (loginRef.current && !loginRef.current.contains(event.target)) {
       onClose(); // Close the login form
     }
   };
+
+  const handleCreateAccountClick = () => {
+    navigate("/register"); // Navigate to the Register page
+  };
+
   useEffect(() => {
     const updateListener = () => {
       setShouldAddListener(window.innerWidth >= 768);
@@ -82,7 +90,11 @@ function Login({ onClose = () => {}, show = false }) {
             Bạn chưa có tài khoản JobStreet? Đăng ký dùng,
           </h3>
           <div className="social-login-container">
-            <a className="jora-sign-up" href="">
+            <a
+              className="jora-sign-up"
+              href=""
+              onClick={handleCreateAccountClick}
+            >
               <svg
                 width="48"
                 height="48"

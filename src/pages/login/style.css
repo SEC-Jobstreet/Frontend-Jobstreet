@@ -96,7 +96,7 @@ input.form-control.password {
 .btn-forgot-pw {
     color: #0e8136;
     background-color: #ffffff;
-    border: 1px solid #0e8136;
+    border: 1px solid #0e8136 !important;
 }
 
 .btn-forgot-pw:hover {
@@ -158,14 +158,13 @@ input.form-control.password {
         width: auto;
         left: 0;
         right: 0;
-        top: 74px;
         height: auto;
         box-shadow: none;
     }
 
-    .rounded-button-primary {
+    .rounded-button-primary.btn-forgot-pw,
+    .rounded-button-primary.btn-sign-up {
         width: 100%;
-        margin: 0px 0px 10px 0px;
     }
 }
 
@@ -179,8 +178,8 @@ input.form-control.password {
         box-shadow: none;
     }
 
-    .rounded-button-primary {
+    .rounded-button-primary.btn-forgot-pw,
+    .rounded-button-primary.btn-sign-up {
         width: 100%;
-        margin: 0px 0px 10px 0px;
     }
 }

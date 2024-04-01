@@ -11,7 +11,7 @@ body {
 .register-widget {
     height: 289px;
     width: 550px;
-    margin: 64px 477px 96px;
+    margin: 64px auto;
     color: #1c1c1c;
     grid-area: auto;
     line-height: 25.6px;
@@ -95,4 +95,22 @@ input.form-control.password {
 .branded-links a {
     text-decoration: none;
     color: #15a449;
+}
+
+/* Tablet (devices with width between 768px and 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .register-widget {
+        width: 100%; 
+        /* margin: 32px 2.5%;  */
+        /* padding: 0 8px;  */
+    }
+}
+
+/* Mobile (devices with width up to 767px) */
+@media screen and (max-width: 767px) {
+    .register-widget {
+        width: 95%; 
+        /* margin: 32px 2.5%;  */
+        /* padding: 0 8px;  */
+    }
 }
