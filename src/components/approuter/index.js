@@ -23,7 +23,7 @@ function AppRouter() {
   return (
     <Routes>
       <Route exact path="/" element={<Homepage />} />
-      <Route exact path="login" element={<Login />} />
+      <Route exact path="/login" element={<Login />} />
       <Route exact path="register" element={<Register />} />
       <Route exact path="search" element={<Search />} />
       <Route path="account/profile" element={<MyAccount />} />
