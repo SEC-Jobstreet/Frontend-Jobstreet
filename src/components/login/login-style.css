@@ -166,7 +166,8 @@ p{
 
 /* Responsive styles */
 @media only screen and (max-width: 768px) {
-    .login-widget {
+    .login-widget,
+    div.role-selection-container {
         width: auto;
         left: 0;
         right: 0;
@@ -181,7 +182,8 @@ p{
 }
 
 @media only screen and (max-width: 480px) {
-    .login-widget {
+    .login-widget,
+    div.role-selection-container {
         width: auto;
         right: 0;
         left: 0;
@@ -204,4 +206,22 @@ p{
 .my-signin-button-class,
 .my-forgot-pw-button-class{
     width: 100% !important;
+}
+
+.role-selection-container{
+    position: absolute;
+    display: block;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 610px;
+    width: 320px;
+    background-color: #ffffff;
+    box-shadow: #a4a4a4 0px 24px 48px 0px;
+    color: #1c1c1c;
+    grid-area: auto;
+    line-height: 25.6px;
+    padding: 16px;
 }
