@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import Login from "../../pages/login/login";
-import { logoutAccout, selectUser } from "../../store/user";
+import { logoutAccount, selectUser } from "../../store/user";
 
 import "./appnav.css";
 
@@ -43,8 +43,8 @@ function NavBar() {
           ) : (
             <>
               <Nav className="p-0">
-                <NavItem eventkey={1} href="/profile">
-                  <NavLink to="/account/profile" as={Link}>
+                <NavItem eventkey={1}>
+                  <NavLink as={Link} to="account/profile">
                     Hồ sơ cá nhân
                   </NavLink>
                 </NavItem>
@@ -67,7 +67,7 @@ function NavBar() {
                 type="button"
                 className="logout"
                 onClick={() => {
-                  dispatch(logoutAccout());
+                  dispatch(logoutAccount());
                   navigate("/");
                 }}
               >

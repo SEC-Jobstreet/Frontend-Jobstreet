@@ -1,22 +1,32 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { loginAccount, selectUser } from "../../store/user";
 
 import "./login-style.css";
 
 function Login({ onClose = () => {}, show = false }) {
+  const dispatch = useDispatch();
+  const loginRef = useRef();
+  const navigate = useNavigate();
+
   const [isLoginVisible, setIsLoginVisible] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle the form submission
+    // Test with static email
+    const userEmail = "user@example.com";
+    dispatch(loginAccount({ email: userEmail }));
   };
-  const loginRef = useRef();
+
   const [shouldAddListener, setShouldAddListener] = useState(
     window.innerWidth >= 768
   );
-  const navigate = useNavigate();
 
   const handleRoleSelection = (role) => {
     sessionStorage.setItem("role", role);
