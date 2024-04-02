@@ -9,6 +9,7 @@ import Register from "../../pages/register";
 import { selectUser } from "../../store/user";
 import DeletionConfirmation from "../deletioncomfirmation";
 import JobsAlerts from "../jobalerts";
+import CreateJobAlert from "../jobalerts/pages/CreateJobAlert";
 import Profile from "../profile";
 import SavedJobs from "../savedjobs";
 import Search from "../searchresult/joblisting";
@@ -30,6 +31,7 @@ function AppRouter() {
           <Route index element={<Setting />} />
           <Route path="profile" element={<Profile />} />
           <Route path="job_alerts" element={<JobsAlerts />} />
+          <Route path="job_alerts/new" element={<CreateJobAlert />} />
           <Route path="saved_jobs" element={<SavedJobs />} />
           <Route
             path="deletion_confirmation"
