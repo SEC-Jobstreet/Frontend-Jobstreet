@@ -2,7 +2,7 @@
 --primary: #0e8136;
 --text-highlight: #0e8136;
 --border-color: rgb(222, 222, 222);
---muted-1: rgb(222, 222, 222);
+--mute: rgb(222, 222, 222);
 --text-muted : #626262;
 --black: rgb(20, 20, 20);
 }
@@ -12,98 +12,6 @@ body {
     display: flex;
     flex-direction: column;
 
-}
-a {
-    text-decoration: none;
-    color: var(--text-highlight);
-}
-/* container */
-.grid-container.-three-columns {
-        display: grid;
-        grid-column-gap: 4rem;
-        grid-row-gap: 2.4rem;
-
-        @media only screen and (min-width: 992px) {
-            grid-template-areas: "left content right"
-                                "left bottom right";
-            grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.5fr) minmax(0, 0.9fr);
-        }
-        @media only screen and (max-width: 991px) {
-            grid-template-areas: "content" "bottom";
-            grid-template-columns: 1fr;
-        }
-    
-}
-.content-container {
-    @media only screen and (min-width: 992px) {
-            margin: 2.4rem;
-            max-width: 1300px;
-    }
-}
-/* left */
-.my-account-left-pane {
-    max-width: 300px;
-}
-.grid-left-pane {
-    grid-area: left;
-}
-@media only screen and (min-width: 992px) {
-    .grid-left-pane {
-        display: block;
-    }
-}
-
-@media only screen and (max-width: 991px) {
-    .grid-left-pane {
-        display: none;
-    }
-}
-.destop-account-tabs {
-    border-radius: 4px;
-    border: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    font-size: 1.6rem;
-    justify-content: space-evenly;
-    text-align: start;
-    padding-bottom: 3.2rem;
-}
-.heading-small {
-    font-size: 1.52;
-}
-.-no-margin-bottom {
-    margin-bottom: 0px;
-}
-.tab-header {
-    justify-self: start;
-    padding: 1.2rem 2.4rem;
-    background-color: var(--muted-1);
-}
-.profile-tab.tab-link {
-    border-bottom: 1px solid var(--border-line, #dedede);
-    margin: 0 2.4rem;
-    padding-bottom: .8rem;
-    padding-top: 1.6rem;
-    text-decoration: none;
-    color: var(--primary);
-    color: #1c1c1c;
-
-}
-.profile-tab.tab-link:hover{
-    text-decoration: underline;
-}
-.profile-tab.tab-link.-active{
-    color: var(--text-highlight, #0e8136);
-    font-weight: bold;
-}
-.-active::after{
-    background-color: var(--text-highlight, #0e8136);
-    content: "";
-    display: block;
-    height: .2rem;
-    position: relative;
-    top: 9px;
-    width: 100%;
 }
 /* mobile */
 
@@ -140,6 +48,15 @@ a {
     font-weight: bold;
     color: var(--primary);
 }
+.-active::after{
+    background-color: var(--text-highlight, #0e8136);
+    content: "";
+    display: block;
+    height: .2rem;
+    position: relative;
+    top: 9px;
+    width: 100%;
+}
 /* content */
 .my-account-content {
     display: block;
@@ -172,7 +89,6 @@ a {
     @media screen and (min-width: 992px){
         display: block;
     }
-
 }
 .text-label {
     display: flex;
@@ -270,7 +186,7 @@ button.tertiary {
     position: relative;
 }
 .actions-container button:hover {
-    background: var(--muted-1);
+    background: var(--mute);
 }
 
 .create-alert-button {
@@ -293,6 +209,9 @@ button.create-alert-button {
     cursor: pointer;
     font-weight: 500;
     border: none;
+    @media screen and (max-width: 991px) {
+        width: 100%;
+    }
 }
 
 button.-primary {
