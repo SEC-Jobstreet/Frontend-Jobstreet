@@ -97,10 +97,41 @@ input.form-control.password {
     color: #15a449;
 }
 
+div.invalid-feedback {
+    color: #e32121;
+    font-size: 14px;
+    text-align: left;
+    margin-top: 4px;
+    line-height: 22.4px;
+}
+
+.is-invalid {
+    border-color: #e32121;
+}
+
+input.form-control.is-invalid {
+    border-color: #e32121;
+}
+
+input.form-control.is-valid {
+    border-color: #28a745;
+}
+
+input.form-control.error {
+    border: 1px solid #e32121;
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+}
+
+.invalid-message {
+    color: #e32121;
+    font-size: 14px;
+    padding-top: 5px;
+}
+
 /* Tablet (devices with width between 768px and 1024px) */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     .register-widget {
-        width: 100%; 
+        width: 100%;
         /* margin: 32px 2.5%;  */
         /* padding: 0 8px;  */
     }
@@ -109,7 +140,7 @@ input.form-control.password {
 /* Mobile (devices with width up to 767px) */
 @media screen and (max-width: 767px) {
     .register-widget {
-        width: 95%; 
+        width: 95%;
         /* margin: 32px 2.5%;  */
         /* padding: 0 8px;  */
     }
