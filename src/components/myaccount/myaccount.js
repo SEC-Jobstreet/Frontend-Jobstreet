@@ -7,9 +7,7 @@ function MyAccount() {
 
   // Hàm xác định NavLink nào là active dựa trên currentPage
   const determineActive = (path) => {
-    // Mặc định đặt /account/profile là active khi ở /account
     if (currentPage === "/account" && path === "/account/profile") return true;
-    // Hoặc nếu currentPage trùng với path của NavLink
     return currentPage === path;
   };
 
@@ -48,9 +46,7 @@ function MyAccount() {
           Xoá tài khoản
         </NavLink>
       </div>
-      <div className="main-content">
-        <h3>Tạo hồ sơ</h3>
-      </div>
+      <div className="main-content"> </div>
     </div>
   );
 }
