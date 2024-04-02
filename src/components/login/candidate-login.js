@@ -9,7 +9,12 @@ import { loginAccount } from "../../store/user";
 
 import "./login-style.css";
 
-function CandidateLogin({ onClose }) {
+function CandidateLogin({
+  className,
+  onClose,
+  signInButtonClass,
+  forgotPasswordButtonClass,
+}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,7 +31,7 @@ function CandidateLogin({ onClose }) {
   };
 
   return (
-    <div className="login-container">
+    <div className={`login-container ${className}`}>
       <h3 className="login-title">Ứng viên tìm việc đăng nhập</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -52,10 +57,14 @@ function CandidateLogin({ onClose }) {
             />
           </div>
         </div>
-        <button className="rounded-button-primary btn-sign-up">
+        <button
+          className={`rounded-button-primary btn-sign-up ${signInButtonClass}`}
+        >
           Đăng nhập
         </button>
-        <button className="rounded-button-primary btn-forgot-pw">
+        <button
+          className={`rounded-button-primary btn-forgot-pw ${forgotPasswordButtonClass}`}
+        >
           Quên mật khẩu
         </button>
         <div className="privacy-statement">

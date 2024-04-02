@@ -195,3 +195,13 @@ p{
         width: 100%;
     }
 }
+
+.custom-login-class{
+    width: 35%;
+    margin: auto;
+}
+
+.my-signin-button-class,
+.my-forgot-pw-button-class{
+    width: 100% !important;
+}

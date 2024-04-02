@@ -3,12 +3,12 @@ import { Route, Routes } from "react-router-dom";
 
 import Account from "../../pages/account/account";
 import Homepage from "../../pages/homepage";
-import Login from "../../pages/login/login";
 import NotFound from "../../pages/notfound";
 import Register from "../../pages/register/register";
 import { selectUser } from "../../store/user";
 import DeletionConfirmation from "../deletioncomfirmation";
 import JobsAlerts from "../jobalerts";
+import CandidateLogin from "../login/candidate-login";
 import MyAccount from "../myaccount/myaccount";
 import Profile from "../profile";
 import SavedJobs from "../savedjobs";
@@ -17,13 +17,25 @@ import Setting from "../setting";
 
 import ProtectedRoute from "./protectedroute";
 
+import "../login/login-style.css";
+
 function AppRouter() {
   const user = useSelector(selectUser);
 
   return (
     <Routes>
       <Route exact path="/" element={<Homepage />} />
-      <Route exact path="/login" element={<Login />} />
+      <Route
+        exact
+        path="login"
+        element={
+          <CandidateLogin
+            className="custom-login-class"
+            signInButtonClass="my-signin-button-class"
+            forgotPasswordButtonClass="my-forgot-pw-button-class"
+          />
+        }
+      />
       <Route exact path="register" element={<Register />} />
       <Route exact path="search" element={<Search />} />
       <Route path="account/profile" element={<MyAccount />} />
