@@ -1,5 +1,6 @@
 import NavBar from "./components/appnav";
 import AppRouter from "./components/approuter";
+import FilterBar from "./components/filterbar";
 import SearchForm from "./components/searchform";
 
 import "./App.css";
@@ -11,6 +12,7 @@ function App() {
       <NavBar />
       <AppRouter />
       <SearchForm />
+      <FilterBar />
     </div>
   );
 }
