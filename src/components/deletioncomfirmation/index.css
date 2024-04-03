@@ -1,0 +1,52 @@
+.deleteAccount{
+    text-align: left;
+    margin: 0 2em;
+    width: 55%;
+    border-bottom: solid .5px #dedede;
+    border-top: solid .5px #dedede;
+    padding-bottom: 2em;
+}
+
+.titleDelete{
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 1em;
+}
+
+#idDeleteAccount{
+    width: 100%;
+    padding: 12px 12px;
+    border: solid .5px #999;
+    border-radius: 3px;
+    outline: none;
+    color: #111;
+    font-size: 16px;
+}
+#idDeleteAccount:focus{
+    border: solid .5px green;
+}
+
+.formDelete span{
+    font-size: 14px;
+    color: #e32121;
+}
+.formDelete label{
+    font-size: 16px;
+    font-weight: 100;
+}
+
+.btnDelete{
+    width: 100%;
+    padding: 10px 0;
+    font-weight: 500;
+    color: white;
+    background-color: #0e8136;
+    border: none;
+    border-radius: 4px;
+    margin-top: 1em;
+    font-size: 16px;
+}
+
+.hide{
+    display: none;
+}
