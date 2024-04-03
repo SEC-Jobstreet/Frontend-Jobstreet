@@ -61,11 +61,14 @@ input.email-alert{
     border: 1px solid var(--color-border);
     background-color: rgba(0, 0, 0, 0);
 }
-
+input.email-alert:focus {
+    box-shadow: none;
+    border-color: var(--primary);
+}
 .email-alert {
     width: 100%;
-
 }
+
 select.email-alert{
     font-size: 1.6rem;
     height: 4.8rem;
@@ -75,7 +78,10 @@ select.email-alert{
     border: 1px solid var(--color-border);
     background-color: rgba(0, 0, 0, 0);
 }
-
+select.email-alert:focus {
+    box-shadow: none;
+    border-color: var(--primary);
+}
 button.email-alert {
     font-size: 1.6rem;
     height: 4.8rem;
