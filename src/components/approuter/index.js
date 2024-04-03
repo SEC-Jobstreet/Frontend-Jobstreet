@@ -36,7 +36,6 @@ function AppRouter() {
           <Route index path="settings" element={<Setting />} />
           <Route path="profile" element={<Profile />} />
           <Route path="job_alerts" element={<JobsAlerts />} />
-          <Route path="job_alerts/new" element={<CreateJobAlert />} />
           <Route path="saved_jobs" element={<SavedJobs />} />
           <Route
             path="deletion_confirmation"
@@ -44,6 +43,7 @@ function AppRouter() {
           />
           <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="account/job_alerts/new" element={<CreateJobAlert />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
