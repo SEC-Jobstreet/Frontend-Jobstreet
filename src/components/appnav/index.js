@@ -1,12 +1,10 @@
 import { Button, Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
-import {
-  IoBookmarkOutline,
-  IoNotificationsOutline,
-  IoPersonOutline,
-} from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
+import alertIcon from "../../assets/svg/alert_icon.svg";
+import infoIcon from "../../assets/svg/info_icon.svg";
+import saveIcon from "../../assets/svg/save_icon2.svg";
 import { loginAccout, logoutAccout, selectUser } from "../../store/user";
 
 import "./appnav.css";
@@ -42,7 +40,7 @@ function NavBar() {
               <Nav className="p-0">
                 <NavItem eventkey={1} href="/profile">
                   <NavLink className="nav-link" to="/account/profile" as={Link}>
-                    <IoPersonOutline className="nav-icon" /> Hồ sơ cá nhân
+                    <img src={infoIcon} alt="info" /> Hồ sơ cá nhân
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -53,8 +51,7 @@ function NavBar() {
                     to="/account/job_alerts"
                     as={Link}
                   >
-                    <IoNotificationsOutline className="nav-icon" /> Thông báo
-                    việc
+                    <img src={alertIcon} alt="alert" /> Thông báo việc
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -65,7 +62,7 @@ function NavBar() {
                     to="/account/saved_jobs"
                     as={Link}
                   >
-                    <IoBookmarkOutline className="nav-icon" /> Việc của tôi
+                    <img src={saveIcon} alt="alert" /> Việc của tôi
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -81,7 +78,9 @@ function NavBar() {
               </button>
             </>
           )}
-
+          <button className="menu" type="button">
+            Danh mục
+          </button>
           <a href="/">
             <Button
               type="button"

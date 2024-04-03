@@ -59,3 +59,16 @@
 .logout:hover {
   text-decoration: underline;
 }
+
+.menu {
+  font-size: 1.4rem;
+  margin-left: 3rem;
+  background-color: transparent;
+  border: none;
+  border-left: 1px solid #000;
+  padding-left: 3rem;
+}
+
+.menu:hover {
+  text-decoration: underline;
+}
