@@ -1,18 +1,127 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
+import axios from "axios";
 
 import { useJobsState } from "../context";
 import FacetLinks from "../facetlinks";
 
 import styles from "./jobdescription.module.css";
 
+// const SAVE_JOB = gql`
+//   mutation CreateSavedJob($jobID: id!, $candidateID: id!) {
+//     createSavedJob(jobID: $jobID, candidateID: $candidateID) {
+//       _id
+//       jobID
+//       candidateID
+//     }
+//   }
+// `;
+
+// const GET_JOB = gql`
+//   query GetJob($id: id!) {
+//     job(id: $id) {
+//       _id
+//       title
+//       description
+//       company
+//       status
+//     }
+//   }
+// `;
+
+const body = {
+  query: `
+  query GetJob($id: id!) {
+         job(id: $id) {
+           _id
+           title
+          description
+           company
+           status
+         }
+       }`,
+  variables: { id: "660ce7de19646c7d5d1c5328" },
+};
+
 function JobDescription({ data }) {
   const { savedJobs, setSaveJobs } = useJobsState();
+  const [apply, setApply] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/query/", body, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchData1 = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/query/", {
+        method: "POST",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: body.query,
+        }),
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    fetchData1();
+  }, []);
 
   const handleSaveButtonClick = (id) => {
     const newValue = !savedJobs[id];
     setSaveJobs((prev) => ({ ...prev, [id]: newValue }));
   };
+
+  const applyjob = async (id) => {
+    try {
+      // const res = await axios.get(
+      //   "http://localhost:4000/api/v1/application/1"
+      // );
+
+      const res = await axios.post(
+        // "http://localhost:8080/api/v1/apply_job",
+        "http://localhost:4000/api/v1/apply_job",
+        {
+          candidate_id: 223,
+          job_id: id,
+        }
+      );
+
+      console.log(res);
+      setApply((prev) => !prev);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleApplyButtonClick = (id) => {
+    applyjob(id);
+  };
+
+  useEffect(() => {
+    setApply(false);
+  }, [data]);
 
   return (
     <Container className={styles.wrapper}>
@@ -38,7 +147,12 @@ function JobDescription({ data }) {
               1 ngày trước, từ JobStreet Vietnam
             </div>
             <div className={styles.actionsContainer}>
-              <Button className={styles.applyButton}>Nộp đơn nhanh</Button>
+              <Button
+                className={styles.applyButton}
+                onClick={() => handleApplyButtonClick(data.id)}
+              >
+                {apply ? "Đã nộp đơn" : "Nộp đơn nhanh"}
+              </Button>
               <Button
                 className={styles.saveButton}
                 onClick={() => handleSaveButtonClick(data.id)}
