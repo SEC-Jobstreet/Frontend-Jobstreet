@@ -1,13 +1,19 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { useState } from "react";
+import { Modal } from "react-bootstrap";
+
 import "./index.css";
 
 function DeletionConfirmation() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
   const handleSubmit = (e) => {
     const { value } = document.getElementById("idDeleteAccount");
     if (value === "xóa") {
-      // eslint-disable-next-line no-alert
-      alert("Bạn có muốn xóa tài khoản");
+      setShow(true);
     } else {
       const txtWarningDelete = document.getElementById("txtWarningDelete");
       txtWarningDelete.classList.remove("hide");
@@ -19,8 +25,13 @@ function DeletionConfirmation() {
       <p className="titleDelete">Delete Account</p>
       <form className="formDelete" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="idDeleteAccount">Nhập "xóa" để tiếp tục</label>
-          <input type="text" name="idDeleteAccount" id="idDeleteAccount" />
+          <label htmlFor="idDeleteAccount">Nhập 'xóa' để tiếp tục</label>
+          <input
+            type="text"
+            name="idDeleteAccount"
+            id="idDeleteAccount"
+            placeholder="Nhập 'xóa'"
+          />
           <span id="txtWarningDelete" className="hide">
             Tài khoản chưa được xóa. Xin vui lòng thử lại.
           </span>
@@ -29,6 +40,28 @@ function DeletionConfirmation() {
           Xóa tài khoản
         </button>
       </form>
+      <Modal show={show} onHide={handleClose} animation={false} centered>
+        <div className="linkCancel">
+          <button type="button" onClick={handleClose}>
+            &times;
+          </button>
+        </div>
+        <div className="contDialog">
+          <p className="titleContDialog">Xóa tài khoản</p>
+          <p>
+            Bạn có chắc rằng bạn muốn xóa tài khoản của mình? Tài khoản của bạn
+            sẽ bị xoá vĩnh viễn.
+          </p>
+          <div className="groupButtonDialog">
+            <button type="button" id="btnDialogDelete" onClick={handleClose}>
+              Xóa
+            </button>
+            <button type="button" id="btnDialogExit" onClick={handleClose}>
+              Hủy
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

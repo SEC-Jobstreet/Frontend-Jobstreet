@@ -52,7 +52,7 @@ label{
     background-color: green;
 }
 .btnCancel{
-    width: 48%;
+    width: 100%;
     padding: 10px 0;
     border: solid  .5px #0e8136;
     background-color: white;
@@ -60,6 +60,10 @@ label{
     border-radius: 3px;
     font-weight: 500;
     font-size: 16px;
+}
+
+.linkButtonCancel{
+    width: 48%;
 }
 .btnCancel:hover{
     color: green;

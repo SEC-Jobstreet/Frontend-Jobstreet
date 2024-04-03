@@ -50,3 +50,57 @@
 .hide{
     display: none;
 }
+
+.contDialog{
+    padding: 0 2em;
+    font-size: 16px;
+}
+
+.linkCancel{
+    float: right;
+    margin-top: 5px;
+    padding: 0 1.5em;
+    font-size: 16px;
+}
+.linkCancel button{
+    font-size: 2em;
+    color: #999;
+    background-color: white;
+    border: none;
+    font-weight: 100;
+    float: right;
+}
+.titleContDialog{
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    margin-top: 0em;
+}
+.groupButtonDialog{
+    margin-top: 20px;
+    margin-bottom: 3em;
+}
+.groupButtonDialog button{
+    padding: 12px 25px;
+    border: none;
+    margin-right: 10px;
+    border-radius: 3px;
+    font-weight: 500;
+}
+#btnDialogDelete{
+    color: white;
+    background-color: #0e8136;
+}
+#btnDialogDelete:hover{
+    background-color: rgb(8, 155, 8);
+}
+
+#btnDialogExit{
+    border: solid .5px #0e8136;
+    background-color: white;
+    color: #0e8136;
+}
+#btnDialogExit:hover{
+    border: solid .5px rgb(8, 155, 8);
+    color: rgb(8, 155, 8);
+}

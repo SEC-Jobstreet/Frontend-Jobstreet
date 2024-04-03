@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { NavLink } from "react-router-dom";
+
 import "./index.css";
 
 function EditSetting() {
@@ -73,9 +75,11 @@ function EditSetting() {
           <button type="submit" className="btnSubmit">
             Lưu tài khoản
           </button>
-          <button type="button" className="btnCancel">
-            Hủy
-          </button>
+          <NavLink to="/account" className="linkButtonCancel">
+            <button type="button" className="btnCancel">
+              Hủy
+            </button>
+          </NavLink>
         </div>
       </form>
     </div>
