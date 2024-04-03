@@ -1,4 +1,4 @@
-import { Mail } from "lucide-react";
+import Email from "../../../assets/svg/email_icon.svg";
 
 export default function UnComfirmAlert(props) {
   const { uncomfirmHandler } = props;
@@ -9,7 +9,7 @@ export default function UnComfirmAlert(props) {
   return (
     <div id="unconfirm-email">
       <h3 className="heading-large text-label">
-        <Mail className="mail-label" />
+        <img src={Email} alt="email-icon" className="mail-label" />
         Địa chỉ email của bạn chưa được xác nhận
       </h3>
       <p>

@@ -1,22 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import JobAlertData from "../../temp/samplejobalertdata";
+
 import JobAlert from "./components/JobAlert";
-import MobileNav from "./components/MobileNav";
 import UnComfirmAlert from "./components/UnComfirmAlert";
 
 import "./index.css";
 
-const JobAlertData = [
-  {
-    id: "v1",
-    title: "  Tuyển dụng, làm việc Java tại Hồ Chí Minh",
-  },
-  {
-    id: "v2",
-    title: "  Tuyển dụng, làm việc Fullstack tại Hồ Chí Minh",
-  },
-];
 function JobsAlerts() {
   const [isConfirmEmail, setIsConfirmEmail] = useState(false);
   const navigate = useNavigate();
@@ -27,13 +18,12 @@ function JobsAlerts() {
   return (
     <div className="my-account-content grid-content">
       <h3 className="heading-large account-page-heading">Thông báo việc</h3>
-      {/* mobile */}
-      <MobileNav />
+      {/* show when email is unconfirm */}
       {!isConfirmEmail && (
         <UnComfirmAlert uncomfirmHandler={uncomfirmHandler} />
       )}
-      {/* alert */}
-      {isConfirmEmail && (
+      {/* show job alert when email is confirmed */}
+      {isConfirmEmail && JobAlertData && (
         <>
           <div id="email-alerts">
             {JobAlertData.map((item) => (

@@ -33,7 +33,7 @@ body {
     font-size: 1.82rem;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: top;
 }
 .new_email_alert {
     margin-bottom: 1.6rem;

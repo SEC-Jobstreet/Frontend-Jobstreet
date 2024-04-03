@@ -1,7 +1,8 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
-import { Mail } from "lucide-react";
+
+import Email from "../../../assets/svg/email_icon.svg";
 
 import "./CreateJobAlert.css";
 
@@ -55,11 +56,10 @@ export default function CreateJobAlert() {
       id="email-alert-management-page"
     >
       <h2 className="heading-large">
-        <Mail
-          style={{
-            margin: "0 1.2rem 0 0",
-            color: "#0e8136",
-          }}
+        <img
+          src={Email}
+          alt="email-icon"
+          style={{ "margin-right": "0.8rem" }}
         />
         Tạo thông báo việc làm
       </h2>
