@@ -11,9 +11,20 @@
 }
 
 .nav-link {
-  font-size: 1.5rem !important;
+  font-size: 1.4rem !important;
   color: black !important;
   margin: 0 1.5rem;
+  display: flex !important;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.nav-icon {
+  font-size: 2rem;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
 }
 
 .rightGroup {
@@ -22,13 +33,14 @@
 
 .button-employer {
   height: 4rem;
-  font-size: 1.5rem !important;
+  font-size: 1.4rem !important;
   font-weight: 500 !important;
   margin: 0rem 0rem 0rem 3rem;
+  padding: 0 2rem !important;
 }
 
 .login {
-  font-size: 1.5rem !important;
+  font-size: 1.4rem !important;
   border: none;
   background: none;
 }
@@ -38,7 +50,7 @@
 }
 
 .logout {
-  font-size: 1.5rem !important;
+  font-size: 1.4rem !important;
   border: none;
   background: none;
   margin-left: 2rem;

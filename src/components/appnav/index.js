@@ -1,4 +1,9 @@
 import { Button, Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
+import {
+  IoBookmarkOutline,
+  IoNotificationsOutline,
+  IoPersonOutline,
+} from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -36,22 +41,31 @@ function NavBar() {
             <>
               <Nav className="p-0">
                 <NavItem eventkey={1} href="/profile">
-                  <NavLink to="/account/profile" as={Link}>
-                    Hồ sơ cá nhân
+                  <NavLink className="nav-link" to="/account/profile" as={Link}>
+                    <IoPersonOutline className="nav-icon" /> Hồ sơ cá nhân
                   </NavLink>
                 </NavItem>
               </Nav>
               <Nav className="p-0">
                 <NavItem eventkey={2} href="/job_alerts">
-                  <NavLink to="/account/job_alerts" as={Link}>
-                    Thông báo việc
+                  <NavLink
+                    className="nav-link"
+                    to="/account/job_alerts"
+                    as={Link}
+                  >
+                    <IoNotificationsOutline className="nav-icon" /> Thông báo
+                    việc
                   </NavLink>
                 </NavItem>
               </Nav>
               <Nav className="p-0">
                 <NavItem eventkey={3} href="/saved_jobs">
-                  <NavLink to="/account/saved_jobs" as={Link}>
-                    Việc của tôi
+                  <NavLink
+                    className="nav-link"
+                    to="/account/saved_jobs"
+                    as={Link}
+                  >
+                    <IoBookmarkOutline className="nav-icon" /> Việc của tôi
                   </NavLink>
                 </NavItem>
               </Nav>
