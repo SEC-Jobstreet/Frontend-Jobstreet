@@ -38,6 +38,9 @@ body {
     width: 100%;
 }
 .profile-tab.tab {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis ;
     color: #1c1c1c;
     text-decoration: none;
 }
@@ -69,9 +72,12 @@ body {
     margin-bottom: 12.8rem; 
 
     @media screen and (max-width: 991px) {
-        margin-bottom: 6.4rem;
+        margin: 0 1.6rem 0rem 1.6rem;
         border-top: 0px;
+        padding: 0;
+        
     }
+
 
 }
 .grid-content {
