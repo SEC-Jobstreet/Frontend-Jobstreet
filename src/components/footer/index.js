@@ -1,6 +1,15 @@
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { loginAccout, logoutAccout, selectUser } from "../../store/user";
+
 import "./footer.css";
 
 function Footer() {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   return (
     <footer>
       <div className="footer">
@@ -25,9 +34,28 @@ function Footer() {
           </a>
         </div>
         <div className="footer-user-action">
-          <span>user@gmail.com</span>
-          <span>·</span>
-          <button type="button">Thoát</button>
+          {user.email === "" ? (
+            <button
+              type="button"
+              onClick={() => dispatch(loginAccout({ email: "a@email.com" }))}
+            >
+              Đăng nhập
+            </button>
+          ) : (
+            <>
+              <span>{user.email}</span>
+              <span>·</span>
+              <button
+                type="button"
+                onClick={() => {
+                  dispatch(logoutAccout());
+                  navigate("/");
+                }}
+              >
+                Thoát
+              </button>
+            </>
+          )}
         </div>
         <div className="mobile-app-link">
           <a href="/">

@@ -69,6 +69,7 @@ footer {
 @media screen and (max-width: 970px) {
   .footer-links {
     max-width: 50rem;
+    padding-bottom: 2.4rem;
   }
 
   .footer-link {
