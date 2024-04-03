@@ -42,26 +42,26 @@ function JobsAlerts() {
       {/* show job alert when email is confirmed */}
       {isConfirmEmail && jobData.length === 0 && <JobAlertEmpty />}
       {isConfirmEmail && jobData.length !== 0 && (
-        <>
-          <div id="email-alerts">
-            {jobData.map((item) => (
-              <JobAlert
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                status={item.status}
-                onChangeJobAlertHandler={onChangeJobAlertHandler}
-              />
-            ))}
-          </div>
-          <button
-            type="button"
-            className="create-alert-button -primary"
-            onClick={() => navigate("new")}
-          >
-            Tạo thông báo việc làm ngay
-          </button>
-        </>
+        <div id="email-alerts">
+          {jobData.map((item) => (
+            <JobAlert
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              status={item.status}
+              onChangeJobAlertHandler={onChangeJobAlertHandler}
+            />
+          ))}
+        </div>
+      )}
+      {isConfirmEmail && (
+        <button
+          type="button"
+          className="create-alert-button -primary"
+          onClick={() => navigate("new")}
+        >
+          Tạo thông báo việc làm ngay
+        </button>
       )}
     </div>
   );
