@@ -152,7 +152,7 @@ input.form-control.password {
     color: #494949;
 }
 
-p{
+p {
     color: #1c1c1c;
     line-height: 25.6px;
     font-size: 16px;
@@ -160,12 +160,19 @@ p{
     margin-bottom: 2rem;
 }
 
-.mb-24{
+.mb-24 {
     margin-bottom: 24px !important;
 }
 
 /* Responsive styles */
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) and (max-width: 1199.98px) {
+    .login-container.custom-login-class {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 480.1px) and (max-width: 767.98px) {
+
     .login-widget,
     div.role-selection-container {
         width: auto;
@@ -180,12 +187,13 @@ p{
         width: 100%;
     }
 
-    .login-container.custom-login-class{
+    .login-container.custom-login-class {
         width: 95%;
     }
 }
 
 @media only screen and (max-width: 480px) {
+
     .login-widget,
     div.role-selection-container {
         width: auto;
@@ -201,22 +209,22 @@ p{
         width: 100%;
     }
 
-    .login-container.custom-login-class{
+    .login-container.custom-login-class {
         width: 95%;
     }
 }
 
-.custom-login-class{
+.custom-login-class {
     width: 35%;
     margin: auto;
 }
 
 .my-signin-button-class,
-.my-forgot-pw-button-class{
+.my-forgot-pw-button-class {
     width: 100% !important;
 }
 
-.role-selection-container{
+.role-selection-container {
     position: absolute;
     display: block;
     z-index: 100;

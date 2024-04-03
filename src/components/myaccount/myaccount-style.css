@@ -72,8 +72,7 @@
     text-align: left;
 }
 
-/* CSS for Tablet and smaller screens */
-@media (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
     .container {
         grid-template-columns: 1fr;
         gap: 0;
@@ -114,7 +113,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media only screen and (max-width: 480px) {
     .sidebar .nav-link {
         font-size: 14px;
     }
