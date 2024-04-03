@@ -179,6 +179,10 @@ p{
     .rounded-button-primary.btn-sign-up {
         width: 100%;
     }
+
+    .login-container.custom-login-class{
+        width: 95%;
+    }
 }
 
 @media only screen and (max-width: 480px) {
@@ -195,6 +199,10 @@ p{
     .rounded-button-primary.btn-forgot-pw,
     .rounded-button-primary.btn-sign-up {
         width: 100%;
+    }
+
+    .login-container.custom-login-class{
+        width: 95%;
     }
 }
 
