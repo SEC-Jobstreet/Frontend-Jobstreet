@@ -1,6 +1,5 @@
 import NavBar from "./components/appnav";
 import AppRouter from "./components/approuter";
-import TrendingJobs from "./components/trendingjobs";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,7 +9,6 @@ function App() {
     <div className="App">
       <NavBar />
       <AppRouter />
-      <TrendingJobs />
     </div>
   );
 }
