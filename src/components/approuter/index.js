@@ -9,7 +9,6 @@ import { selectUser } from "../../store/user";
 import DeletionConfirmation from "../deletioncomfirmation";
 import JobsAlerts from "../jobalerts";
 import CandidateLogin from "../login/candidate-login";
-import MyAccount from "../myaccount/myaccount";
 import Profile from "../profile";
 import SavedJobs from "../savedjobs";
 import Search from "../searchresult/joblisting";
@@ -25,23 +24,15 @@ function AppRouter() {
   return (
     <Routes>
       <Route exact path="/" element={<Homepage />} />
-      <Route
-        exact
-        path="login"
-        element={
-          <CandidateLogin
-            className="custom-login-class"
-            signInButtonClass="my-signin-button-class"
-            forgotPasswordButtonClass="my-forgot-pw-button-class"
-          />
-        }
-      />
-      <Route exact path="register" element={<Register />} />
+      <Route element={<ProtectedRoute isAllowed={!user?.email} />}>
+        <Route exact path="login" element={<CandidateLogin isPage />} />
+        <Route exact path="register" element={<Register />} />
+      </Route>
+
       <Route exact path="search" element={<Search />} />
-      <Route path="account/profile" element={<MyAccount />} />
       <Route element={<ProtectedRoute isAllowed={!!user?.email} />}>
         <Route path="account" element={<Account />}>
-          <Route index element={<Setting />} />
+          <Route index path="settings" element={<Setting />} />
           <Route path="profile" element={<Profile />} />
           <Route path="job_alerts" element={<JobsAlerts />} />
           <Route path="saved_jobs" element={<SavedJobs />} />

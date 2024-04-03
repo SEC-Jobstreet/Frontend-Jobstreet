@@ -9,12 +9,7 @@ import { loginAccount } from "../../store/user";
 
 import "./login-style.css";
 
-function CandidateLogin({
-  className,
-  onClose,
-  signInButtonClass,
-  forgotPasswordButtonClass,
-}) {
+function CandidateLogin({ isPage }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -31,7 +26,7 @@ function CandidateLogin({
   };
 
   return (
-    <div className={`login-container ${className}`}>
+    <div className={`login-container ${isPage ? "custom-login-class" : ""}`}>
       <h3 className="login-title">Ứng viên tìm việc đăng nhập</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -58,12 +53,12 @@ function CandidateLogin({
           </div>
         </div>
         <button
-          className={`rounded-button-primary btn-sign-up ${signInButtonClass}`}
+          className={`rounded-button-primary btn-sign-up ${isPage ? "my-signin-button-class" : ""}`}
         >
           Đăng nhập
         </button>
         <button
-          className={`rounded-button-primary btn-forgot-pw ${forgotPasswordButtonClass}`}
+          className={`rounded-button-primary btn-forgot-pw ${isPage ? "my-forgot-pw-button-class" : ""}`}
         >
           Quên mật khẩu
         </button>
