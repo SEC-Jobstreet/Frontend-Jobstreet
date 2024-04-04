@@ -49,6 +49,7 @@
   font-size: 1.4rem !important;
   border: none;
   background: none;
+  margin: 0 1.2rem;
 }
 
 .login:hover {
