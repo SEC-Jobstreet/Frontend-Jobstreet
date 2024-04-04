@@ -2,6 +2,7 @@ import NavBar from "./components/appnav";
 import AppRouter from "./components/approuter";
 import FilterBar from "./components/filterbar";
 import FilterBarMobile from "./components/filterbarmobile";
+import Footer from "./components/footer";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,6 +14,7 @@ function App() {
       <AppRouter />
       <FilterBar />
       <FilterBarMobile />
+      <Footer />
     </div>
   );
 }
