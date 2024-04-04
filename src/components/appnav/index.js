@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button, Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +7,8 @@ import alertIcon from "../../assets/svg/alert_icon.svg";
 import infoIcon from "../../assets/svg/info_icon.svg";
 import menuIcon from "../../assets/svg/menu_icon.svg";
 import saveIcon from "../../assets/svg/save_icon2.svg";
-import { loginAccout, logoutAccout, selectUser } from "../../store/user";
+import Login from "../../pages/login/login";
+import { loginAccount, logoutAccount, selectUser } from "../../store/user";
 
 import "./appnav.css";
 
@@ -17,6 +18,12 @@ function NavBar() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showLogin, setShowLogin] = useState(false);
+
+  // eslint-disable-next-line no-unused-vars
+  const handleLoginClick = () => {
+    setShowLogin(!showLogin);
+  };
 
   const [showNav, setShowNav] = useState(false);
 
@@ -35,7 +42,7 @@ function NavBar() {
             <button
               type="button"
               className="login"
-              onClick={() => dispatch(loginAccout({ email: "a@email.com" }))}
+              onClick={() => setShowLogin(true)}
             >
               <span>Đăng nhập</span>
             </button>
@@ -74,7 +81,7 @@ function NavBar() {
                 type="button"
                 className="logout"
                 onClick={() => {
-                  dispatch(logoutAccout());
+                  dispatch(logoutAccount());
                   navigate("/");
                 }}
               >
@@ -108,7 +115,7 @@ function NavBar() {
               <button
                 type="button"
                 className="login"
-                onClick={() => dispatch(loginAccout({ email: "a@email.com" }))}
+                onClick={() => dispatch(loginAccount({ email: "a@email.com" }))}
               >
                 <span>Đăng nhập</span>
               </button>
@@ -117,7 +124,7 @@ function NavBar() {
                 type="button"
                 className="logout"
                 onClick={() => {
-                  dispatch(logoutAccout());
+                  dispatch(logoutAccount());
                   navigate("/");
                 }}
               >
@@ -221,6 +228,9 @@ function NavBar() {
           </div>
         )}
       </Navbar>
+      {showLogin && (
+        <Login onClose={() => setShowLogin(false)} show={showLogin} />
+      )}
     </div>
   );
 }

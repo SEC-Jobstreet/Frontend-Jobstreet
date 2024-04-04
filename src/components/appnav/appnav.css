@@ -41,7 +41,7 @@
   height: 4rem;
   font-size: 1.4rem !important;
   font-weight: 500 !important;
-  margin-left: 1.2rem;
+  margin-left: 2.3rem;
   padding: 0 2rem !important;
 }
 
@@ -58,8 +58,10 @@
 .logout {
   font-size: 1.4rem !important;
   border: none;
+  color: #626262;
   background: none;
-  margin: 0 1.2rem;
+  margin: 0 0.2rem;
+  margin-left: 0.8rem;
 }
 
 .logout:hover {
