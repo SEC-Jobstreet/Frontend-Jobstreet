@@ -2,8 +2,8 @@
 // Import any necessary libraries or modules
 import React from "react";
 
-import LocationPinIcon from "../icon/location-icon";
-import SearchIcon from "../icon/search-icon";
+import LocationPinIcon from "../../assets/svg/location-pin-svgrepo-com.svg";
+import SearchIcon from "../../assets/svg/search-svgrepo-com.svg";
 
 import "./searchform.css";
 // Define your SearchForm component
@@ -24,7 +24,7 @@ function SearchForm() {
             autoComplete="off"
           />
           <div className="ti-search">
-            <SearchIcon />
+            <img className="search-icon" src={SearchIcon} alt="search-icon" />
           </div>
         </div>
       </div>
@@ -41,7 +41,11 @@ function SearchForm() {
             icon="location"
           />
           <div className="ti-search">
-            <LocationPinIcon />
+            <img
+              className="location-icon"
+              src={LocationPinIcon}
+              alt="location-icon"
+            />
           </div>
         </div>
       </div>

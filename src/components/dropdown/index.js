@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
-import DownArrowIcon from "../icon/downarrow-icon";
+import DownArrowIcon from "../../assets/svg/down-arrow-backup-2-svgrepo-com.svg";
 
 import "./dropdown.css";
 
 function DropDown({ data }) {
   const [selectedOption, setSelectedOption] = useState(data[0]);
   const [isShowDropDown, setIsShowDropDown] = useState(false);
+  // const [activeButton, setActiveButton] = useState();
   const handleSelect = (title) => {
     setSelectedOption(title);
   };
@@ -31,7 +32,11 @@ function DropDown({ data }) {
     >
       {selectedOption}
       <div className="dropdown-icon">
-        <DownArrowIcon />
+        <img
+          className="dropdown-icon"
+          src={DownArrowIcon}
+          alt="dropdown-icon"
+        />
       </div>
       {isShowDropDown && (
         <ul className="dropdown-option-container">

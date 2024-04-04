@@ -37,6 +37,7 @@ function FilterBar() {
   const handleClick = (label) => {
     setActiveButton(label);
   };
+
   return (
     <div className="filter-bar-container">
       <div className="filter-bar">
@@ -84,97 +85,6 @@ function FilterBar() {
         <a className="reset-filters" data-href="#">
           Đặt lại tất cả bộ lọc
         </a>
-      </div>
-      <div className="filter-bar-mobile">
-        <div className="filter-bar-mobile-header">
-          <button className="close-modal-button" type="button">
-            Trở lại
-          </button>
-          <h3 className="filter-bar-mobile-title">Sàng lọc</h3>
-          <button className="clear-modal-button" type="button">
-            Xóa
-          </button>
-        </div>
-        <div className="refine-search-facet">
-          <h4>Sắp xếp</h4>
-          <button className="option-button" type="button">
-            Độ chính xác
-          </button>
-          <button className="option-button" type="button">
-            Ngày
-          </button>
-        </div>
-        <div className="refine-search-facet">
-          <h4>Những sàng lọc phổ biến</h4>
-          <button className="option-button" type="button">
-            Nộp đơn nhanh
-          </button>
-        </div>
-        <div className="refine-search-facet">
-          <h4>Thời gian</h4>
-          <button className="option-button" type="button">
-            Mọi loại việc
-          </button>
-          <button className="option-button" type="button">
-            Full time
-          </button>
-          <button className="option-button" type="button">
-            Part time
-          </button>
-          <button className="option-button" type="button">
-            Permanent
-          </button>
-          <button className="option-button" type="button">
-            Internship
-          </button>
-          <button className="option-button" type="button">
-            Casual/Temporary
-          </button>
-        </div>
-        <div className="refine-search-facet">
-          <h4>Ngày đăng</h4>
-          <button className="option-button" type="button">
-            Mọi thời gian
-          </button>
-          <button className="option-button" type="button">
-            24 giờ qua
-          </button>
-          <button className="option-button" type="button">
-            7 ngày qua
-          </button>
-          <button className="option-button" type="button">
-            14 ngày qua
-          </button>
-          <button className="option-button" type="button">
-            30 ngày qua
-          </button>
-        </div>
-        <div className="refine-search-facet">
-          <h4>Khoảng cách</h4>
-          <button className="option-button" type="button">
-            Tại địa điểm này
-          </button>
-          <button className="option-button" type="button">
-            5km
-          </button>
-          <button className="option-button" type="button">
-            10km
-          </button>
-          <button className="option-button" type="button">
-            25km
-          </button>
-          <button className="option-button" type="button">
-            50km
-          </button>
-          <button className="option-button" type="button">
-            100km
-          </button>
-        </div>
-        <div className="find-button-section">
-          <button className="find-button" type="button">
-            Chỉnh tìm kiếm
-          </button>
-        </div>
       </div>
     </div>
   );

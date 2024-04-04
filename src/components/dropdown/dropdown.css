@@ -33,5 +33,12 @@ ul {
 .dropdown-item:hover {
     background-color: #ccc !important;
 }
+.mobile-list-options-wrapper{
+    display: none;
+}
 
-
+@media (max-width: 990px){
+    .mobile-list-options-wrapper{
+        display: block;
+    }
+}
