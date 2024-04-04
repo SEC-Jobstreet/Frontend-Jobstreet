@@ -15,7 +15,7 @@ function JobItem({ data, activeItem, handleClick }) {
 
   const handleItemClick = (href, id) => {
     if (window.innerWidth < 1000) {
-      window.location.href = href;
+      window.open(href);
     } else {
       handleClick(id);
     }
