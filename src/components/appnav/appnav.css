@@ -1,5 +1,5 @@
 .header {
-  padding: 1.8rem 4rem;
+  padding: 1.8rem 3.2rem;
   margin-bottom: 1.5rem;
 }
 
@@ -18,7 +18,7 @@
 .nav-link {
   font-size: 1.4rem !important;
   color: black !important;
-  margin: 0 1.2rem;
+  margin: 0 1rem;
   display: flex !important;
   align-items: center;
   text-align: left;
@@ -49,7 +49,7 @@
   font-size: 1.4rem !important;
   border: none;
   background: none;
-  margin: 0 1.2rem;
+  margin-right: 0.8rem;
 }
 
 .login:hover {
@@ -86,6 +86,8 @@
     display: flex !important;
     flex-direction: column !important;
     padding: 0 !important;
+    width: inherit;
+    margin: 0 -1.6rem 4rem !important;
   }
 
   .above-content {
@@ -93,7 +95,7 @@
     display: flex !important;
     justify-content: space-between !important;
     flex-wrap: wrap;
-    margin-bottom: 1.9rem;
+    margin-bottom: 1.6rem;
     padding: 0 1.6rem;
   }
 
@@ -103,11 +105,16 @@
 
   .category-title {
     font-size: 1.4rem;
-    margin-left: 3rem;
+    margin-left: 2rem;
     background-color: transparent;
     border: none;
     border-left: 1px solid #cfcfcf;
-    padding-left: 3rem;
+    padding-left: 2rem;
+  }
+
+  .login,
+  .logout {
+    margin-right: 0;
   }
 
   .category-title:hover {
@@ -157,7 +164,7 @@
     margin: 0;
   }
 
-  .mobile-app-link {
+  .nav-mobile-app-link {
     width: 100%;
     text-align: left;
     padding: 2.4rem 1.6rem;

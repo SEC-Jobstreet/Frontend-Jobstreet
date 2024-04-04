@@ -206,7 +206,7 @@ function NavBar() {
                   Truy cập trang web của nhà tuyển dụng
                 </Button>
               </a>
-              <div className="mobile-app-link">
+              <div className="nav-mobile-app-link">
                 <a href="/">
                   <img
                     className="img-app-link"
