@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
+import { gql, useMutation } from "@apollo/client";
 import axios from "axios";
 
 import { useJobsState } from "../context";
@@ -7,18 +8,18 @@ import FacetLinks from "../facetlinks";
 
 import styles from "./jobdescription.module.css";
 
-// const SAVE_JOB = gql`
-//   mutation CreateSavedJob($jobID: id!, $candidateID: id!) {
-//     createSavedJob(jobID: $jobID, candidateID: $candidateID) {
-//       _id
-//       jobID
-//       candidateID
-//     }
-//   }
-// `;
+const SAVE_JOB = gql`
+  mutation CreateSavedJob($jobID: ID!, $candidateID: ID!) {
+    createSavedJob(jobID: $jobID, candidateID: $candidateID) {
+      _id
+      jobID
+      candidateID
+    }
+  }
+`;
 
 // const GET_JOB = gql`
-//   query GetJob($id: id!) {
+//   query GetJob($id: ID!) {
 //     job(id: $id) {
 //       _id
 //       title
@@ -29,68 +30,26 @@ import styles from "./jobdescription.module.css";
 //   }
 // `;
 
-const body = {
-  query: `
-  query GetJob($id: id!) {
-         job(id: $id) {
-           _id
-           title
-          description
-           company
-           status
-         }
-       }`,
-  variables: { id: "660ce7de19646c7d5d1c5328" },
-};
-
 function JobDescription({ data }) {
   const { savedJobs, setSaveJobs } = useJobsState();
   const [apply, setApply] = useState(false);
+  // const getQuery = useQuery(GET_JOB, {
+  //   variables: { id: "660ce7de19646c7d5d1c5328" },
+  // });
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.post("http://localhost:4000/query/", body, {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Allow-Credentials": "true",
-        },
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // console.log(getQuery);
 
-  const fetchData1 = async () => {
-    try {
-      const response = await fetch("http://localhost:4000/query/", {
-        method: "POST",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Allow-Credentials": "true",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query: body.query,
-        }),
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-    fetchData1();
-  }, []);
+  const [addjob, ressavejob] = useMutation(SAVE_JOB);
 
   const handleSaveButtonClick = (id) => {
-    const newValue = !savedJobs[id];
-    setSaveJobs((prev) => ({ ...prev, [id]: newValue }));
+    try {
+      const newValue = !savedJobs[id];
+      setSaveJobs((prev) => ({ ...prev, [id]: newValue }));
+      addjob({ variables: { jobID: id, candidateID: "386" } });
+      console.log(ressavejob);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const applyjob = async (id) => {
