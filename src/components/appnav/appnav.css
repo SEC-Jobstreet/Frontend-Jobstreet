@@ -18,9 +18,10 @@
 .nav-link {
   font-size: 1.4rem !important;
   color: black !important;
-  margin: 0 1.5rem;
+  margin: 0 1.2rem;
   display: flex !important;
   align-items: center;
+  text-align: left;
   gap: 0.6rem;
 }
 
@@ -40,7 +41,7 @@
   height: 4rem;
   font-size: 1.4rem !important;
   font-weight: 500 !important;
-  margin: 0rem 0rem 0rem 3rem;
+  margin-left: 1.2rem;
   padding: 0 2rem !important;
 }
 
@@ -58,7 +59,7 @@
   font-size: 1.4rem !important;
   border: none;
   background: none;
-  margin-left: 2rem;
+  margin: 0 1.2rem;
 }
 
 .logout:hover {
@@ -69,7 +70,7 @@
   display: none !important;
 }
 
-@media screen and (max-width: 1220px) {
+@media screen and (max-width: 990px) {
   .header {
     padding: 1.6rem 0;
   }
