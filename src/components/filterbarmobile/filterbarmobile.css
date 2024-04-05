@@ -10,6 +10,11 @@
     font-size: 16px;
 }
 
+.refine-search-facet .active {
+    border-color: #15A449 !important;
+    color: #15A449;
+}
+
 .filter-bar-mobile-button {
     display: block;
 }

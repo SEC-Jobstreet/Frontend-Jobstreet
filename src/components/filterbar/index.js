@@ -68,9 +68,7 @@ function FilterBar() {
         </div>
         <div className="quick-apply-filter">
           <div className="quick-apply-control-container">
-            <div className="quick-apply-label heading-medium">
-              Nộp đơn nhanh
-            </div>
+            <div className="quick-apply-label">Nộp đơn nhanh</div>
             <label className="switch" htmlFor="quick-apply-label">
               <input
                 type="checkbox"

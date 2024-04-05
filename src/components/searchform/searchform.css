@@ -15,6 +15,7 @@
     display: block;
     margin-bottom: 5px;
     text-align: left;
+    opacity: 0.7;
 }
 
 .input-field {
@@ -29,6 +30,9 @@
     color: #15A449;
 }
 
+.input-field input {
+    border: 1px solid #ccc;
+}
 
 .search-input-field input:focus {
     border: 1px solid #15A449;
