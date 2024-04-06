@@ -1,28 +1,35 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable react/button-has-type */
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
+import { setNotification } from "../../store/notification";
 import { loginAccount } from "../../store/user";
+import { notiLoginAccount } from "../../utils/notification";
 
 import "./login-style.css";
 
-function CandidateLogin({ isPage, onClose = () => {} }) {
+function CandidateLogin({ isPage }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle the form submission
-    // Test with static email
-    const userEmail = "user@example.com";
-    dispatch(loginAccount({ email: userEmail }));
-    onClose(true);
+    // After verify
+    const temp = document.querySelector(".login-widget-from-nav");
+    if (temp) temp.style.display = "none";
+    const accessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRoYW5oIFF1eSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJlbWFpbCI6ImNhbmRpZGF0ZWpvYnN0cmVldEBnbWFpbC5jb20iLCJwaWN0dXJlIjoiaHR0cHM6Ly9jZG4taWNvbnMtcG5nLmZyZWVwaWsuY29tLzI1Ni8xMDc3LzEwNzcxMTQucG5nIiwiZXhwIjoxNzI2Mjk5OTIyfQ.bspjeO6l3cKFvmzbozZCMutaT-shlVmDuKCKE3ql68w";
+    localStorage.setItem("access-token", accessToken);
+    const data = jwtDecode(accessToken);
+    dispatch(loginAccount(data));
+    dispatch(setNotification(notiLoginAccount));
   };
 
   const handleCreateAccountClick = () => {
+    const temp = document.querySelector(".login-widget-from-nav");
+    if (temp) temp.style.display = "none";
     navigate("/register"); // Navigate to the Register page
   };
 
@@ -37,7 +44,7 @@ function CandidateLogin({ isPage, onClose = () => {} }) {
               className="form-control email"
               placeholder="Nhập email của bạn"
               name="user[email]"
-              id="login_widget_user_email"
+              id={`login_widget_user_email ${isPage ? "page" : ""}`}
               required
             />
           </div>
@@ -47,7 +54,7 @@ function CandidateLogin({ isPage, onClose = () => {} }) {
             <input
               type="password"
               className="form-control password"
-              id="login_widget_user_password"
+              id={`login_widget_user_password ${isPage ? "page" : ""}`}
               placeholder="Nhập mật khẩu"
               required
             />
@@ -68,17 +75,17 @@ function CandidateLogin({ isPage, onClose = () => {} }) {
         <div className="privacy-statement">
           <span className="branded-links">
             Bằng cách đăng nhập vào tài khoản của bạn, bạn đồng ý với{" "}
-            <a href="#">Các điều khoản và điều kiện sử dụng</a> và{" "}
-            <a href="#">Chính Sách Bảo Mật</a> của JobStreet.
+            <NavLink to="/">Các điều khoản và điều kiện sử dụng</NavLink> và{" "}
+            <NavLink to="/">Chính Sách Bảo Mật</NavLink> của JobStreet.
           </span>
         </div>
         <h3 className="login-title sign-up">
           Bạn chưa có tài khoản JobStreet? Đăng ký dùng,
         </h3>
         <div className="social-login-container">
-          <a
+          <NavLink
             className="jora-sign-up"
-            href=""
+            to="/register"
             onClick={handleCreateAccountClick}
           >
             <svg
@@ -104,8 +111,8 @@ function CandidateLogin({ isPage, onClose = () => {} }) {
             <div className="heading-xsmall social-login-text">
               Tạo tài khoản
             </div>
-          </a>
-          <a className="facebook-login" href="">
+          </NavLink>
+          <a className="facebook-login" to="/">
             <svg
               width="48"
               height="48"
@@ -122,7 +129,7 @@ function CandidateLogin({ isPage, onClose = () => {} }) {
             </svg>
             <div className="heading-xsmall social-login-text">Facebook</div>
           </a>
-          <a className="apple-login" href="#">
+          <a className="apple-login" to="/">
             <svg
               width="48"
               height="48"
@@ -141,7 +148,7 @@ function CandidateLogin({ isPage, onClose = () => {} }) {
             </svg>
             <div className="heading-xsmall social-login-text">Apple</div>
           </a>
-          <a className="google-login" href="">
+          <a className="google-login" to="/">
             <svg
               width="48"
               height="48"

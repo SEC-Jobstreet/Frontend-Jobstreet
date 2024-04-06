@@ -1,0 +1,23 @@
+.contJobCard{
+    text-align: left;
+    margin-left: 2em;
+    margin-bottom: 100px;
+    border-bottom: solid .5px #dedede;
+    border-top: solid .5px #dedede;
+    padding-bottom: 2em;
+}
+
+.title{
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+.titleTwo {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.txtTitle{
+    font-size: 14px;
+}
