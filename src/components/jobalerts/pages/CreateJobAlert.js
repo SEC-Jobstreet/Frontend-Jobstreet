@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import Email from "../../../assets/svg/email_icon.svg";
 
-import "./CreateJobAlert.css";
+import "./styles.css";
 
 const RadiosData = [
   {
