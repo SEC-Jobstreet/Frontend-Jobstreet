@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
+import { Form } from "react-bootstrap";
 
 import DropDown from "../dropdown";
 
-import "./filterbar.css";
+import styles from "./filterbar.module.css";
 
 const TypeOfJob = [
   "Mọi loại việc",
@@ -39,48 +40,49 @@ function FilterBar() {
   };
 
   return (
-    <div className="filter-bar-container">
-      <div className="filter-bar">
-        <div className="sort-container">
-          <span className="sort-label"> Sắp xếp: </span>
+    <div className={styles.filterBarContainer}>
+      <div className={styles.filterBar}>
+        <div className={styles.dropdownContainer}>
+          <span> Sắp xếp: &nbsp;</span>
           <button
             type="button"
-            className={`sort-link ${activeButton === "Độ chính xác" ? "active" : ""}`}
+            className={
+              activeButton === "Độ chính xác"
+                ? `${styles.active} ${styles.sortLink}`
+                : `${styles.sortLink}`
+            }
             onClick={() => handleClick("Độ chính xác")}
           >
             Độ chính xác
           </button>
-          <text> / </text>
+          &nbsp;/&nbsp;
           <button
             type="button"
-            className={`sort-link ${activeButton === "Ngày" ? "active" : ""}`}
+            className={
+              activeButton === "Ngày"
+                ? `${styles.active} ${styles.sortLink}`
+                : `${styles.sortLink}`
+            }
             onClick={() => handleClick("Ngày")}
           >
             Ngày
           </button>
         </div>
-        <div className="dropdowns">
-          <div>
-            <DropDown data={TypeOfJob} />
-            <DropDown data={DatePosted} />
-            <DropDown data={Distance} />
-          </div>
+        <div className={styles.dropdowns}>
+          <DropDown data={DatePosted} />
+          <DropDown data={TypeOfJob} />
+          <DropDown data={Distance} />
         </div>
-        <div className="quick-apply-filter">
-          <div className="quick-apply-control-container">
-            <div className="quick-apply-label">Nộp đơn nhanh</div>
-            <label className="switch" htmlFor="quick-apply-label">
-              <input
-                type="checkbox"
-                id="quick-apply-label"
-                checked={checked}
-                onChange={handleChange}
-              />
-              <span className="slider round" />
-            </label>
-          </div>
-        </div>
-        <a className="reset-filters" data-href="#">
+        <Form.Check // prettier-ignore
+          type="switch"
+          id="custom-switch"
+          label="Nộp đơn nhanh"
+          onChange={handleChange}
+          checked={checked}
+          reverse
+          className={styles.quickApplyFilter}
+        />
+        <a className={styles.resetFilters} href="#">
           Đặt lại tất cả bộ lọc
         </a>
       </div>

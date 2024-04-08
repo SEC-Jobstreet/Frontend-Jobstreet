@@ -4,10 +4,7 @@ import { jwtDecode } from "jwt-decode";
 
 import NavBar from "./components/appnav";
 import AppRouter from "./components/approuter";
-import FilterBar from "./components/filterbar";
-import FilterBarMobile from "./components/filterbarmobile";
 import Footer from "./components/footer";
-import SearchForm from "./components/searchform";
 import NotificationBar from "./components/notificationbar";
 import { setNotification } from "./store/notification";
 import { loginAccount, logoutAccount } from "./store/user";
@@ -44,9 +41,6 @@ function App() {
       <div className="App">
         <NavBar />
         <div className="app-content">
-          <SearchForm />
-          <FilterBar />
-          <FilterBarMobile />
           <NotificationBar />
           <AppRouter />
         </div>

@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 
-import FilterIcon from "../../assets/svg/filter-icon.svg";
-import LeftArrowIcon from "../../assets/svg/left-arrow-icon.svg";
+import FilterIcon from "../../../assets/svg/filter-icon.svg";
+import LeftArrowIcon from "../../../assets/svg/left-arrow-icon.svg";
 import FilterSelect from "../filterselect";
 
 import "./filterbarmobile.css";

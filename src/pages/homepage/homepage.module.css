@@ -1,0 +1,11 @@
+.searchContainer {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.jobNumber {
+  text-align: center;
+  font-size: 1.96rem;
+  margin-bottom: 1.6rem;
+}
