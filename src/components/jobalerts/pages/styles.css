@@ -172,7 +172,7 @@ li.reason {
 }
 textarea.email-alert {
   font-size: 1.6rem;
-  height: 4.8rem;
+  height: 12rem;
   padding: 1.6rem;
   width: 100%;
   min-height: 12rem;
@@ -190,8 +190,23 @@ label.expand {
   gap: 0.8rem;
 }
 input[type="radio"] {
-  margin: 0;
+  height: 1.6rem;
+  width: 1.6rem;
+  margin: 0px;
+  margin-bottom: 0.6rem;
+  padding: 0px;
 }
-input[type="checkbox"] {
-  margin: 0;
+.expand input[type="checkbox"] {
+  height: 1.6rem;
+  width: 1.6rem;
+  margin: 0px;
+  padding: 0px;
+}
+#email-alert-management-page a {
+  text-decoration: none;
+  color: var(--primary);
+}
+
+#email-alert-management-page a:hover {
+  text-decoration: underline;
 }

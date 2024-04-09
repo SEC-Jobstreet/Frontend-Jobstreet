@@ -31,6 +31,9 @@ function JobsAlerts() {
         return currentArray;
       });
     }
+    if (identifier === "discard") {
+      navigate(`${id}/cancel`);
+    }
   };
   return (
     <div className="my-account-content grid-content">

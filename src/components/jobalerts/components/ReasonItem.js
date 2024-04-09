@@ -1,3 +1,5 @@
+import { Form } from "react-bootstrap";
+
 export default function ReasonData(props) {
   const { id, title, expand, currentSelected, onCheckedHandler } = props;
 
@@ -6,29 +8,30 @@ export default function ReasonData(props) {
   };
   return (
     <li className="reason">
-      <div className="basic-info">
+      <Form.Group className="basic-info">
         <input
           type="radio"
           id={id}
           name="reason-item"
           onClick={onClickHandler}
         />
-        <label htmlFor={id}>{title}</label>
-      </div>
+        <Form.Label htmlFor={id}>{title}</Form.Label>
+      </Form.Group>
       {expand && currentSelected === id && (
-        <div className="expand-info">
-          <input className="email-alert" placeholder="Tên" />
-          <textarea
+        <Form.Group className="expand-info">
+          <Form.Control className="email-alert" placeholder="Tên" />
+          <Form.Control
+            as="textarea"
             className="email-alert"
             placeholder="Chia sẻ kinh nghiệm của bạn"
           />
           <div>
-            <label htmlFor={`expand-inoout-${id}`} className="expand">
+            <Form.Label htmlFor={`expand-inoout-${id}`} className="expand">
               <input type="checkbox" id={`expand-inoout-${id}`} />
               Chia sẻ với mọi người
-            </label>
+            </Form.Label>
           </div>
-        </div>
+        </Form.Group>
       )}
     </li>
   );

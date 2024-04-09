@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 import Email from "../../../assets/svg/email_icon.svg";
 import ReasonItem from "../components/ReasonItem";
@@ -43,10 +45,15 @@ const ReasonData = [
   },
 ];
 export default function CancelJobAlert() {
+  const navigate = useNavigate();
   const [currentSelected, setCurrentSelected] = useState("");
 
   const onCheckedHandler = (value) => {
     setCurrentSelected(value);
+  };
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    navigate("/cancel-reason");
   };
   return (
     <div
@@ -73,7 +80,11 @@ export default function CancelJobAlert() {
           Tại sao bạn huỷ thông báo việc làm này?
         </h2>
         <p>Hãy giúp chúng tôi hoàn thiện thông báo việc làm.</p>
-        <form className="new-cancel-reason" id="new-cancel-reason">
+        <Form
+          className="new-cancel-reason"
+          id="new-cancel-reason"
+          onSubmit={onSubmitHandler}
+        >
           <ul className="reason-list">
             {ReasonData.map((item) => (
               <ReasonItem
@@ -86,10 +97,10 @@ export default function CancelJobAlert() {
               />
             ))}
           </ul>
-          <button type="button" className="email-alert primary">
+          <button type="submit" className="email-alert primary">
             Gửi đi
           </button>
-        </form>
+        </Form>
       </div>
     </div>
   );

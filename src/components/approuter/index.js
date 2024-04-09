@@ -13,6 +13,7 @@ import DeletionConfirmation from "../deletioncomfirmation";
 import EditSetting from "../editsetting";
 import JobsAlerts from "../jobalerts";
 import CancelJobAlert from "../jobalerts/pages/CancelJobAlert";
+import CancelReason from "../jobalerts/pages/CancelReason";
 import CreateJobAlert from "../jobalerts/pages/CreateJobAlert";
 import Profile from "../profile";
 import SavedJobs from "../savedjobs";
@@ -55,6 +56,7 @@ function AppRouter() {
           path="account/job-alerts/:id/cancel"
           element={<CancelJobAlert />}
         />
+        <Route path="cancel-reason" element={<CancelReason />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
