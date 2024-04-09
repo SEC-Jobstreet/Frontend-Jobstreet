@@ -225,3 +225,10 @@ button.-primary {
 button.-primary:hover {
   opacity: 0.9;
 }
+.field-description {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  justify-items: center;
+  align-items: center;
+}
