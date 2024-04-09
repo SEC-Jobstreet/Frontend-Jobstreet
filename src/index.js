@@ -12,7 +12,7 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 
 const client = new ApolloClient({
-  uri: "http://127.0.0.1:4000/query",
+  uri: "http://3.106.126.218:4001/query",
   cache: new InMemoryCache(),
 });
 

@@ -43,9 +43,9 @@ function JobDescription({ data }) {
 
   const handleSaveButtonClick = (id) => {
     try {
+      addjob({ variables: { jobID: id, candidateID: "386" } });
       const newValue = !savedJobs[id];
       setSaveJobs((prev) => ({ ...prev, [id]: newValue }));
-      addjob({ variables: { jobID: id, candidateID: "386" } });
       console.log(ressavejob);
     } catch (error) {
       console.log(error);
