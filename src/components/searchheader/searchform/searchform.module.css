@@ -57,7 +57,7 @@
     flex-flow: column;
     align-items: center;
     margin: 0 auto;
-    padding-inline: 1.6rem;
+    /* padding-inline: 1.6rem; */
   }
 
   .input {

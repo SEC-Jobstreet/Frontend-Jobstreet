@@ -8,9 +8,11 @@ import styles from "./filterbar.module.css";
 
 const TypeOfJob = [
   "Mọi loại việc",
-  "Bán thời gian",
-  "Thực tập",
-  "Casual/Temporary",
+  "Full time",
+  "Part time",
+  "Permanent",
+  "Internship",
+  "Contract",
 ];
 const DatePosted = [
   "Mọi thời gian",
@@ -69,8 +71,8 @@ function FilterBar() {
           </button>
         </div>
         <div className={styles.dropdowns}>
-          <DropDown data={DatePosted} />
           <DropDown data={TypeOfJob} />
+          <DropDown data={DatePosted} />
           <DropDown data={Distance} />
         </div>
         <Form.Check // prettier-ignore

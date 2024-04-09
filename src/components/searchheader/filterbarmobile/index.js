@@ -1,19 +1,28 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React from "react";
+import { Button, Form, Modal } from "react-bootstrap";
+import Slider from "rc-slider";
 
-import FilterIcon from "../../../assets/svg/filter-icon.svg";
-import LeftArrowIcon from "../../../assets/svg/left-arrow-icon.svg";
-import FilterSelect from "../filterselect";
+import RecentResearch from "../../searchresult/recentresearch";
+import SearchForm from "../searchform";
 
-import "./filterbarmobile.css";
+import "rc-slider/assets/index.css";
+// import FilterIcon from "../../../assets/svg/filter-icon.svg";
+// import LeftArrowIcon from "../../../assets/svg/left-arrow-icon.svg";
+// import FilterSelect from "../filterselect";
+import "./slider.css";
+import styles from "./filterbarmobile.module.css";
 
 const TypeOfSort = ["Độ chính xác", "Ngày"];
 
+const PopularFilter = ["Nộp đơn nhanh"];
+
 const TypeOfJob = [
   "Mọi loại việc",
-  "Bán thời gian",
-  "Thực tập",
-  "Casual/Temporary",
+  "Full time",
+  "Part time",
+  "Permanent",
+  "Internship",
+  "Contract",
 ];
 const TypeOfDated = [
   "Mọi thời gian",
@@ -22,92 +31,269 @@ const TypeOfDated = [
   "14 ngày qua",
   "30 ngày qua",
 ];
-const TypeOfDistance = [
-  "Tại địa điểm này",
-  "Bán kính 5km",
-  "Bán kính 10km",
-  "Bán kính 25km",
-  "Bán kính 50km",
-  "Bán kính 100km",
-];
+const TypeOfDistance = [0, 5, 10, 25, 50, 100];
+const marks = { 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5 };
+
 function FilterBarMobile() {
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-  const handleOpenModal = () => {
-    setIsOpenModal(true);
+  const [isOpenSM, setIsOpenSM] = React.useState(false);
+  const [isOpenFM, setIsOpenFM] = React.useState(false);
+
+  const [sortFilter, setSortFilter] = React.useState(TypeOfSort[0]);
+  const [popFilter, setPopFilter] = React.useState(null);
+  const [timeFilter, setTimeFilter] = React.useState(TypeOfJob[0]);
+  const [datedFilter, setDatedFilter] = React.useState(TypeOfDated[0]);
+  // const [distanceFilter, setDistanceFilter] = React.useState(TypeOfDistance[0]);
+
+  const deleteButton = () => {
+    setSortFilter(TypeOfSort[0]);
+    setPopFilter(null);
+    setTimeFilter(TypeOfJob[0]);
+    setDatedFilter(TypeOfDated[0]);
   };
-  const handleCloseModal = () => {
-    setIsOpenModal(false);
+
+  const handleOpenSearchModal = () => {
+    setIsOpenSM(true);
   };
-  const handleQuickSubmit = () => {
-    setIsActive(!isActive);
+  const handleCloseSearchModal = () => {
+    setIsOpenSM(false);
   };
+
+  const handleOpenFilterModal = () => {
+    setIsOpenFM(true);
+  };
+  const handleCloseFilterModal = () => {
+    setIsOpenFM(false);
+  };
+
+  const handleSortFilter = (label) => {
+    setSortFilter(label);
+  };
+  const handlePopFilter = (label) => {
+    if (popFilter !== label) {
+      setPopFilter(label);
+    } else {
+      setPopFilter(null);
+    }
+  };
+  const handleTimeFilter = (label) => {
+    setTimeFilter(label);
+  };
+  const handleDatedFilter = (label) => {
+    setDatedFilter(label);
+  };
+
   return (
-    <div className="filter-bar-mobile">
-      <div className="filter-bar-mobile-button">
-        <button
-          className="open-modal-button"
-          type="button"
-          onClick={handleOpenModal}
-        >
-          <img className="filter-icon" src={FilterIcon} alt="filter-icon" />
-          <span>Sàng lọc</span>
-        </button>
-      </div>
-      {isOpenModal && (
-        <div className="filter-bar-mobile-modal">
-          <div className="filter-bar-mobile-header">
-            <button
-              className="close-modal-button"
-              type="button"
-              onClick={handleCloseModal}
-            >
-              <img
-                className="left-arrow-icon"
-                src={LeftArrowIcon}
-                alt="left-arrow-icon"
-              />
-              Trở lại
-            </button>
-            <h3 className="filter-bar-mobile-title">Sàng lọc</h3>
-            <button className="clear-modal-button" type="button">
-              Xóa
-            </button>
+    <div className={styles.wrapper}>
+      <Button
+        className={styles.findButton}
+        onClick={() => handleOpenSearchModal()}
+      >
+        Tìm việc làm
+      </Button>
+      <Button
+        className={styles.filterButton}
+        onClick={() => handleOpenFilterModal()}
+      >
+        Sàng lọc
+      </Button>
+      <Modal show={isOpenSM} fullscreen onHide={() => handleCloseSearchModal()}>
+        <Modal.Body className={styles.modalContainer}>
+          <Button
+            className={styles.backButton}
+            onClick={() => handleCloseSearchModal()}
+          >
+            Trở lại
+          </Button>
+          <div className={styles.searchForm}>
+            <SearchForm />
           </div>
-          <div className="refine-search-facet">
+          <div className={styles.recentResearch}>
+            <RecentResearch />
+          </div>
+        </Modal.Body>
+      </Modal>
+      <Modal show={isOpenFM} fullscreen onHide={() => handleCloseFilterModal()}>
+        <Modal.Header className={styles.headerFM}>
+          <Button
+            className={styles.backButton}
+            onClick={() => handleCloseFilterModal()}
+          >
+            Trở lại
+          </Button>
+          <Modal.Title>Sàng lọc</Modal.Title>
+          <Button
+            className={styles.deleteButton}
+            onClick={() => deleteButton()}
+          >
+            Xóa
+          </Button>
+        </Modal.Header>
+        <Modal.Body className={styles.modalContainerFM}>
+          <div className={styles.fieldset}>
             <h4>Sắp xếp</h4>
-            <FilterSelect data={TypeOfSort} />
+            {TypeOfSort.map((item) => (
+              <Form.Check
+                inline
+                key={item}
+                name="SortFilter"
+                type="radio"
+                checked={sortFilter === item}
+                onChange={() => handleSortFilter(item)}
+                label={item}
+                id={item}
+                className={
+                  sortFilter === item
+                    ? `${styles.option} ${styles.activeOption}`
+                    : styles.option
+                }
+              />
+            ))}
           </div>
-          <div className="refine-search-facet">
+          <div className={styles.fieldset}>
             <h4>Những sàng lọc phổ biến</h4>
-            <button
-              className={`option-button ${isActive ? "active" : ""}`}
-              type="button"
-              onClick={handleQuickSubmit}
-            >
-              Nộp đơn nhanh
-            </button>
+            {PopularFilter.map((item) => (
+              <Form.Check
+                inline
+                key={item}
+                name="PopularFilter"
+                type="checkbox"
+                checked={popFilter === item}
+                onChange={() => handlePopFilter(item)}
+                label={item}
+                id={item}
+                className={
+                  popFilter === item
+                    ? `${styles.option} ${styles.activeOption}`
+                    : styles.option
+                }
+              />
+            ))}
           </div>
-          <div className="refine-search-facet">
+          <div className={styles.fieldset}>
             <h4>Thời gian</h4>
-            <FilterSelect data={TypeOfJob} />
+            {TypeOfJob.map((item) => (
+              <Form.Check
+                inline
+                key={item}
+                name="TimeFilter"
+                type="radio"
+                checked={timeFilter === item}
+                onChange={() => handleTimeFilter(item)}
+                label={item}
+                id={item}
+                className={
+                  timeFilter === item
+                    ? `${styles.option} ${styles.activeOption}`
+                    : styles.option
+                }
+              />
+            ))}
           </div>
-          <div className="refine-search-facet">
+          <div className={styles.fieldset}>
             <h4>Ngày đăng</h4>
-            <FilterSelect data={TypeOfDated} />
+            {TypeOfDated.map((item) => (
+              <Form.Check
+                inline
+                key={item}
+                name="DatedFilter"
+                type="radio"
+                checked={datedFilter === item}
+                onChange={() => handleDatedFilter(item)}
+                label={item}
+                id={item}
+                className={
+                  datedFilter === item
+                    ? `${styles.option} ${styles.activeOption}`
+                    : styles.option
+                }
+              />
+            ))}
           </div>
-          <div className="refine-search-facet">
+          <div className={styles.fieldset}>
             <h4>Khoảng cách</h4>
-            <FilterSelect data={TypeOfDistance} />
+            <div className={styles.distanceContainer}>
+              <Slider
+                min={0}
+                max={TypeOfDistance.length - 1}
+                step={1}
+                marks={marks}
+                className="slider_custom"
+                keyboard={false}
+              />
+            </div>
           </div>
-          <div className="find-button-section">
-            <button className="find-button" type="button">
-              Chỉnh tìm kiếm
-            </button>
+          <div>
+            <Button className={styles.applyFilter}>Chỉnh tìm kiếm</Button>
           </div>
-        </div>
-      )}
+        </Modal.Body>
+      </Modal>
     </div>
+
+    // <div className="filter-bar-mobile">
+    //   <div className="filter-bar-mobile-button">
+    //     <button
+    //       className="open-modal-button"
+    //       type="button"
+    //       onClick={handleOpenModal}
+    //     >
+    //       <img className="filter-icon" src={FilterIcon} alt="filter-icon" />
+    //       <span>Sàng lọc</span>
+    //     </button>
+    //   </div>
+    //   {isOpenModal && (
+    //     <div className="filter-bar-mobile-modal">
+    //       <div className="filter-bar-mobile-header">
+    //         <button
+    //           className="close-modal-button"
+    //           type="button"
+    //           onClick={handleCloseModal}
+    //         >
+    //           <img
+    //             className="left-arrow-icon"
+    //             src={LeftArrowIcon}
+    //             alt="left-arrow-icon"
+    //           />
+    //           Trở lại
+    //         </button>
+    //         <h3 className="filter-bar-mobile-title">Sàng lọc</h3>
+    //         <button className="clear-modal-button" type="button">
+    //           Xóa
+    //         </button>
+    //       </div>
+    //       <div className="refine-search-facet">
+    //         <h4>Sắp xếp</h4>
+    //         <FilterSelect data={TypeOfSort} />
+    //       </div>
+    //       <div className="refine-search-facet">
+    //         <h4>Những sàng lọc phổ biến</h4>
+    //         <button
+    //           className={`option-button ${isActive ? "active" : ""}`}
+    //           type="button"
+    //           onClick={handleQuickSubmit}
+    //         >
+    //           Nộp đơn nhanh
+    //         </button>
+    //       </div>
+    //       <div className="refine-search-facet">
+    //         <h4>Thời gian</h4>
+    //         <FilterSelect data={TypeOfJob} />
+    //       </div>
+    //       <div className="refine-search-facet">
+    //         <h4>Ngày đăng</h4>
+    //         <FilterSelect data={TypeOfDated} />
+    //       </div>
+    //       <div className="refine-search-facet">
+    //         <h4>Khoảng cách</h4>
+    //         <FilterSelect data={TypeOfDistance} />
+    //       </div>
+    //       <div className="find-button-section">
+    //         <button className="find-button" type="button">
+    //           Chỉnh tìm kiếm
+    //         </button>
+    //       </div>
+    //     </div>
+    //   )}
+    // </div>
   );
 }
 export default FilterBarMobile;
