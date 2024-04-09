@@ -146,7 +146,7 @@ li.reason {
   display: flex;
   flex-direction: column;
   justify-items: center;
-  line-height: 3.2rem;
+  line-height: 2.6rem;
   margin-left: 0px;
 }
 .reason .basic-info {
@@ -162,16 +162,18 @@ li.reason {
 }
 .reason input {
   display: inline;
+  font-size: 1.4rem;
   margin-right: 0.8rem;
   margin-bottom: 1.6rem;
 }
 .reason label {
   display: inline;
+  font-size: 1.4rem;
   padding: 0.4rem 0.4rem;
   font-weight: normal;
 }
 textarea.email-alert {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   height: 12rem;
   padding: 1.6rem;
   width: 100%;

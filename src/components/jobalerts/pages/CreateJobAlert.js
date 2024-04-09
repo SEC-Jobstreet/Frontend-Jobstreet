@@ -56,11 +56,7 @@ export default function CreateJobAlert() {
       id="email-alert-management-page"
     >
       <h2 className="heading-large">
-        <img
-          src={Email}
-          alt="email-icon"
-          style={{ "margin-right": "0.8rem" }}
-        />
+        <img src={Email} alt="email-icon" style={{ marginRight: "0.8rem" }} />
         Tạo thông báo việc làm
       </h2>
       <Form className="new_email_alert" id="email_alert_form" method="post">
