@@ -13,7 +13,7 @@
   cursor: pointer;
 }
 #foreground {
-  overflow-y: scroll;
+  overflow-y: auto;
   position: fixed;
   top: 50%;
   left: 50%;
