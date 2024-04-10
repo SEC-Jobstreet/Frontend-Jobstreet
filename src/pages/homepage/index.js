@@ -13,7 +13,6 @@ function Homepage() {
           Tìm <b>65.362</b> việc bây giờ
         </p>
       </div>
-      <div>This is homepage</div>
       <RecentResearch />
       <TrendingJobs />
     </div>

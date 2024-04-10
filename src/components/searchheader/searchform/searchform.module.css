@@ -52,6 +52,13 @@
   background-color: #15a449 !important;
 }
 
+.closeButton {
+  position: absolute;
+  background: transparent url("../../../assets/cancel.png") center / 1em auto
+    no-repeat !important;
+  font-size: 1.5rem;
+}
+
 @media (max-width: 990px) {
   .wrapper {
     flex-flow: column;
@@ -69,111 +76,3 @@
     flex: none !important;
   }
 }
-
-/* .search-form {
-    font-size: 16px;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-    max-width: 100%;
-    width: 868px;
-    height: 74px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-.search-form .search-input-field label {
-    display: block;
-    margin-bottom: 5px;
-    text-align: left;
-    opacity: 0.7;
-}
-
-.input-field {
-    position: relative;
-}
-
-.ti-search, .ti-location-pin {
-    position: absolute;
-    right: 30px;
-    top: 15%;
-    font-size: 2rem;
-    color: #15A449;
-}
-
-.input-field input {
-    border: 1px solid #ccc;
-}
-
-.search-input-field input:focus {
-    border: 1px solid #15A449;
-    outline: none;
-  } 
-
-.search-input-field input:focus::placeholder {
-    opacity: 0.6;
-}
-
-#q, #l {
-    width: 333px;
-    height: 48px;
-    font-size: 16px;
-    padding-left: 16px;
-    padding-right: 35px;
-    border-radius: 4px;
-    border-width: 1px;
-    margin-right: 16px;
-}
-
-
-.search-job-button {
-    background-color: #0E8136;
-    color: #fff;
-    width: 100%;
-    height: 48px;
-    font-size: 16px;
-    border-radius: 4px;
-    border-width: 0px;
-
-}
-
-.search-button {
-    align-items: end;
-    display: flex;
-    height: 100%;
-    max-width: 100%;
-    width: 150px;
-}
-
-.search-job-button:hover {
-    background-color: #15A449;
-}
-
-@media (max-width: 990px) {
-    .search-form {
-        flex-direction: column;
-        align-items: center;
-        height: auto;
-        padding: 16px;
-    }
-
-    #q, #l {
-        width: 100%;
-        margin-bottom: 16px;
-    }
-
-    .search-input-field {
-        width: 100%;
-    }
-
-    .search-button {
-        margin-top: 16px;
-        width: 100%;
-    }
-
-    .ti-search, .ti-location-pin {
-        top: 10%;
-        right: 20px;
-    }
-} */

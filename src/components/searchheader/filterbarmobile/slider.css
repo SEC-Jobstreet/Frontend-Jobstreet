@@ -40,3 +40,9 @@
   border: 1px solid var(--border-highlight, #0e8136) !important;
   box-shadow: 0 0 0 5px var(--bg-highlight-light, #f2fdf7) !important;
 }
+
+@media (min-width: 990px) {
+  .modal-backdrop {
+    display: none !important;
+  }
+}

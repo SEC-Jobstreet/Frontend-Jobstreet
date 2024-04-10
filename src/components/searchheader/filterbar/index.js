@@ -73,7 +73,7 @@ function FilterBar() {
         <div className={styles.dropdowns}>
           <DropDown data={TypeOfJob} />
           <DropDown data={DatePosted} />
-          <DropDown data={Distance} />
+          <DropDown data={Distance} defaultValue={Distance[3]} />
         </div>
         <Form.Check // prettier-ignore
           type="switch"
@@ -84,9 +84,9 @@ function FilterBar() {
           reverse
           className={styles.quickApplyFilter}
         />
-        <a className={styles.resetFilters} href="#">
-          Đặt lại tất cả bộ lọc
-        </a>
+        <button type="button" className={styles.resetFilters}>
+          Đặt lại tất cả các bộ lọc
+        </button>
       </div>
     </div>
   );
