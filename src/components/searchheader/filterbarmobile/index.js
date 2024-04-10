@@ -237,7 +237,7 @@ function FilterBarMobile() {
                 className="slider_custom"
                 keyboard={false}
                 defaultValue={distanceFilterIdx}
-                onAfterChange={handleSliderChange}
+                onChangeComplete={handleSliderChange}
               />
             </div>
           </div>
