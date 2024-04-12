@@ -16,31 +16,12 @@ export default function CreateJobAlertModel(props) {
   const [inputKeyWords, setInputKeyWords] = useState("");
   const [inputLocation, setInputLocation] = useState("");
 
-  const onInputChange = (event, identifier) => {
-    const enteredValue = event.target.value;
-
-    if (identifier === "key-word") {
-      setInputKeyWords(enteredValue);
-    }
-    if (identifier === "location") {
-      setInputLocation(enteredValue);
-    }
-  };
-  const onClearInputHandler = (identifier) => {
-    if (identifier === "key-word") {
-      setInputKeyWords("");
-    }
-
-    if (identifier === "location") {
-      setInputLocation("");
-    }
-  };
   return (
     <Model onHideModelHandler={onHideModelHandler}>
       <div
         className="content-container -width-md -margin-y-md"
         id="email-alert-management-page"
-        style={{ width: "100%", overflowY: "auto", margin: "0px" }}
+        style={{ width: "95%", overflowY: "auto", margin: "0px" }}
       >
         <h2 className="heading-large">
           <img src={Email} alt="email-icon" style={{ marginRight: "0.8rem" }} />
@@ -50,10 +31,23 @@ export default function CreateJobAlertModel(props) {
           Luôn cập nhật với những vị trí tuyển dụng mới phù hợp với những tìm
           kiếm hiện tại của bạn.
         </p>
-        <Form className="new_email_alert" id="email_alert_form" method="post">
+        <Form
+          className="new_email_alert"
+          id="email_alert_form"
+          method="post"
+          style={{ marginBottom: "0px" }}
+        >
           {/* từ khoá */}
-          <Form.Group className="email-alert-container">
-            <Form.Label htmlFor="email-alert-query">Từ khoá</Form.Label>
+          <Form.Group
+            className="email-alert-container"
+            style={{ maxWidth: "40rem" }}
+          >
+            <Form.Label
+              htmlFor="email-alert-query"
+              style={{ color: "#626262" }}
+            >
+              Từ khoá
+            </Form.Label>
             <InputGroup className="email-alert">
               <Form.Control
                 className="email-alert"
@@ -61,14 +55,14 @@ export default function CreateJobAlertModel(props) {
                 type="text"
                 id="email-alert-query"
                 value={inputKeyWords}
-                onChange={(event) => onInputChange(event, "key-word")}
+                onChange={(event) => setInputKeyWords(event.target.value)}
               />
               <InputGroup.Text id="dismiss">
                 {inputKeyWords !== "" && (
                   <img
                     src={Dismiss}
-                    alt="location icon"
-                    onClick={() => onClearInputHandler("key-word")}
+                    alt="dismiss icon"
+                    onClick={() => setInputKeyWords("")}
                     aria-hidden="true"
                   />
                 )}
@@ -95,8 +89,16 @@ export default function CreateJobAlertModel(props) {
             </div>
           </Form.Group>
           {/* địa điểm */}
-          <Form.Group className="email-alert-container">
-            <Form.Label htmlFor="email-alert-location">Địa điểm</Form.Label>
+          <Form.Group
+            className="email-alert-container"
+            style={{ maxWidth: "40rem" }}
+          >
+            <Form.Label
+              htmlFor="email-alert-location"
+              style={{ color: "#626262" }}
+            >
+              Địa điểm
+            </Form.Label>
             <InputGroup className="email-alert">
               <Form.Control
                 className="email-alert"
@@ -104,14 +106,14 @@ export default function CreateJobAlertModel(props) {
                 type="text"
                 id="email-alert-location"
                 value={inputLocation}
-                onChange={(event) => onInputChange(event, "location")}
+                onChange={(event) => setInputLocation(event.target.value)}
               />
               <InputGroup.Text id="dismiss">
                 {inputLocation !== "" && (
                   <img
                     src={Dismiss}
                     alt="location icon"
-                    onClick={() => onClearInputHandler("location")}
+                    onClick={() => setInputLocation("")}
                     aria-hidden="true"
                   />
                 )}
@@ -120,28 +122,15 @@ export default function CreateJobAlertModel(props) {
                 <img src={Location} alt="location icon" />
               </InputGroup.Text>
             </InputGroup>
-            <div className="field-description">
-              <img
-                src={Info}
-                alt="info-icon"
-                style={{
-                  margin: "0px 0px 0px 5px",
-                  width: "20px",
-                  height: "20px",
-                }}
-              />
-              <p
-                style={{ color: "#0e8136", fontSize: "1.4rem", margin: "0px" }}
-              >
-                Vui lòng điền chức danh công việc một cách cụ thể nhất.
-              </p>
-            </div>
           </Form.Group>
 
-          <Button type="submit" className="email-alert primary">
+          <Button type="submit" className="email-alert primary model-wrapper">
             Thông báo việc tương tự
           </Button>
-          <div className="privacy-statement heading-xxsmall">
+          <div
+            className="privacy-statement heading-xxsmall"
+            style={{ marginBottom: "1.2rem" }}
+          >
             <span className="branded-links">
               Bằng cách tạo thông báo qua email, bạn đồng ý với{" "}
               <NavLink to="/">Các điều khoản và điều kiện sử dụng</NavLink> và{" "}
