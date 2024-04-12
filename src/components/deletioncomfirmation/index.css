@@ -1,10 +1,10 @@
-.deleteAccount {
-  text-align: left;
-  margin-left: 2em;
-  margin-bottom: 100px;
-  border-bottom: solid 0.5px #dedede;
-  border-top: solid 0.5px #dedede;
-  padding-bottom: 5em;
+.deleteAccount{
+    text-align: left;
+    margin-bottom: 100px;
+    border-bottom: solid .5px #dedede;
+    border-top: solid .5px #dedede;
+    padding-bottom: 5em;
+
 }
 
 .titleDelete {
