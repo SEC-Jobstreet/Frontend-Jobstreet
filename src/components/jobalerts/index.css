@@ -225,3 +225,34 @@ button.-primary {
 button.-primary:hover {
   opacity: 0.9;
 }
+
+/* model css */
+
+.field-description {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  justify-items: center;
+  align-items: center;
+}
+
+.input-group .input-group-text {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0);
+  border: none;
+}
+.input-group .input-group-text#dismiss {
+  border: none;
+}
+.input-group.email-alert {
+  margin: 0px;
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+}
+.input-group input.email-alert {
+  border: none;
+}
+.input-group input:focus {
+  border-right: none;
+}
