@@ -1,0 +1,56 @@
+#overlay {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 60;
+  z-index: 2;
+  cursor: pointer;
+}
+#foreground {
+  overflow-y: auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  color: black;
+  width: 100%;
+  height: auto;
+  max-width: 60rem;
+  background-color: white;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  border-radius: 8px;
+  @media only screen and (min-width: 480px) {
+    max-height: 80%;
+  }
+}
+.model-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  padding: 0px 1.6rem;
+  @media only screen and (min-width: 768px) {
+    padding: 2.4rem 3.2rem;
+  }
+}
+
+.model-wrapper .dismiss {
+  flex: flex;
+  align-self: end;
+}
+
+button.email-alert.primary.model-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 2.8rem 0px;
+  @media only screen and (min-width: 768px) {
+    width: 50%;
+  }
+}

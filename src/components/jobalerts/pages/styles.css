@@ -35,6 +35,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: top;
+  margin-bottom: 1.6rem;
 }
 .new_email_alert {
   margin-bottom: 1.6rem;
@@ -66,9 +67,6 @@ input.email-alert:focus {
   box-shadow: none;
   border-color: var(--primary);
 }
-.email-alert {
-  width: 100%;
-}
 
 select.email-alert {
   font-size: 1.6rem;
@@ -85,10 +83,12 @@ select.email-alert:focus {
 }
 button.email-alert {
   font-size: 1.6rem;
+  font-weight: 500;
   height: 4.8rem;
   padding-left: 2.4rem;
   padding-right: 2.4rem;
   margin-bottom: 1.6rem;
+  border-radius: 4px;
   border: 1px solid var(--primary);
 }
 button.email-alert:hover {
@@ -114,4 +114,101 @@ button.email-alert.secondary {
 }
 .privacy-statement a {
   color: var(--primary);
+}
+
+.heading-medium {
+  font-size: 1.68rem;
+  font-weight: 700;
+}
+.-with-margin {
+  margin: 1.6rem 0;
+  display: block;
+  width: 100%;
+}
+.content-container .cancel-form-container {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 1.6rem;
+  margin-bottom: 1.6rem;
+}
+.content-container .frequency_message {
+  width: 100%;
+}
+form.new-cancel-reason {
+  width: 100%;
+}
+ul.reason-list {
+  list-style-type: none;
+  padding-left: 0px;
+}
+li.reason {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  line-height: 2.6rem;
+  margin-left: 0px;
+}
+.reason .basic-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.reason .expand-info {
+  margin-left: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+.reason input {
+  display: inline;
+  font-size: 1.4rem;
+  margin-right: 0.8rem;
+  margin-bottom: 1.6rem;
+}
+.reason label {
+  display: inline;
+  font-size: 1.4rem;
+  padding: 0.4rem 0.4rem;
+  font-weight: normal;
+}
+textarea.email-alert {
+  font-size: 1.4rem;
+  height: 12rem;
+  padding: 1.6rem;
+  width: 100%;
+  min-height: 12rem;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  background-color: rgba(0, 0, 0, 0);
+}
+textarea.email-alert:focus {
+  box-shadow: none;
+  border-color: var(--primary);
+}
+label.expand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+input[type="radio"] {
+  height: 1.6rem;
+  width: 1.6rem;
+  margin: 0px;
+  margin-bottom: 0.6rem;
+  padding: 0px;
+}
+.expand input[type="checkbox"] {
+  height: 1.6rem;
+  width: 1.6rem;
+  margin: 0px;
+  padding: 0px;
+}
+#email-alert-management-page a {
+  text-decoration: none;
+  color: var(--primary);
+}
+
+#email-alert-management-page a:hover {
+  text-decoration: underline;
 }
