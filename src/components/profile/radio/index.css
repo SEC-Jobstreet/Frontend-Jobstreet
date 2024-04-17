@@ -10,3 +10,7 @@
 .radio-custom:hover {
   cursor: pointer;
 }
+
+.radio-custom input {
+  margin-top: .5rem;
+}

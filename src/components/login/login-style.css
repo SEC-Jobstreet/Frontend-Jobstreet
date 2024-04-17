@@ -9,6 +9,7 @@ body {
 } */
 
 .login-widget {
+  height: 610px;
   width: 32rem;
   position: absolute;
   right: 40px;
