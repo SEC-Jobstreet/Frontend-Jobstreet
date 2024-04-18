@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
@@ -41,6 +42,11 @@ function App() {
   return (
     rehydrated && (
       <div className="App">
+        <Helmet>
+          <title>
+            Tìm việc tại trang tìm kiếm việc làm số 1 Việt Nam | JobStreet
+          </title>
+        </Helmet>
         <NavBar />
         <div className="app-content">
           <NotificationBar />

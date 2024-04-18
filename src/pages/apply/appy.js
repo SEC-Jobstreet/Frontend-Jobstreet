@@ -1,5 +1,9 @@
 function ApplyPage() {
-  return <div>This is apply page</div>;
+  return (
+    <div>
+      <p>This is apply page</p>
+    </div>
+  );
 }
 
 export default ApplyPage;
