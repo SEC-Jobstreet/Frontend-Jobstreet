@@ -1,15 +1,15 @@
 import React, { Fragment } from "react";
 import { Button, Col, Container, Pagination } from "react-bootstrap";
 
-import { SearchResult } from "../../../temp/samplelistjobdata";
-import { StateProvider } from "../context";
-import EmailAlert from "../emailalert";
-import JobDescription from "../jobdescription";
-import JobItem from "../jobitem";
-import RecentResearch from "../recentresearch";
-import RelatedResearch from "../relatedsearches";
+import { SearchResult } from "../../temp/samplelistjobdata";
 
+import { StateProvider } from "./context";
+import EmailAlert from "./emailalert";
+import JobDescription from "./jobdescription";
+import JobItem from "./jobitem";
 import PersonalizedTags from "./personalizedTags";
+import RecentResearch from "./recentresearch";
+import RelatedResearch from "./relatedsearches";
 
 import styles from "./joblisting.module.css";
 

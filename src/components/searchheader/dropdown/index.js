@@ -3,15 +3,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 import styles from "./dropdown.module.css";
 
-function DropDown({ data, defaultValue }) {
-  const [selectedOption, setSelectedOption] = React.useState(
-    defaultValue || data[0]
-  );
+function DropDown({ data, option, handleOptionChange }) {
   const [isShowDropDown, setIsShowDropDown] = React.useState(false);
-
-  const handleSelect = (title) => {
-    setSelectedOption(title);
-  };
 
   const toggleDropDown = () => {
     setIsShowDropDown(!isShowDropDown);
@@ -30,16 +23,16 @@ function DropDown({ data, defaultValue }) {
             : `${styles.dropdownButton}`
         }
       >
-        {selectedOption}
+        {option}
       </Dropdown.Toggle>
       <Dropdown.Menu className={styles.dropdownOptionContainer}>
-        {data.map((option) => (
+        {data.map((item) => (
           <Dropdown.Item
-            key={option}
+            key={item}
             className={styles.dropdownItem}
-            onClick={() => handleSelect(option)}
+            onClick={() => handleOptionChange(item)}
           >
-            {option}
+            {item}
           </Dropdown.Item>
         ))}
       </Dropdown.Menu>

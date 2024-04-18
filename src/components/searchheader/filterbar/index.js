@@ -31,29 +31,42 @@ const Distance = [
 ];
 
 function FilterBar() {
-  const [activeButton, setActiveButton] = useState("Độ chính xác");
+  const [filters, setFilters] = useState({
+    sortType: "Độ chính xác",
+    jobType: "Mọi loại việc",
+    date: "Mọi thời gian",
+    distance: "Bán kính 25km",
+  });
   const [checked, setChecked] = useState(false);
 
-  const handleChange = (event) => {
+  const handleFilterValueChange = (field, value) => {
+    setFilters((prev) => ({ ...prev, [field]: value }));
+  };
+  const handleSwitchChange = (event) => {
     setChecked(event.target.checked);
   };
-  const handleClick = (label) => {
-    setActiveButton(label);
+  const handleResetButtonClick = () => {
+    setFilters({
+      sortType: "Độ chính xác",
+      jobType: "Mọi loại việc",
+      date: "Mọi thời gian",
+      distance: "Bán kính 25km",
+    });
   };
 
   return (
     <div className={styles.filterBarContainer}>
       <div className={styles.filterBar}>
-        <div className={styles.dropdownContainer}>
+        <div className={styles.sortType}>
           <span> Sắp xếp: &nbsp;</span>
           <button
             type="button"
             className={
-              activeButton === "Độ chính xác"
+              filters.sortType === "Độ chính xác"
                 ? `${styles.active} ${styles.sortLink}`
                 : `${styles.sortLink}`
             }
-            onClick={() => handleClick("Độ chính xác")}
+            onClick={() => handleFilterValueChange("sortType", "Độ chính xác")}
           >
             Độ chính xác
           </button>
@@ -61,30 +74,52 @@ function FilterBar() {
           <button
             type="button"
             className={
-              activeButton === "Ngày"
+              filters.sortType === "Ngày"
                 ? `${styles.active} ${styles.sortLink}`
                 : `${styles.sortLink}`
             }
-            onClick={() => handleClick("Ngày")}
+            onClick={() => handleFilterValueChange("sortType", "Ngày")}
           >
             Ngày
           </button>
         </div>
         <div className={styles.dropdowns}>
-          <DropDown data={TypeOfJob} />
-          <DropDown data={DatePosted} />
-          <DropDown data={Distance} defaultValue={Distance[3]} />
+          <DropDown
+            data={TypeOfJob}
+            option={filters.jobType}
+            handleOptionChange={(value) => {
+              handleFilterValueChange("jobType", value);
+            }}
+          />
+          <DropDown
+            data={DatePosted}
+            option={filters.date}
+            handleOptionChange={(value) => {
+              handleFilterValueChange("date", value);
+            }}
+          />
+          <DropDown
+            data={Distance}
+            option={filters.distance}
+            handleOptionChange={(value) => {
+              handleFilterValueChange("distance", value);
+            }}
+          />
         </div>
         <Form.Check // prettier-ignore
           type="switch"
           id="custom-switch"
           label="Nộp đơn nhanh"
-          onChange={handleChange}
+          onChange={handleSwitchChange}
           checked={checked}
           reverse
           className={styles.quickApplyFilter}
         />
-        <button type="button" className={styles.resetFilters}>
+        <button
+          type="button"
+          className={styles.resetFilters}
+          onClick={handleResetButtonClick}
+        >
           Đặt lại tất cả các bộ lọc
         </button>
       </div>

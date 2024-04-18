@@ -1,6 +1,6 @@
 import SearchHeader from "../../components/searchheader";
+import JobListing from "../../components/searchresult";
 import { StateProvider } from "../../components/searchresult/context";
-import JobListing from "../../components/searchresult/joblisting";
 
 function Search() {
   return (
