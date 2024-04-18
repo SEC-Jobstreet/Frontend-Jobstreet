@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 
 import NavBar from "./components/appnav";
@@ -19,16 +20,17 @@ function App() {
 
   useEffect(() => {
     const checkToken = () => {
-      const accessToken = localStorage.getItem("access-token");
-
-      if (accessToken) {
-        const exp = new Date(jwtDecode(accessToken).exp);
+      const IDToken = Cookies.get("IDToken");
+      if (IDToken) {
+        const exp = new Date(jwtDecode(IDToken).exp);
         if (new Date() > new Date(exp * 1000)) {
           dispatch(setNotification(notiAccountExpired));
-          localStorage.removeItem("access-token");
+          Cookies.remove("IDToken");
+          Cookies.remove("access_token");
+          Cookies.remove("refresh_token");
           dispatch(logoutAccount());
         }
-        const data = jwtDecode(accessToken);
+        const data = jwtDecode(IDToken);
         dispatch(loginAccount(data));
       }
     };

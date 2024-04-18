@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import { setNotification } from "../../store/notification";
 import { logoutAccount, selectUser } from "../../store/user";
@@ -22,7 +23,9 @@ function NavBar() {
   const navigate = useNavigate();
 
   const handleLogoutClick = () => {
-    localStorage.removeItem("access-token");
+    Cookies.remove("IDToken");
+    Cookies.remove("access_token");
+    Cookies.remove("refresh_token");
     dispatch(logoutAccount());
     dispatch(setNotification(notiLogout));
     navigate("/");
