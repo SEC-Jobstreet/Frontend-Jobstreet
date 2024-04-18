@@ -5,6 +5,7 @@
   padding: 0 1.6rem;
   margin-top: 8rem;
   margin-bottom: 5rem;
+  width: -webkit-fill-available;
 }
 
 .heading-medium {

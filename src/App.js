@@ -46,6 +46,10 @@ function App() {
           <title>
             Tìm việc tại trang tìm kiếm việc làm số 1 Việt Nam | JobStreet
           </title>
+          <meta
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+            name="viewport"
+          />
         </Helmet>
         <NavBar />
         <div className="app-content">
