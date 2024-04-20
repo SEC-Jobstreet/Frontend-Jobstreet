@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import Email from "../../../assets/svg/email_icon.svg";

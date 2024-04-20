@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Form, FormLabel } from "react-bootstrap";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import PhoneInput, { isPossiblePhoneNumber } from "react-phone-number-input";
 import classNames from "classnames/bind";
 
