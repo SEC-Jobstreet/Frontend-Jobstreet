@@ -10,6 +10,7 @@
 
 .logo-page-header {
   padding: 0 !important;
+  align-content: center;
 }
 
 .navbar {
@@ -104,9 +105,14 @@
     width: 100%;
     display: flex !important;
     justify-content: space-between !important;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     margin-bottom: 1.9rem;
     padding: 0 1.6rem;
+  }
+
+  .right-content {
+    display: flex;
+    flex-wrap: nowrap;
   }
 
   .below-content {

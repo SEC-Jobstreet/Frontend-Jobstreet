@@ -21,6 +21,7 @@ body {
   padding: 1.6rem;
   display: none;
   z-index: 15;
+  border-bottom: 1px solid var(--border-line, #dedede);
 }
 
 input.form-control {
@@ -159,6 +160,11 @@ p {
   margin-bottom: 24px !important;
 }
 
+.login-container {
+  position: relative;
+  top: inherit;
+}
+
 /* Responsive styles */
 @media only screen and (min-width: 768px) and (max-width: 1199.98px) {
   .login-container.custom-login-class {
@@ -176,6 +182,10 @@ p {
     box-shadow: none;
     position: relative;
     top: 0;
+  }
+
+  .login-widget {
+    display: contents;
   }
 
   .rounded-button-primary.btn-forgot-pw,
@@ -197,6 +207,14 @@ p {
     top: 0;
     height: auto;
     box-shadow: none;
+  }
+
+  .login-widget {
+    position: relative;
+  }
+
+  .role-selection-container {
+    border-bottom: 1px solid var(--border-line, #dedede);
   }
 
   .rounded-button-primary.btn-forgot-pw,

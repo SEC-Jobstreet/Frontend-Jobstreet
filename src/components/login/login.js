@@ -9,9 +9,10 @@ function Login({ open, setOpen }) {
   const loginRef = useRef();
 
   const handleClickOutside = (event) => {
-    event.stopPropagation();
     if (loginRef.current && !loginRef.current.contains(event.target)) {
-      setOpen(false);
+      if (event.target.innerHTML !== "Đăng nhập") {
+        setOpen(false);
+      }
     }
   };
 
@@ -22,7 +23,7 @@ function Login({ open, setOpen }) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [open]);
 
   return (
     <div

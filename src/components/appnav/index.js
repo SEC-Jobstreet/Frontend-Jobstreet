@@ -218,7 +218,10 @@ function NavBar() {
         )}
       </Navbar>
       {user.email === "" && (
-        <Login open={openLoginForm} setOpen={setOpenLoginForm} />
+        <Login
+          open={openLoginForm}
+          setOpen={(value) => setOpenLoginForm(value)}
+        />
       )}
     </div>
   );
