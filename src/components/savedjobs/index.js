@@ -12,7 +12,6 @@ function SavedJobs() {
         <title>Việc đã lưu | JobStreet</title>
       </Helmet>
       <div className="contJobCard">
-        <p className="title">Việc đã lưu</p>
         {check ? (
           <div>
             <p className="titleTwo">Bạn chưa lưu việc làm nào</p>

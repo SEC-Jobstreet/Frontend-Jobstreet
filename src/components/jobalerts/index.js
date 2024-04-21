@@ -43,7 +43,6 @@ function JobsAlerts() {
         <title>Thông báo việc làm | JobStreet</title>
       </Helmet>
       <div className="my-account-content grid-content">
-        <h3 className="heading-large account-page-heading">Thông báo việc</h3>
         {/* show when email is unconfirm */}
         {!isConfirmEmail && (
           <UnComfirmAlert uncomfirmHandler={uncomfirmHandler} />

@@ -12,7 +12,6 @@
   min-height: calc(100vh - 220px);
   text-align: center;
   display: flex;
-  justify-content: center;
   flex-direction: column
 }
 

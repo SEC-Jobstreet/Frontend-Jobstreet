@@ -23,7 +23,6 @@ function DeletionConfirmation() {
         <title>Xóa tài khoản | JobStreet</title>
       </Helmet>
       <div className="deleteAccount">
-        <p className="titleDelete">Delete Account</p>
         <form className="formDelete" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="idDeleteAccount">
