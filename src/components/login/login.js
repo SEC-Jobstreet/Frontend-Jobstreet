@@ -5,15 +5,17 @@ import CandidateLogin from "./candidate-login";
 
 import "./login-style.css";
 
-function Login() {
+function Login({ open, setOpen }) {
   const loginRef = useRef();
 
   const handleClickOutside = (event) => {
+    event.stopPropagation();
     if (loginRef.current && !loginRef.current.contains(event.target)) {
-      const temp = document.querySelector(".login-widget-from-nav");
-      if (temp) temp.style.display = "none";
+      setOpen(false);
     }
   };
+
+  console.log(open);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -23,7 +25,11 @@ function Login() {
   }, []);
 
   return (
-    <div className="login-widget login-widget-from-nav" ref={loginRef}>
+    <div
+      className="login-widget login-widget-from-nav"
+      ref={loginRef}
+      style={open ? { display: "block" } : { display: "none" }}
+    >
       <CandidateEmployer />
       <CandidateLogin />
     </div>
