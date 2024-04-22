@@ -5,13 +5,14 @@ import CandidateLogin from "./candidate-login";
 
 import "./login-style.css";
 
-function Login() {
+function Login({ open, setOpen }) {
   const loginRef = useRef();
 
   const handleClickOutside = (event) => {
     if (loginRef.current && !loginRef.current.contains(event.target)) {
-      const temp = document.querySelector(".login-widget-from-nav");
-      if (temp) temp.style.display = "none";
+      if (event.target.innerHTML !== "Đăng nhập") {
+        setOpen(false);
+      }
     }
   };
 
@@ -20,10 +21,14 @@ function Login() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [open]);
 
   return (
-    <div className="login-widget login-widget-from-nav" ref={loginRef}>
+    <div
+      className="login-widget login-widget-from-nav"
+      ref={loginRef}
+      style={open ? { display: "block" } : { display: "none" }}
+    >
       <CandidateEmployer />
       <CandidateLogin />
     </div>

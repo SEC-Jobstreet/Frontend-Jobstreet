@@ -32,6 +32,7 @@ function NavBar() {
   };
 
   const [showNav, setShowNav] = useState(false);
+  const [openLoginForm, setOpenLoginForm] = useState(false);
 
   return (
     <div className="header">
@@ -48,10 +49,7 @@ function NavBar() {
             <button
               type="button"
               className="login"
-              onClick={() => {
-                const temp = document.querySelector(".login-widget-from-nav");
-                if (temp) temp.style.display = "block";
-              }}
+              onClick={() => setOpenLoginForm((prev) => !prev)}
             >
               <span>Đăng nhập</span>
             </button>
@@ -115,10 +113,7 @@ function NavBar() {
               <button
                 type="button"
                 className="login"
-                onClick={() => {
-                  const temp = document.querySelector(".login-widget-from-nav");
-                  if (temp) temp.style.display = "block";
-                }}
+                onClick={() => setOpenLoginForm((prev) => !prev)}
               >
                 <span>Đăng nhập</span>
               </button>
@@ -222,7 +217,12 @@ function NavBar() {
           </div>
         )}
       </Navbar>
-      {user.email === "" && <Login />}
+      {user.email === "" && (
+        <Login
+          open={openLoginForm}
+          setOpen={(value) => setOpenLoginForm(value)}
+        />
+      )}
     </div>
   );
 }

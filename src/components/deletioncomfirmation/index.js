@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
 
 import "./index.css";
 
@@ -17,52 +18,56 @@ function DeletionConfirmation() {
     e.preventDefault();
   };
   return (
-    <div className="deleteAccount">
-      <p className="titleDelete">Delete Account</p>
-      <form className="formDelete" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="idDeleteAccount">
-            Nhập &quot;xóa&quot; để tiếp tục
-            <input
-              type="text"
-              name="idDeleteAccount"
-              id="idDeleteAccount"
-              placeholder='Nhập "xóa"'
-            />
-          </label>
-          <p>
-            <span id="txtWarningDelete" className="hide">
-              Tài khoản chưa được xóa. Xin vui lòng thử lại.
-            </span>
-          </p>
-        </div>
-        <button type="submit" className="btnDelete">
-          Xóa tài khoản
-        </button>
-      </form>
-      <Modal show={show} onHide={handleClose} animation={false} centered>
-        <div className="linkCancel">
-          <button type="button" onClick={handleClose}>
-            &times;
+    <>
+      <Helmet>
+        <title>Xóa tài khoản | JobStreet</title>
+      </Helmet>
+      <div className="deleteAccount">
+        <form className="formDelete" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="idDeleteAccount">
+              Nhập &quot;xóa&quot; để tiếp tục
+              <input
+                type="text"
+                name="idDeleteAccount"
+                id="idDeleteAccount"
+                placeholder='Nhập "xóa"'
+              />
+            </label>
+            <p>
+              <span id="txtWarningDelete" className="hide">
+                Tài khoản chưa được xóa. Xin vui lòng thử lại.
+              </span>
+            </p>
+          </div>
+          <button type="submit" className="btnDelete">
+            Xóa tài khoản
           </button>
-        </div>
-        <div className="contDialog">
-          <p className="titleContDialog">Xóa tài khoản</p>
-          <p>
-            Bạn có chắc rằng bạn muốn xóa tài khoản của mình? Tài khoản của bạn
-            sẽ bị xoá vĩnh viễn.
-          </p>
-          <div className="groupButtonDialog">
-            <button type="button" id="btnDialogDelete" onClick={handleClose}>
-              Xóa
-            </button>
-            <button type="button" id="btnDialogExit" onClick={handleClose}>
-              Hủy
+        </form>
+        <Modal show={show} onHide={handleClose} animation={false} centered>
+          <div className="linkCancel">
+            <button type="button" onClick={handleClose}>
+              &times;
             </button>
           </div>
-        </div>
-      </Modal>
-    </div>
+          <div className="contDialog">
+            <p className="titleContDialog">Xóa tài khoản</p>
+            <p>
+              Bạn có chắc rằng bạn muốn xóa tài khoản của mình? Tài khoản của
+              bạn sẽ bị xoá vĩnh viễn.
+            </p>
+            <div className="groupButtonDialog">
+              <button type="button" id="btnDialogDelete" onClick={handleClose}>
+                Xóa
+              </button>
+              <button type="button" id="btnDialogExit" onClick={handleClose}>
+                Hủy
+              </button>
+            </div>
+          </div>
+        </Modal>
+      </div>
+    </>
   );
 }
 

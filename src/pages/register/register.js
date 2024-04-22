@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 import "./register-style.css";
 
@@ -31,65 +32,73 @@ function Register() {
   };
 
   return (
-    <div className="register-widget">
-      <div className="register-container">
-        <h3 className="register-title">Tạo tài khoản</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <div className="input-group">
-              <input
-                type="email"
-                className={`form-control email ${emailError ? "is-invalid" : ""}`}
-                placeholder="Nhập email của bạn"
-                name="user[email]"
-                id="register_widget_user_email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              {emailError && (
-                <div className="invalid-feedback">
-                  Địa chỉ email không hợp lệ
-                </div>
-              )}
+    <>
+      <Helmet>
+        <title>Tạo tài khoản | JobStreet</title>
+      </Helmet>
+      <div className="register-widget">
+        <div className="register-container">
+          <h3 className="register-title">Tạo tài khoản</h3>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <div className="input-group">
+                <input
+                  type="email"
+                  className={`form-control email ${emailError ? "is-invalid" : ""}`}
+                  placeholder="Nhập email của bạn"
+                  name="user[email]"
+                  id="register_widget_user_email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                {emailError && (
+                  <div className="invalid-feedback">
+                    Địa chỉ email không hợp lệ
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="form-group">
-            <div className="input-group">
-              <input
-                type="password"
-                className={`form-control password ${passwordError || passwordLengthError ? "is-invalid" : ""}`}
-                id="register_widget_user_password"
-                placeholder="Nhập mật khẩu"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              {passwordError && (
-                <div className="invalid-feedback">
-                  Mật khẩu không thể để trắng
-                </div>
-              )}
-              {passwordLengthError && (
-                <div className="invalid-feedback">
-                  Mật khẩu quá ngắn (tối thiểu 6 ký tự)
-                </div>
-              )}
+            <div className="form-group">
+              <div className="input-group">
+                <input
+                  type="password"
+                  className={`form-control password ${passwordError || passwordLengthError ? "is-invalid" : ""}`}
+                  id="register_widget_user_password"
+                  placeholder="Nhập mật khẩu"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                {passwordError && (
+                  <div className="invalid-feedback">
+                    Mật khẩu không thể để trắng
+                  </div>
+                )}
+                {passwordLengthError && (
+                  <div className="invalid-feedback">
+                    Mật khẩu quá ngắn (tối thiểu 6 ký tự)
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-          <button className="rounded-button-primary btn-sign-in" type="submit">
-            Tạo tài khoản mới
-          </button>
-          <div className="privacy-statement">
-            <span className="branded-links">
-              Bằng cách tạo tài khoản, bạn đồng ý với{" "}
-              <a href="/">Các điều khoản và điều kiện sử dụng</a> và{" "}
-              <a href="/">Chính Sách Bảo Mật</a> của JobStreet.
-            </span>
-          </div>
-        </form>
+            <button
+              className="rounded-button-primary btn-sign-in"
+              type="submit"
+            >
+              Tạo tài khoản mới
+            </button>
+            <div className="privacy-statement">
+              <span className="branded-links">
+                Bằng cách tạo tài khoản, bạn đồng ý với{" "}
+                <a href="/">Các điều khoản và điều kiện sử dụng</a> và{" "}
+                <a href="/">Chính Sách Bảo Mật</a> của JobStreet.
+              </span>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

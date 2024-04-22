@@ -5,6 +5,7 @@
   border: 1px solid var(--border-line, #dedede);
   border-radius: 0.8rem;
   text-align: left;
+  width: 100%;
 }
 
 .header {

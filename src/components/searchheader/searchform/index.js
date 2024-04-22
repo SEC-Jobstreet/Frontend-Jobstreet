@@ -2,8 +2,6 @@ import React from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-// import LocationPinIcon from "../../assets/svg/location-pin-svgrepo-com.svg";
-// import SearchIcon from "../../assets/svg/search-svgrepo-com.svg";
 import "./input.css";
 import styles from "./searchform.module.css";
 
