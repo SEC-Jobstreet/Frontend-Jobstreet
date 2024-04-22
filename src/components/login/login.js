@@ -16,8 +16,6 @@ function Login({ open, setOpen }) {
     }
   };
 
-  console.log(open);
-
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
