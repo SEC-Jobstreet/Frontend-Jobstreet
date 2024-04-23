@@ -21,21 +21,36 @@ function App() {
 
   useEffect(() => {
     const checkToken = () => {
-      const IDToken = Cookies.get("IDToken");
-      if (IDToken) {
-        const exp = new Date(jwtDecode(IDToken).exp);
-        if (new Date() > new Date(exp * 1000)) {
-          dispatch(setNotification(notiAccountExpired));
-          Cookies.remove("IDToken");
-          Cookies.remove("access_token");
-          Cookies.remove("refresh_token");
+      const idToken =
+        Cookies.get("id_token") || localStorage.getItem("id_token");
+      const accessToken =
+        Cookies.get("access_token") || localStorage.getItem("access_token");
+      const refreshToken =
+        Cookies.get("refresh_token") || localStorage.getItem("refresh_token");
+
+      if (idToken && accessToken && refreshToken) {
+        localStorage.setItem("id_token", idToken);
+        localStorage.setItem("access_token", accessToken);
+        localStorage.setItem("refresh_token", refreshToken);
+        Cookies.remove("id_token");
+        Cookies.remove("access_token");
+        Cookies.remove("refresh_token");
+
+        try {
+          const data = jwtDecode(idToken);
+          dispatch(loginAccount(data));
+        } catch (err) {
+          localStorage.removeItem("id_token");
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
           dispatch(logoutAccount());
         }
-        const data = jwtDecode(IDToken);
-        dispatch(loginAccount(data));
       }
     };
-    checkToken();
+    if (localStorage.getItem("token_expired")) {
+      dispatch(setNotification(notiAccountExpired));
+      localStorage.removeItem("token_expired");
+    } else checkToken();
     setReHyddated(true);
   }, []);
 

@@ -12,9 +12,8 @@ function NotificationBar() {
   const { type, message } = useSelector(selectNotification);
   const dispatch = useDispatch();
   const location = useLocation();
-
   useEffect(() => {
-    dispatch(setDefaultNoti());
+    if (location.key !== "default") dispatch(setDefaultNoti());
   }, [location]);
 
   // color error: #fff1f1, color success: #f2fdf7
