@@ -1,17 +1,9 @@
-/* :root {
-  --primary: #0e8136;
-  --text-highlight: #0e8136;
-  --border-color: rgb(222, 222, 222);
-  --mute: rgb(222, 222, 222);
-  --text-muted: #626262;
-  --black: rgb(20, 20, 20);
-}
 body {
   margin: 0;
   padding: 0 1.6rem 1.6rem 1.6rem;
   display: flex;
   flex-direction: column;
-} */
+}
 /* mobile */
 
 .tabs-container {
@@ -20,7 +12,7 @@ body {
   height: 3.4rem;
   justify-content: space-evenly;
   margin-top: 2.4rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgb(222, 222, 222);
 }
 .mobile-account-tabs {
   display: none;
@@ -47,10 +39,10 @@ body {
 }
 .profile-tab.tab.-active {
   font-weight: bold;
-  color: var(--primary);
+  color: #0e8136;
 }
 .-active::after {
-  background-color: var(--text-highlight, #0e8136);
+  background-color: #0e8136;
   content: "";
   display: block;
   height: 0.2rem;
@@ -63,8 +55,8 @@ body {
   display: block;
   text-align: start;
   unicode-bidi: isolate;
-  border-bottom: 1px solid var(--border-color);
-  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid rgb(222, 222, 222);
+  border-top: 1px solid rgb(222, 222, 222);
   padding: 2.4rem;
   min-height: 27rem;
   margin-bottom: 12.8rem;
@@ -101,7 +93,7 @@ body {
   align-items: center;
 }
 .mail-label {
-  color: var(--primary);
+  color: #0e8136;
   margin-right: 1rem;
 }
 #unconfirm-email {
@@ -122,7 +114,7 @@ input {
   margin-bottom: 1.6rem;
 }
 .button {
-  color: var(--primary);
+  color: #0e8136;
   font-weight: bold;
   padding-top: 0.8rem;
   border: 0px;
@@ -140,7 +132,7 @@ form {
 /* alerts item */
 .alert-item {
   width: 100%;
-  border-bottom: 1px solid var(--border-color, #dedede);
+  border-bottom: 1px solid rgb(222, 222, 222);
   padding-bottom: 1.6rem;
   padding-top: 1.6rem;
 }
@@ -150,7 +142,7 @@ form {
   font-size: 1.6rem;
   font-weight: 400;
   line-height: 1.6;
-  color: var(--primary);
+  color: #0e8136;
   text-decoration: none;
 }
 .alert-item .alert-info {
@@ -165,7 +157,7 @@ form {
   margin: 0 0.5rem 0 0.5rem;
 }
 .alert-info .alert-status {
-  color: var(--text-muted);
+  color: #626262;
 }
 .alert-item > .actions-container {
   display: flex;
@@ -190,7 +182,7 @@ button.tertiary {
   position: relative;
 }
 .actions-container button:hover {
-  background: var(--mute);
+  background: rgb(222, 222, 222);
 }
 
 .create-alert-button {
@@ -220,7 +212,7 @@ button.create-alert-button {
 
 button.-primary {
   color: white;
-  background: var(--primary);
+  background: #0e8136;
 }
 button.-primary:hover {
   opacity: 0.9;
@@ -247,7 +239,7 @@ button.-primary:hover {
 }
 .input-group.email-alert {
   margin: 0px;
-  border: 1px solid var(--primary);
+  border: 1px solid #0e8136;
   border-radius: 4px;
 }
 .input-group input.email-alert {

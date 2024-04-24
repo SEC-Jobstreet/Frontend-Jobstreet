@@ -119,6 +119,7 @@ export default function CreateJobAlert() {
             type="submit"
             className="email-alert primary"
             onClick={onSubmitHandler}
+            style={{ backgroundColor: "#0e8136" }}
           >
             Tạo thông báo việc
           </Button>
