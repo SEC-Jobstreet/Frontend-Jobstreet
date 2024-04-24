@@ -15,6 +15,11 @@ export const notiLogout = {
 };
 
 // error
+export const notiErrorLoginFail = {
+  type: "error",
+  message: "Đăng nhập không thành công. Vui lòng thử lại.",
+};
+
 export const notiErrorLoginAccount = {
   type: "error",
   message: "Sai email hoặc mật khẩu.",

@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 
 import { setNotification } from "../../store/notification";
@@ -21,20 +20,17 @@ function CandidateLogin({ isPage }) {
     const temp = document.querySelector(".login-widget-from-nav");
     if (temp) temp.style.display = "none";
 
-    const IDToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4NDM0NzE3NTUyNDEta2NkOGpmZXZrMnRwMDk3YXZqZjVpN2NsbnVqZHMybGEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4NDM0NzE3NTUyNDEta2NkOGpmZXZrMnRwMDk3YXZqZjVpN2NsbnVqZHMybGEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDYwMzE3MDQ4OTczNjcwNDk3ODciLCJlbWFpbCI6InRoYW5ocXV5MTEwNUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImNqZFdMYmJ5V1lHLU9oZVJUTUxNMmciLCJuYW1lIjoiUXXDvSBQaGFuIFbEg24gVGjDoG5oIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0tJdkpOYjhGdFQ5Z0d3U2FVaHdkQnBUaEdTU0pzYjNnQ0JrazRoZXc3SlBKUDBTa2pRPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IlF1w70iLCJmYW1pbHlfbmFtZSI6IlBoYW4gVsSDbiBUaMOgbmgiLCJpYXQiOjE3MTMzMzczOTMsImV4cCI6MTcyMzM0MDk5M30._8akrJSzTTrF0C7zx68gg_vVuarmxPnxR13P_ROjt2E";
-    Cookies.set(
-      "access_token",
-      "ya29.a0Ad52N39xe9rMzhmQNxezsngZantnr7XAToWFRjqe-VTQVx50BcAtxUsxcivNIARtgsmq0ZvwBzvSrkSaXDVq6Qz1pC5QXJQWSU4_pMnJysG5mWNdhHZHtOZQ9QidjhPVM0sB4SI1bi-l7TdLg1fPDyIxxzTYG6jQYMw8aCgYKAQcSARISFQHGX2MiWmFTKnCvII24ybn8ord5Yw0171"
-    );
-    Cookies.set(
-      "refresh_token",
-      "1//0edPttP6Z4BADCgYIARAAGA4SNwF-L9IrDVO2ngFM3PKHx9fkCCzPz3C9v41Bjc-hZtf3Eoc-v2hRehgj-JLrHPx5EIhlysjPbF4"
-    );
-    Cookies.set("IDToken", IDToken);
-    const data = jwtDecode(IDToken);
-    dispatch(loginAccount(data));
-    dispatch(setNotification(notiLoginAccount));
+    const accesstoken = "";
+    const refreshtoken = "";
+    localStorage.setItem("access_token", accesstoken);
+    localStorage.setItem("refresh_token", refreshtoken);
+    try {
+      const data = jwtDecode(accesstoken);
+      dispatch(loginAccount(data));
+      dispatch(setNotification(notiLoginAccount));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleCreateAccountClick = () => {

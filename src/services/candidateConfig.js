@@ -27,7 +27,7 @@ candidateConfig.interceptors.response.use(
   (response) => response,
   async (error) => {
     const { status, data } = error.response;
-    if (status === 401 && data === "access token invalid") {
+    if (status === 401 && data?.error === "token has expired") {
       const refreshToken = localStorage.getItem("refresh_token");
       if (!refreshToken) {
         return Promise.reject(error);
@@ -36,7 +36,7 @@ candidateConfig.interceptors.response.use(
 
       try {
         const res = await axios.post(
-          `${process.env.REACT_APP_BACKEND_CANDIDATE_SERVICE_ADDRESS}/oauth/google/refresh_token`,
+          `${process.env.REACT_APP_BACKEND_CANDIDATE_SERVICE_ADDRESS}/oauth/refresh_token`,
           {
             refresh_token: refreshToken,
           },
@@ -53,11 +53,9 @@ candidateConfig.interceptors.response.use(
           return axios(originalRequest);
         }
       } catch (err) {
-        localStorage.removeItem("id_token");
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         localStorage.setItem("token_expired", true);
-
         window.location.href = "/";
       }
     }
