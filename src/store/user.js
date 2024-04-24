@@ -3,9 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const init = {
   account: {
     email: "",
-    email_verified: false,
-    name: "",
-    picture: "",
+    username: "",
+    email_verified: true,
   },
 };
 
@@ -19,12 +18,14 @@ export const userSlice = createSlice({
       };
     },
     loginAccount: (state, action) => {
-      const newState = action.payload;
+      const newState = {
+        email_verified: true,
+        ...action.payload,
+      };
       state.account = {
         email: newState.email,
-        name: newState.name,
+        username: newState.username,
         email_verified: newState.email_verified,
-        picture: newState.picture,
       };
     },
   },

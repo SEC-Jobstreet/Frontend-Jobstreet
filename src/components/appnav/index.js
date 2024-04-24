@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { signOut } from "aws-amplify/auth";
 
 import { setNotification } from "../../store/notification";
 import { logoutAccount, selectUser } from "../../store/user";
@@ -19,14 +20,15 @@ const logo = require("../../assets/svg/logo.svg").default;
 function NavBar() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const handleLogoutClick = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    dispatch(logoutAccount());
-    dispatch(setNotification(notiLogout));
-    navigate("/");
+  const handleLogoutClick = async () => {
+    try {
+      await signOut();
+      dispatch(logoutAccount());
+      dispatch(setNotification(notiLogout));
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
   };
 
   const [showNav, setShowNav] = useState(false);

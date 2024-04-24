@@ -1,21 +1,13 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useDispatch } from "react-redux";
-import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
+import { decodeJWT, getCurrentUser } from "aws-amplify/auth";
 
 import NavBar from "./components/appnav";
 import AppRouter from "./components/approuter";
 import Footer from "./components/footer";
 import NotificationBar from "./components/notificationbar";
-import { getAAA } from "./services/candidateAPI";
-import { setNotification } from "./store/notification";
-import { loginAccount, logoutAccount } from "./store/user";
-import {
-  notiAccountExpired,
-  notiErrorLoginFail,
-  notiLoginGoogle,
-} from "./utils/notification";
+import { loginAccount } from "./store/user";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -25,42 +17,38 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const checkToken = () => {
-      const accessToken =
-        Cookies.get("access_token") || localStorage.getItem("access_token");
-      const refreshToken =
-        Cookies.get("refresh_token") || localStorage.getItem("refresh_token");
-
-      if (accessToken && refreshToken) {
-        localStorage.setItem("access_token", accessToken);
-        localStorage.setItem("refresh_token", refreshToken);
-        Cookies.remove("access_token");
-        Cookies.remove("refresh_token");
-
+    const checkToken = async () => {
+      try {
+        const res = await getCurrentUser();
+        console.log(res);
+        let userinfo = {
+          username: res.username,
+        };
         try {
-          const data = jwtDecode(accessToken);
-          dispatch(loginAccount(data));
+          console.log(
+            `CognitoIdentityServiceProvider.${process.env.REACT_APP_COGNITO_USER_POOL_CLIENT_ID}.${res.username}.idToken`
+          );
+          const idToken = localStorage.getItem(
+            `CognitoIdentityServiceProvider.${process.env.REACT_APP_COGNITO_USER_POOL_CLIENT_ID}.${res.username}.idToken`
+          );
+          console.log(idToken);
+
+          const data = decodeJWT(idToken);
+          userinfo = {
+            ...userinfo,
+            email: data.payload.email,
+          };
+          console.log(data);
         } catch (err) {
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("refresh_token");
-          dispatch(logoutAccount());
+          console.log(err);
         }
+        dispatch(loginAccount(userinfo));
+      } catch (err) {
+        console.log(err);
       }
     };
-    if (localStorage.getItem("token_expired")) {
-      dispatch(setNotification(notiAccountExpired));
-      localStorage.removeItem("token_expired");
-    } else if (Cookies.get("login")) {
-      const value = Cookies.get("login");
-      if (value === "fail") {
-        dispatch(setNotification(notiErrorLoginFail));
-        localStorage.removeItem("login");
-      }
-      if (value === "google") {
-        dispatch(setNotification(notiLoginGoogle));
-        Cookies.remove("login");
-      }
-    } else checkToken();
+
+    checkToken();
     setReHyddated(true);
   }, []);
 
@@ -77,14 +65,6 @@ function App() {
           />
         </Helmet>
         <NavBar />
-        <button
-          type="button"
-          onClick={() => {
-            getAAA();
-          }}
-        >
-          aaaaaaa
-        </button>
         <div className="app-content">
           <NotificationBar />
           <AppRouter />

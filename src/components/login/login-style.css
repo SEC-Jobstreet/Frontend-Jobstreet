@@ -268,4 +268,11 @@ p {
 
 .google-login {
   cursor: pointer;
+  border: none;
+  background-color: transparent;
+  align-self: start;
+}
+
+.google-login:hover {
+  text-decoration: underline;
 }

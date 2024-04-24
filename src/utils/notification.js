@@ -1,7 +1,7 @@
 // success
 export const notiLoginAccount = {
   type: "success",
-  message: "Đăng nhập thành công bằng tài khỏan.",
+  message: "Đăng nhập thành công bằng tài khoản.",
 };
 
 export const notiLoginGoogle = {
@@ -12,6 +12,11 @@ export const notiLoginGoogle = {
 export const notiLogout = {
   type: "success",
   message: "Thoát tài khoản thành công.",
+};
+
+export const notiRegister = {
+  type: "success",
+  message: "Xin chào! Bạn đã đăng ký thành công tài khoản Ứng viên tìm việc.",
 };
 
 // error

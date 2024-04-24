@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { signOut } from "aws-amplify/auth";
 
 import { setNotification } from "../../store/notification";
 import { logoutAccount, selectUser } from "../../store/user";
@@ -46,12 +47,14 @@ function Footer() {
               <span>·</span>
               <button
                 type="button"
-                onClick={() => {
-                  localStorage.removeItem("access_token");
-                  localStorage.removeItem("refresh_token");
-                  dispatch(logoutAccount());
-                  dispatch(setNotification(notiLogout));
-                  navigate("/");
+                onClick={async () => {
+                  try {
+                    await signOut();
+                    dispatch(logoutAccount());
+                    dispatch(setNotification(notiLogout));
+                  } catch (error) {
+                    console.log("error signing out: ", error);
+                  }
                 }}
               >
                 Thoát

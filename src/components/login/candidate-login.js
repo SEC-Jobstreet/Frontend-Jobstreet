@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { getCurrentUser, signIn, signInWithRedirect } from "aws-amplify/auth";
+import { Hub } from "aws-amplify/utils";
 
 import { setNotification } from "../../store/notification";
 import { loginAccount } from "../../store/user";
@@ -13,23 +14,25 @@ function CandidateLogin({ isPage }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const [emailInput, setEmail] = useState("");
+  const [passwordInput, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle the form submission
     // After verify
-    const temp = document.querySelector(".login-widget-from-nav");
-    if (temp) temp.style.display = "none";
 
-    const accesstoken = "";
-    const refreshtoken = "";
-    localStorage.setItem("access_token", accesstoken);
-    localStorage.setItem("refresh_token", refreshtoken);
     try {
-      const data = jwtDecode(accesstoken);
-      dispatch(loginAccount(data));
+      await signIn({
+        username: emailInput,
+        password: passwordInput,
+      });
+      dispatch(loginAccount({ email: emailInput }));
       dispatch(setNotification(notiLoginAccount));
-    } catch (err) {
-      console.log(err);
+      const temp = document.querySelector(".login-widget-from-nav");
+      if (temp) temp.style.display = "none";
+    } catch (error) {
+      console.log("error signing in", error);
     }
   };
 
@@ -38,6 +41,38 @@ function CandidateLogin({ isPage }) {
     if (temp) temp.style.display = "none";
     navigate("/register"); // Navigate to the Register page
   };
+
+  const getUser = async () => {
+    try {
+      const currentUser = await getCurrentUser();
+      console.log(currentUser);
+    } catch (error) {
+      console.error(error);
+      console.log("Not signed in");
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = Hub.listen("auth", ({ payload }) => {
+      switch (payload.event) {
+        case "signInWithRedirect":
+          getUser();
+          break;
+        case "signInWithRedirect_failure":
+          console.log("An error has occurred during the OAuth flow.");
+          break;
+        case "customOAuthState":
+          console.log(payload.data); // this is the customState provided on signInWithRedirect function
+          break;
+        default:
+          break;
+      }
+    });
+
+    getUser();
+
+    return unsubscribe;
+  }, []);
 
   return (
     <div className={`login-container ${isPage ? "custom-login-class" : ""}`}>
@@ -51,6 +86,8 @@ function CandidateLogin({ isPage }) {
               placeholder="Nhập email của bạn"
               name="user[email]"
               id={`login_widget_user_email ${isPage ? "page" : ""}`}
+              value={emailInput}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -62,6 +99,8 @@ function CandidateLogin({ isPage }) {
               className="form-control password"
               id={`login_widget_user_password ${isPage ? "page" : ""}`}
               placeholder="Nhập mật khẩu"
+              value={passwordInput}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -154,9 +193,15 @@ function CandidateLogin({ isPage }) {
             </svg>
             <div className="heading-xsmall social-login-text">Apple</div>
           </a>
-          <a
+          <button
+            type="button"
             className="google-login"
-            href={`${process.env.REACT_APP_BACKEND_CANDIDATE_SERVICE_ADDRESS}/oauth/google?current_url=${encodeURIComponent(window.location.href)}`}
+            onClick={() =>
+              signInWithRedirect({
+                provider: "Google",
+                customState: window.location.href,
+              })
+            }
           >
             <svg
               width="48"
@@ -195,7 +240,7 @@ function CandidateLogin({ isPage }) {
               />
             </svg>
             <div className="heading-xsmall social-login-text">Google</div>
-          </a>
+          </button>
         </div>
       </form>
     </div>
