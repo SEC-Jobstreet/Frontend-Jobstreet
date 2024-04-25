@@ -2,12 +2,8 @@ import "./style.css";
 
 const Dates = ["M", "T", "W", "T", "F", "S", "S"];
 
-function TimeAvailable() {
-  const particularTime = [
-    [true, true, true, true, true, false, false],
-    [true, true, true, true, true, false, false],
-    [false, false, false, false, false, false, false],
-  ];
+function TimeAvailable(props) {
+  const { particularTime } = props;
   return (
     <div>
       <p>Thời gian bạn có thể làm việc:</p>
