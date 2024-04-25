@@ -7,6 +7,7 @@ import NavBar from "./components/appnav";
 import AppRouter from "./components/approuter";
 import Footer from "./components/footer";
 import NotificationBar from "./components/notificationbar";
+import { postApplyJob } from "./services/candidateAPI";
 import { loginAccount } from "./store/user";
 
 import "./App.css";
@@ -64,6 +65,14 @@ function App() {
             name="viewport"
           />
         </Helmet>
+        <button
+          type="button"
+          onClick={async () => {
+            await postApplyJob();
+          }}
+        >
+          aaaaaaaaaaaaa
+        </button>
         <NavBar />
         <div className="app-content">
           <NotificationBar />

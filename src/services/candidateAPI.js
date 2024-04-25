@@ -1,8 +1,14 @@
-import candidateConfig from "./candidateConfig";
+import axiosConfig from "./axiosConfig";
 
-export const getAAA = async () => {
+export const postApplyJob = async () => {
   try {
-    const res = await candidateConfig.get("/test/apply_job");
+    const res = await axiosConfig.post(
+      "http://localhost:4000/api/v1/apply_job",
+      {
+        candidate_id: 1,
+        job_id: 12,
+      }
+    );
     return res;
   } catch (error) {
     console.log(error);
@@ -12,7 +18,7 @@ export const getAAA = async () => {
 
 export const getBBB = async () => {
   try {
-    await candidateConfig.get("/test/apply_job");
+    await axiosConfig.get("/test/apply_job");
   } catch (error) {
     console.log(error);
   }
