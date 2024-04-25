@@ -16,7 +16,8 @@ import JobsAlerts from "../jobalerts";
 import CancelJobAlert from "../jobalerts/pages/CancelJobAlert";
 import CancelReason from "../jobalerts/pages/CancelReason";
 import CreateJobAlert from "../jobalerts/pages/CreateJobAlert";
-import Profile from "../profile";
+import ProfileEdit from "../profile";
+import Profile from "../profile/Profile";
 import SavedJobs from "../savedjobs";
 import Setting from "../setting";
 
@@ -42,6 +43,7 @@ function AppRouter() {
         <Route path="account" element={<Account />}>
           <Route path="settings" element={<Setting />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="profile/edit" element={<ProfileEdit />} />
           <Route path="job-alerts" element={<JobsAlerts />} />
           <Route path="save-jobs" element={<SavedJobs />} />
           <Route path="edit-setting" element={<EditSetting />} />
