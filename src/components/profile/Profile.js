@@ -30,6 +30,8 @@ function Profile() {
   const lastName = "Văn A";
   const phoneNumber = "123456789";
   const address = "Quận 1, Tp Hồ Chí Minh";
+  const ability =
+    "Chứng chỉ Toiec 600+, có khả năng làm việc nhóm, có tin thần học tập, sẵn sàng tiếp thu kiến thức mới";
   const isVNCitizend = true;
   const particularTime = [
     [true, true, true, true, true, false, false],
@@ -68,6 +70,9 @@ function Profile() {
           <div className="profile-title">{`${firstName} ${lastName}`}</div>
         </div>
         <div className="profile-info-item">
+          <p>{ability}</p>
+        </div>
+        <div className="profile-info-item">
           <div className="img-container">
             <img
               src={Phone}
@@ -75,7 +80,7 @@ function Profile() {
               style={{ marginRight: "1.2rem", marginBottom: "0.4rem" }}
             />
           </div>
-          <div>+84 + {phoneNumber}</div>
+          <div>+84{phoneNumber}</div>
         </div>
         <div className="profile-info-item">
           <div>
