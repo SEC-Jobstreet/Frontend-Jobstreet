@@ -1,14 +1,3 @@
-/* :root {
-  --color-border: #a4a4a4;
-  --primary: #0e8136;
-}
-body {
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 1.6;
-  margin-top: 1.6rem;
-} */
-
 #email-alert-management-page {
   margin-top: 0px;
   min-height: 50vh;
@@ -60,12 +49,12 @@ input.email-alert {
   padding: 0 1.6rem;
   width: 100%;
   border-radius: 4px;
-  border: 1px solid var(--color-border);
+  border: 1px solid #a4a4a4;
   background-color: rgba(0, 0, 0, 0);
 }
 input.email-alert:focus {
   box-shadow: none;
-  border-color: var(--primary);
+  border-color: #0e8136;
 }
 
 select.email-alert {
@@ -74,12 +63,12 @@ select.email-alert {
   padding: 0 1.6rem;
   width: 100%;
   border-radius: 4px;
-  border: 1px solid var(--color-border);
+  border: 1px solid #a4a4a4;
   background-color: rgba(0, 0, 0, 0);
 }
 select.email-alert:focus {
   box-shadow: none;
-  border-color: var(--primary);
+  border-color: #0e8136;
 }
 button.email-alert {
   font-size: 1.6rem;
@@ -89,20 +78,35 @@ button.email-alert {
   padding-right: 2.4rem;
   margin-bottom: 1.6rem;
   border-radius: 4px;
-  border: 1px solid var(--primary);
+  border: 1px solid #0e8136;
 }
 button.email-alert:hover {
-  border-color: var(--primary);
+  border-color: #0e8136;
   opacity: 80%;
 }
+button.email-alert:active {
+  border-color: #0e8136;
+  opacity: 70%;
+}
 button.email-alert.primary {
-  background-color: var(--primary);
+  background-color: #0e8136;
+  color: white;
+}
+button.email-alert.primary:active {
+  background-color: #0e8136;
+  border-color: #0e8136;
   color: white;
 }
 
 button.email-alert.secondary {
   background-color: white;
-  color: var(--primary);
+  color: #0e8136;
+}
+button.email-alert.secondary:active {
+  background-color: white;
+  color: #0e8136;
+  border-color: #0e8136;
+  opacity: 70%;
 }
 
 #email-alert-management-page .privacy-statement {
@@ -113,7 +117,7 @@ button.email-alert.secondary {
   font-size: 1.12rem;
 }
 .privacy-statement a {
-  color: var(--primary);
+  color: #0e8136;
 }
 
 .heading-medium {
@@ -127,7 +131,7 @@ button.email-alert.secondary {
 }
 .content-container .cancel-form-container {
   width: 100%;
-  border: 1px solid var(--color-border);
+  border: 1px solid #a4a4a4;
   border-radius: 4px;
   padding: 1.6rem;
   margin-bottom: 1.6rem;
@@ -179,12 +183,12 @@ textarea.email-alert {
   width: 100%;
   min-height: 12rem;
   border-radius: 4px;
-  border: 1px solid var(--color-border);
+  border: 1px solid #a4a4a4;
   background-color: rgba(0, 0, 0, 0);
 }
 textarea.email-alert:focus {
   box-shadow: none;
-  border-color: var(--primary);
+  border-color: #0e8136;
 }
 label.expand {
   display: flex;
@@ -206,7 +210,7 @@ input[type="radio"] {
 }
 #email-alert-management-page a {
   text-decoration: none;
-  color: var(--primary);
+  color: #0e8136;
 }
 
 #email-alert-management-page a:hover {

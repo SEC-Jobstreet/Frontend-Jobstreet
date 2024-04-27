@@ -16,7 +16,7 @@ import styles from "./profile.module.css";
 const cx = classNames.bind(styles);
 const TEXTAREA_MAX_LENGTH = 300;
 
-function Profile() {
+function ProfileEdit() {
   const [firstName, setFirstName] = useState("");
   const [errorFirstName, setErrorFirstName] = useState(false);
 
@@ -325,4 +325,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default ProfileEdit;
