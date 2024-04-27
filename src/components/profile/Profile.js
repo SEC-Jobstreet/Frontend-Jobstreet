@@ -142,9 +142,9 @@ function Profile() {
           />
           <div>
             {isSharedProifle ? (
-              <p>Không chia sẻ hồ sơ</p>
-            ) : (
               <p>Chia sẻ hồ sơ</p>
+            ) : (
+              <p>Không chia sẻ hồ sơ</p>
             )}
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { signOut } from "aws-amplify/auth";
 
 import { setNotification } from "../../store/notification";
@@ -20,6 +20,7 @@ const logo = require("../../assets/svg/logo.svg").default;
 function NavBar() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const handleLogoutClick = async () => {
     try {
@@ -30,6 +31,8 @@ function NavBar() {
       console.log("error signing out: ", error);
     }
   };
+
+  const isProfile = location.pathname.includes("/profile");
 
   const [showNav, setShowNav] = useState(false);
   const [openLoginForm, setOpenLoginForm] = useState(false);
@@ -55,35 +58,43 @@ function NavBar() {
             </button>
           ) : (
             <>
-              <Nav className="p-0">
-                <NavItem eventkey={1} href="/profile">
-                  <NavLink className="nav-link" to="/account/profile" as={Link}>
-                    <img src={infoIcon} alt="info" /> Hồ sơ cá nhân
-                  </NavLink>
-                </NavItem>
-              </Nav>
-              <Nav className="p-0">
-                <NavItem eventkey={2} href="/job-alerts">
-                  <NavLink
-                    className="nav-link"
-                    to="/account/job-alerts"
-                    as={Link}
-                  >
-                    <img src={alertIcon} alt="alert" /> Thông báo việc
-                  </NavLink>
-                </NavItem>
-              </Nav>
-              <Nav className="p-0">
-                <NavItem eventkey={3} href="/save-jobs">
-                  <NavLink
-                    className="nav-link"
-                    to="/account/save-jobs"
-                    as={Link}
-                  >
-                    <img src={saveIcon} alt="alert" /> Việc của tôi
-                  </NavLink>
-                </NavItem>
-              </Nav>
+              {!isProfile && (
+                <>
+                  <Nav className="p-0">
+                    <NavItem eventkey={1} href="/profile">
+                      <NavLink
+                        className="nav-link"
+                        to="/account/profile"
+                        as={Link}
+                      >
+                        <img src={infoIcon} alt="info" /> Hồ sơ cá nhân
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                  <Nav className="p-0">
+                    <NavItem eventkey={2} href="/job-alerts">
+                      <NavLink
+                        className="nav-link"
+                        to="/account/job-alerts"
+                        as={Link}
+                      >
+                        <img src={alertIcon} alt="alert" /> Thông báo việc
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                  <Nav className="p-0">
+                    <NavItem eventkey={3} href="/save-jobs">
+                      <NavLink
+                        className="nav-link"
+                        to="/account/save-jobs"
+                        as={Link}
+                      >
+                        <img src={saveIcon} alt="alert" /> Việc của tôi
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                </>
+              )}
               <button
                 type="button"
                 className="logout"
@@ -93,9 +104,11 @@ function NavBar() {
               </button>
             </>
           )}
-          <a href="/" className="employer-link button-employer">
-            Truy cập trang web của nhà tuyển dụng
-          </a>
+          {!isProfile && (
+            <a href="/" className="employer-link button-employer">
+              Truy cập trang web của nhà tuyển dụng
+            </a>
+          )}
         </Navbar.Collapse>
       </Navbar>
 
@@ -126,22 +139,24 @@ function NavBar() {
                 <span>Thoát</span>
               </button>
             )}
-            <button
-              type="button"
-              className="category-title"
-              onClick={() => setShowNav(!showNav)}
-            >
-              Danh mục
-              <img
-                src={menuIcon}
-                alt="Danh mục"
-                style={{
-                  width: "2.2rem",
-                  height: "2.2rem",
-                  marginLeft: "0.8rem",
-                }}
-              />
-            </button>
+            {!isProfile && (
+              <button
+                type="button"
+                className="category-title"
+                onClick={() => setShowNav(!showNav)}
+              >
+                Danh mục
+                <img
+                  src={menuIcon}
+                  alt="Danh mục"
+                  style={{
+                    width: "2.2rem",
+                    height: "2.2rem",
+                    marginLeft: "0.8rem",
+                  }}
+                />
+              </button>
+            )}
           </div>
         </div>
         {showNav && (
