@@ -29,7 +29,7 @@ function ProfileEdit() {
   const [address, setAddress] = useState("");
   const [errorAddress, setErrorAddress] = useState(false);
 
-  const [workEligibility, setWorkEligibility] = useState(0); // 0: dont choose yet, 1: option 1, 2: option 2, 3: invalid (submit but didnt choose)
+  const [visa, setVisa] = useState(0); // 0: dont choose yet, 1: option 1, 2: option 2, 3: invalid (submit but didnt choose)
   const [secureSetting, setSecureSetting] = useState(0); // 0: dont choose yet, 1: option 1, 2: option 2, 3: invalid (submit but didnt choose)
 
   const [position, setPosition] = useState("");
@@ -69,8 +69,8 @@ function ProfileEdit() {
     if (address === "") {
       setErrorAddress(true);
     }
-    if (workEligibility === 0) {
-      setWorkEligibility(3);
+    if (visa === 0) {
+      setVisa(3);
     }
     if (secureSetting === 0) {
       setSecureSetting(3);
@@ -178,9 +178,9 @@ function ProfileEdit() {
               Việt Nam?
             </div>
             <Radio
-              value={workEligibility}
+              value={visa}
               checkedValue={1}
-              setValue={setWorkEligibility}
+              setValue={setVisa}
               id="workEligibility1"
             >
               <p>
@@ -190,9 +190,9 @@ function ProfileEdit() {
               </p>
             </Radio>
             <Radio
-              value={workEligibility}
+              value={visa}
               checkedValue={2}
-              setValue={setWorkEligibility}
+              setValue={setVisa}
               id="workEligibility2"
             >
               <p>
@@ -202,7 +202,7 @@ function ProfileEdit() {
               </p>
             </Radio>
 
-            {workEligibility === 3 && (
+            {visa === 3 && (
               <div className={cx("invalid-feedback-input")}>
                 Mục này bắt buộc
               </div>

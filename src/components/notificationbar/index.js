@@ -14,7 +14,11 @@ function NotificationBar() {
   const dispatch = useDispatch();
   const location = useLocation();
   useEffect(() => {
-    if (location.key !== "default" && oldPath !== location.pathname) {
+    if (
+      location.key !== "default" &&
+      oldPath !== location.pathname &&
+      type !== ""
+    ) {
       setOldPath(location.pathname);
       dispatch(setDefaultNoti());
     }

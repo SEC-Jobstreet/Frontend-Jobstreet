@@ -21,6 +21,18 @@ function JobItem({ data, activeItem, handleClick }) {
     }
   };
 
+  const postedTimeByDay = Math.round(
+    (new Date().getTime() -
+      new Date(parseInt(data.CreatedAt, 10) * 1000).getTime()) /
+      (1000 * 3600 * 24)
+  );
+
+  const postedTimebyHour = Math.round(
+    (new Date().getTime() -
+      new Date(parseInt(data.CreatedAt, 10) * 1000).getTime()) /
+      (1000 * 3600)
+  );
+
   return (
     <Card
       className={
@@ -33,24 +45,34 @@ function JobItem({ data, activeItem, handleClick }) {
       <Card.Body className={styles.jobCard}>
         <Card.Subtitle className="mb-2 text-mute d-flex align-items-center">
           <span className={`${styles.badge} ${styles.seenJobBadge}`}>
-            <span>{data.status}</span>
+            <span>Mới với bạn</span>
           </span>
-          <span className={styles.freshnessTime}>{data.freshnessTime}</span>
-          <span className="text-end w-50">{data.id}</span>
+          <span className={styles.freshnessTime}>Mới với bạn</span>
+          {/* <span className="text-end w-50">{data.id}</span> */}
         </Card.Subtitle>
         <Card.Title className={styles.jobTitle}>{data.title}</Card.Title>
         <div className={styles.jobCardBody}>
-          <div>{data.company}</div>
-          <div>{data.location}</div>
-          <div>
-            <span className={`${styles.badge} ${styles.quickApplyBadge}`}>
-              Nộp đơn nhanh
-            </span>
+          <div>{data.enterprise_name}</div>
+          <div>{data.enterprise_address.split(", ").pop()}</div>
+          {!data.crawl && (
+            <div>
+              <span className={`${styles.badge} ${styles.quickApplyBadge}`}>
+                Nộp đơn nhanh
+              </span>
+            </div>
+          )}
+          <div className={`${styles.jobDescriptionOverview}`}>
+            {data.description.replace(/<[^>]*>/g, "")}
           </div>
-          <div>{data.jobAstract}</div>
         </div>
         <div className={styles.cardBottom}>
-          <span className={styles.listedDate}>{data.listedDate}</span>
+          <span className={styles.listedDate}>
+            Đã đăng{" "}
+            {postedTimebyHour < 24
+              ? `${postedTimebyHour} giờ`
+              : `${postedTimeByDay} ngày`}{" "}
+            trước
+          </span>
           <Button
             onClick={(e) => {
               e.stopPropagation();

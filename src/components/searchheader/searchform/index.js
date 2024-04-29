@@ -10,8 +10,9 @@ function SearchForm() {
   const [place, setPlace] = React.useState("");
 
   const navigate = useNavigate();
-  const handleSubmitButtonClick = () => {
-    navigate("/search?keyword=&location=");
+  const handleSubmitButtonClick = (e) => {
+    e.preventDefault();
+    navigate(`/search?keyword=${keyword}&location=${place}`);
   };
 
   return (

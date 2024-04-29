@@ -1,7 +1,8 @@
 import React, { Fragment } from "react";
 import { Button, Col, Container, Pagination } from "react-bootstrap";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
-import { SearchResult } from "../../temp/samplelistjobdata";
+import { getJobList } from "../../services/api";
 
 import { StateProvider } from "./context";
 import EmailAlert from "./emailalert";
@@ -13,10 +14,15 @@ import RelatedResearch from "./relatedsearches";
 
 import styles from "./joblisting.module.css";
 
-const ITEM_PER_PAGE = 15;
+const ITEM_PER_PAGE = 4;
 const MAX_PAGES_LISTED = 7;
 
 function JobListing() {
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [totalCount, setTotalCount] = React.useState(0);
   const [jobsListed, setJobsListed] = React.useState([]);
   const [pages, setPages] = React.useState({
     current: 0,
@@ -27,76 +33,58 @@ function JobListing() {
   const [activeTag, setActiveTag] = React.useState(null);
   const [activeJob, setAvticeJob] = React.useState(null);
 
-  React.useEffect(() => {
-    const totalPageNumber = Math.ceil(
-      (1.0 * SearchResult.length) / ITEM_PER_PAGE
-    );
-    const pageEnd =
-      totalPageNumber < MAX_PAGES_LISTED
-        ? totalPageNumber
-        : MAX_PAGES_LISTED - 1;
+  const keyword = searchParams.get("keyword");
+  const address = searchParams.get("location");
 
-    setPages((prev) => ({
-      ...prev,
+  const getJobListFunc = async () => {
+    const request = {
+      keyword,
+      location: address,
+      pageId: searchParams.get("page") || 1,
+      pageSize: ITEM_PER_PAGE, // default
+    };
+    const response = await getJobList(request);
+    console.log(response);
+    setAvticeJob(null);
+    setJobsListed(response.data.jobs);
+    setTotalCount(response.data.total);
+
+    const totalPageNumber = Math.ceil(
+      (1.0 * parseInt(response.data.total, 10)) / ITEM_PER_PAGE
+    );
+    setPages({
+      current: response.data.page_id - 1,
       total: totalPageNumber,
       start: 0,
-      end: pageEnd,
-    }));
-  }, []);
+      end:
+        totalPageNumber < MAX_PAGES_LISTED
+          ? totalPageNumber
+          : MAX_PAGES_LISTED - 1,
+    });
+  };
 
   React.useEffect(() => {
-    const listJobs = SearchResult.slice(
-      ITEM_PER_PAGE * pages.current,
-      ITEM_PER_PAGE * (pages.current + 1)
-    );
-    setJobsListed(listJobs);
-  }, [pages]);
+    getJobListFunc();
+  }, [location]);
 
-  const setCurrentPage = (newPage) => {
-    // logic
-    const halfMaxPages = Math.floor(MAX_PAGES_LISTED / 2);
-    let pageStart = 0;
-    let pageEnd = MAX_PAGES_LISTED - 1;
-    if (newPage < halfMaxPages) {
-      pageStart = 0;
-      pageEnd = MAX_PAGES_LISTED - 1;
-    } else if (newPage + halfMaxPages > pages.total) {
-      pageEnd = pages.total - 1;
-      pageStart = pageEnd - MAX_PAGES_LISTED + 1;
-    } else {
-      pageStart = newPage - halfMaxPages;
-      pageEnd = newPage + 3;
-    }
-
-    // set new pages
-    setPages((prev) => ({
-      ...prev,
-      current: newPage,
-      start: pageStart,
-      end: pageEnd,
-    }));
-
-    // scroll to top
-    // window.scrollTo({
-    //   top: 0,
-    //   behavior: "smooth",
-    // });
+  const changePage = (page) => {
+    navigate(`/search?keyword=${keyword}&location=${address}&page=${page}`);
   };
 
   const handlePageNumberClick = (e) => {
     const newPage = e.target.text;
-    setCurrentPage(parseInt(newPage, 10) - 1);
+    changePage(parseInt(newPage, 10));
   };
 
   const handleNextButtonClick = () => {
     if (pages.current !== pages.total - 1) {
-      setCurrentPage(pages.current + 1);
+      changePage(pages.current + 2);
     }
   };
 
   const handlePreviousButtonClick = () => {
     if (pages.current !== 0) {
-      setCurrentPage(pages.current - 1);
+      changePage(pages.current);
     }
   };
 
@@ -124,7 +112,14 @@ function JobListing() {
               style={{ fontSize: "1.54rem", marginBottom: "1rem" }}
             >
               <p style={{ fontSize: "1.6rem" }}>
-                <b>{SearchResult.length} việc làm </b>– tại <b>Hồ Chí Minh</b>
+                <b>{totalCount} việc làm </b>–{" "}
+                {address === "" ? (
+                  "tất cả"
+                ) : (
+                  <>
+                    tại <b>{address}</b>
+                  </>
+                )}
               </p>
               <p>
                 Trang
@@ -184,7 +179,7 @@ function JobListing() {
               >
                 <b>Trước</b>
               </Pagination.Prev>
-              {[...Array(pages.end - pages.start + 1)].map((item, index) => {
+              {[...Array(pages.end - pages.start)].map((item, index) => {
                 const page = pages.start + index + 1;
                 return (
                   <Fragment key={page}>
@@ -221,7 +216,11 @@ function JobListing() {
         </Col>
         <Col style={{ alignSelf: "stretch" }} className={styles.jobDescription}>
           <JobDescription
-            data={activeJob === null ? null : SearchResult[activeJob - 1]}
+            data={
+              activeJob === null
+                ? null
+                : jobsListed.find((e) => e.id === activeJob)
+            }
           />
         </Col>
       </Container>

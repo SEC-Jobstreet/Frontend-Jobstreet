@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import FilterBar from "./filterbar";
 import FilterBarMobile from "./filterbarmobile";
@@ -8,7 +8,7 @@ import SearchForm from "./searchform";
 import styles from "./searchheader.module.css";
 
 function SearchHeader() {
-  const { q: keyword, I: place } = useParams();
+  const [searchParams] = useSearchParams();
 
   const getHeaderTitle = () => {
     const currentDate = new Date();
@@ -16,7 +16,7 @@ function SearchHeader() {
     const year = currentDate.getFullYear();
     const date = `${month}/${year}`;
 
-    return `Tuyển dụng, tìm việc làm ${keyword} tại ${place} - ${date} |
+    return `Tuyển dụng, tìm việc làm ${searchParams.get("keyword")} tại ${searchParams.get("location")} - ${date} |
     JobStreet`;
   };
   return (

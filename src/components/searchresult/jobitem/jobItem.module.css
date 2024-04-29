@@ -31,8 +31,8 @@
 }
 
 .seenJobBadge {
-  background-color: var(--bg-badge-default-jobcard-temp, #626262) !important;
-  color: #fff;
+  background-color: #def0fc !important;
+  color: #1c1c1c;
 }
 
 .freshnessTime {
@@ -64,6 +64,14 @@
 .quickApplyBadge {
   background-color: #ddf8eb !important;
   margin-block: 1rem !important;
+}
+
+.jobDescriptionOverview {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .listedDate {
