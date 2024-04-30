@@ -107,7 +107,12 @@ function NavBar() {
             </>
           )}
           {!isHidden && (
-            <a href="/" className="employer-link button-employer">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              className="employer-link button-employer"
+              href={process.env.REACT_APP_FRONTEND_EMPLOYER}
+            >
               Truy cập trang web của nhà tuyển dụng
             </a>
           )}
@@ -209,7 +214,12 @@ function NavBar() {
                   </Nav>
                 </div>
               )}
-              <a className="employer-link button-employer" href="/">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                className="employer-link button-employer"
+                href={process.env.REACT_APP_FRONTEND_EMPLOYER}
+              >
                 Truy cập trang web của nhà tuyển dụng
               </a>
               <div className="nav-mobile-app-link">
