@@ -106,6 +106,9 @@
   color: var(--text-pop, #fff) !important;
   border: 0px !important;
   background-color: var(--bg-highlight, #0e8136) !important;
+  text-decoration: none;
+  align-content: center;
+  border-radius: 5px;
 }
 
 .applyButton:hover {

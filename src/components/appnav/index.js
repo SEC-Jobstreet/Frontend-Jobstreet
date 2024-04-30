@@ -32,7 +32,9 @@ function NavBar() {
     }
   };
 
-  const isProfile = location.pathname.includes("/profile");
+  const isHidden =
+    location.pathname.includes("/profile") ||
+    location.pathname.includes("/apply");
 
   const [showNav, setShowNav] = useState(false);
   const [openLoginForm, setOpenLoginForm] = useState(false);
@@ -58,7 +60,7 @@ function NavBar() {
             </button>
           ) : (
             <>
-              {!isProfile && (
+              {!isHidden && (
                 <>
                   <Nav className="p-0">
                     <NavItem eventkey={1} href="/profile">
@@ -104,7 +106,7 @@ function NavBar() {
               </button>
             </>
           )}
-          {!isProfile && (
+          {!isHidden && (
             <a href="/" className="employer-link button-employer">
               Truy cập trang web của nhà tuyển dụng
             </a>
@@ -139,7 +141,7 @@ function NavBar() {
                 <span>Thoát</span>
               </button>
             )}
-            {!isProfile && (
+            {!isHidden && (
               <button
                 type="button"
                 className="category-title"

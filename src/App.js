@@ -37,13 +37,14 @@ function App() {
           console.log(err);
         }
         dispatch(loginAccount(userinfo));
+        setReHyddated(true);
       } catch (err) {
         console.log(err);
+        setReHyddated(true);
       }
     };
 
     checkToken();
-    setReHyddated(true);
   }, []);
 
   return (

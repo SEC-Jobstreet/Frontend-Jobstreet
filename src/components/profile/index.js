@@ -1,8 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Form, FormLabel } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import PhoneInput, { isPossiblePhoneNumber } from "react-phone-number-input";
+import PhoneInput, {
+  getCountryCallingCode,
+  isPossiblePhoneNumber,
+  parsePhoneNumber,
+} from "react-phone-number-input";
+import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
+
+import {
+  createProfile,
+  getProfile,
+  updateProfile,
+} from "../../services/configAPI";
 
 import Input from "./input/input";
 import FileUpload from "./fileupload";
@@ -17,6 +28,7 @@ const cx = classNames.bind(styles);
 const TEXTAREA_MAX_LENGTH = 300;
 
 function ProfileEdit() {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [errorFirstName, setErrorFirstName] = useState(false);
 
@@ -43,6 +55,13 @@ function ProfileEdit() {
   ]);
   const [errorWorkShift, setErrorWorkShift] = useState(false);
 
+  const [file, setFile] = useState(null);
+  const fileInputRef = useRef();
+
+  const [errorFile, setErrorFile] = useState("");
+
+  const [isEdit, setIsEdit] = useState(false);
+
   const [aboutMe, setAboutMe] = useState("");
   const [maxDate, setMaxDate] = useState("");
 
@@ -51,12 +70,44 @@ function ProfileEdit() {
     setMaxDate(newDate);
   }, []);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const getCandidateProfile = async () => {
+      const response = await getProfile();
+      console.log(response);
+      if (response.status === 200) {
+        setIsEdit(true);
+        setFirstName(response.data.first_name);
+        setLastName(response.data.last_name);
+        setPhoneNumber(
+          `+${getCountryCallingCode(response.data.CountryPhone)}${response.data.Phone}`
+        );
+        setAboutMe(response.data.Description);
+        setAddress(response.data.Address);
+        setVisa(response.data.Visa ? 2 : 1);
+        setPosition(response.data.CurrentPosition);
+
+        const date = new Date(parseInt(response.data.StartDate, 10) * 1000)
+          .toISOString()
+          .split("T")[0];
+
+        setStartingDate(date);
+        setWhenever(response.data.WorkWhenever);
+        setParticularTime(JSON.parse(response.data.WorkShift));
+        setSecureSetting(response.data.ShareProfile ? 1 : 2);
+      }
+    };
+    getCandidateProfile();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    let error = false;
     if (firstName === "") {
+      error = true;
       setErrorFirstName(true);
     }
     if (lastName === "") {
+      error = true;
       setErrorLastName(true);
     }
     if (
@@ -64,17 +115,22 @@ function ProfileEdit() {
       phoneNumber === undefined ||
       !isPossiblePhoneNumber(phoneNumber)
     ) {
+      error = true;
       setErrorPhoneNumber(true);
     }
     if (address === "") {
+      error = true;
       setErrorAddress(true);
     }
     if (visa === 0) {
+      error = true;
       setVisa(3);
     }
     if (secureSetting === 0) {
+      error = true;
       setSecureSetting(3);
     }
+
     if (!whenever) {
       let check = false;
       for (let i = 0; i < 3; i += 1) {
@@ -86,7 +142,75 @@ function ProfileEdit() {
         }
         if (check) break;
       }
-      if (!check) setErrorWorkShift(true);
+      if (!check) {
+        error = true;
+        setErrorWorkShift(true);
+      }
+    }
+    if (errorFile) {
+      error = true;
+    }
+    if (error) {
+      window.scrollTo(0, 0);
+    } else {
+      const request = new FormData();
+      request.append("last_name", lastName.trim());
+      request.append("first_name", firstName.trim());
+      const countryPhone = parsePhoneNumber(phoneNumber).country;
+      request.append("country_phone", countryPhone);
+      let phone = phoneNumber.split(getCountryCallingCode(countryPhone))[1];
+      if (phone[0] === "0") {
+        phone = phone.slice(1);
+      }
+
+      request.append("phone", phone);
+      request.append("address", address.trim());
+      // request.append('latitude', latitude);
+      // request.append('longitude', longitude);
+      request.append("visa", visa === 2);
+      if (aboutMe.trim() !== "") {
+        request.append("description", aboutMe.trim());
+      }
+      if (position.trim() !== "") {
+        request.append("current_position", position.trim());
+      }
+      if (startingDate.trim() !== "") {
+        request.append("start_date", new Date(startingDate).getTime() / 1000);
+      }
+      request.append("work_whenever", whenever);
+      request.append(
+        "work_shift",
+        JSON.stringify(
+          whenever
+            ? [
+                [true, true, true, true, true, true, true],
+                [true, true, true, true, true, true, true],
+                [true, true, true, true, true, true, true],
+              ]
+            : particularTime
+        )
+      );
+      request.append("share_profile", secureSetting === 1);
+
+      if (file && file.size !== 0) {
+        request.append("resume", file);
+      }
+
+      if (isEdit) {
+        const response = await updateProfile(request);
+        console.log(response);
+        if (response.status === 200) {
+          navigate("/account/profile");
+        }
+        window.scrollTo(0, 0);
+      } else {
+        const response = await createProfile(request);
+        console.log(response);
+        if (response.status === 200) {
+          navigate("/account/profile");
+        }
+        window.scrollTo(0, 0);
+      }
     }
   };
 
@@ -297,7 +421,13 @@ function ProfileEdit() {
           <hr className={cx("horizontal-line")} />
           <div>
             <p className={cx("tilte")}>Sơ yếu lý lịch</p>
-            <FileUpload />
+            <FileUpload
+              setFile={setFile}
+              file={file}
+              fileInputRef={fileInputRef}
+              error={errorFile}
+              setError={setErrorFile}
+            />
             <p className={cx("normal-text", "text-grey")}>
               Loại tập tin: .pdf, .doc, .docx. Kích thước tối đa của tệp: 4.3
               MB.
@@ -316,7 +446,7 @@ function ProfileEdit() {
               className={cx("filled-button", "button-custom")}
               onClick={handleSubmit}
             >
-              Tạo hồ sơ
+              {isEdit ? "Cập nhật hồ sơ" : "Tạo hồ sơ"}
             </Button>
           </div>
         </form>

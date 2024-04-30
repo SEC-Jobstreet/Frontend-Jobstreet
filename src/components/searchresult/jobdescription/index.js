@@ -60,7 +60,25 @@ function JobDescription({ data }) {
                 {data.crawl ? data.job_source_name : "JobStreet Vietnam"}
               </div>
               <div className={styles.actionsContainer}>
-                <Button className={styles.applyButton}>Nộp đơn nhanh</Button>
+                {!data.crawl ? (
+                  <a
+                    target="_blank"
+                    className={styles.applyButton}
+                    href={`/apply?job_id=${data.id}&name=${data.title}&address=${data.enterprise_address.split(", ").pop()}`}
+                    rel="noreferrer"
+                  >
+                    Nộp đơn nhanh
+                  </a>
+                ) : (
+                  <a
+                    target="_blank"
+                    className={styles.applyButton}
+                    href={data.job_source_url}
+                    rel="noreferrer"
+                  >
+                    Xem thêm hoặc nộp hồ sơ
+                  </a>
+                )}
                 <Button
                   className={styles.saveButton}
                   onClick={() => handleSaveButtonClick(data.id)}

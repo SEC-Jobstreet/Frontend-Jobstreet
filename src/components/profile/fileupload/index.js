@@ -7,12 +7,7 @@ import styles from "./fileupload.module.css";
 const cx = classNames.bind(styles);
 const MAX_SIZE_FILE = 4.3 * 1024 * 1024;
 
-function FileUpload() {
-  const [file, setFile] = React.useState(null);
-  const fileInputRef = React.useRef();
-
-  const [error, setError] = React.useState("");
-
+function FileUpload({ setFile, file, error, setError, fileInputRef }) {
   const onFileUpload = async () => {
     fileInputRef.current.click();
   };

@@ -118,7 +118,7 @@ function WorkShift({
           <div className="row">
             <div className="col">All</div>
             {sessionsList.map((session) => (
-              <Form.Check // prettier-ignore
+              <Form.Check
                 type="checkbox"
                 className="col checkbox-custom"
                 value={sessions[session]}

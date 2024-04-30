@@ -45,22 +45,25 @@ function JobListing() {
     };
     const response = await getJobList(request);
     console.log(response);
-    setAvticeJob(null);
-    setJobsListed(response.data.jobs);
-    setTotalCount(response.data.total);
+    if (response.status === 200) {
+      setAvticeJob(null);
+      setJobsListed(response.data.jobs);
+      setTotalCount(response.data.total);
 
-    const totalPageNumber = Math.ceil(
-      (1.0 * parseInt(response.data.total, 10)) / ITEM_PER_PAGE
-    );
-    setPages({
-      current: response.data.page_id - 1,
-      total: totalPageNumber,
-      start: 0,
-      end:
-        totalPageNumber < MAX_PAGES_LISTED
-          ? totalPageNumber
-          : MAX_PAGES_LISTED - 1,
-    });
+      const totalPageNumber = Math.ceil(
+        (1.0 * parseInt(response.data.total, 10)) / ITEM_PER_PAGE
+      );
+      setPages({
+        current: response.data.page_id - 1,
+        total: totalPageNumber,
+        start: 0,
+        end:
+          totalPageNumber < MAX_PAGES_LISTED
+            ? totalPageNumber
+            : MAX_PAGES_LISTED - 1,
+      });
+      window.scrollTo(0, 0);
+    }
   };
 
   React.useEffect(() => {

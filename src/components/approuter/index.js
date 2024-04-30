@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
 import Account from "../../pages/account/account";
-import ApplyPage from "../../pages/apply/appy";
+import ApplyPage from "../../pages/apply";
 import Homepage from "../../pages/homepage";
 import JobDetail from "../../pages/jobdetail";
 import LoginPage from "../../pages/login";
