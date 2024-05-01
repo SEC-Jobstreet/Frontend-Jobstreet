@@ -31,8 +31,8 @@ Amplify.configure({
         oauth: {
           domain: process.env.REACT_APP_COGNITO_OAUTH_DOMAIN,
           scopes: ["phone", "email", "profile", "openid"],
-          redirectSignIn: ["http://localhost:3000"],
-          redirectSignOut: ["http://localhost:3000"],
+          redirectSignIn: [process.env.REACT_APP_REDIRECT_SIGN_IN],
+          redirectSignOut: [process.env.REACT_APP_REDIRECT_SIGN_OUT],
           responseType: "token", // or 'token', note that REFRESH token will only be generated when the responseType is code
         },
       },
