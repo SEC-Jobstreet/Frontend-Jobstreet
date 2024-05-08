@@ -8,13 +8,20 @@ import styles from "./searchform.module.css";
 function SearchForm() {
   const [keyword, setKeyword] = React.useState("");
   const [place, setPlace] = React.useState("");
+  const [history, setHistory] = React.useState(
+    JSON.parse(localStorage.getItem("historySearch")) || []
+  );
+  console.log(history);
+  let historySearch = JSON.parse(localStorage.getItem("historySearch")) || [];
 
   const navigate = useNavigate();
   const handleSubmitButtonClick = (e) => {
+    historySearch = [...historySearch, { keyword, location: place }];
+    localStorage.setItem("historySearch", JSON.stringify(historySearch));
+    setHistory(historySearch);
     e.preventDefault();
     navigate(`/search?keyword=${keyword}&location=${place}`);
   };
-
   return (
     <Form className={styles.wrapper} onSubmit={handleSubmitButtonClick}>
       <Form.Group className={`${styles.keyInput} ${styles.input}`}>
