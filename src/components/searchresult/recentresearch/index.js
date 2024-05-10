@@ -23,27 +23,33 @@ function RecentResearch() {
     localStorage.removeItem("historySearch");
     window.location.reload();
   };
+  const localStorageEmpty = data.length === 0;
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.historySearchHeader}>
-        <h3 className={styles.header}>Tìm kiếm gần đây</h3>
-        <button
-          className={styles.clearButton}
-          type="button"
-          onClick={handleClearButtonClick}
-        >
-          Xoá
-        </button>
-      </div>
-      {data.map((item) => (
-        <Link
-          to={`/search?keyword=${item.keyword}&location=${item.location}`}
-          className={styles.recentResearch}
-        >
-          <div className={styles.title}>{item.title}</div>
-          <div className={styles.number}>123</div>
-        </Link>
-      ))}
+    <div>
+      {!localStorageEmpty && ( // Conditionally render based on localStorageEmpty
+        <div className={styles.wrapper}>
+          <div className={styles.historySearchHeader}>
+            <h3 className={styles.header}>Tìm kiếm gần đây</h3>
+            <button
+              className={styles.clearButton}
+              type="button"
+              onClick={handleClearButtonClick}
+            >
+              Xoá
+            </button>
+          </div>
+          {data.map((item) => (
+            <Link
+              to={`/search?keyword=${item.keyword}&location=${item.location}`}
+              className={styles.recentResearch}
+              key={item.title} // Add a unique key for each link
+            >
+              <div className={styles.title}>{item.title}</div>
+              <div className={styles.number}>123</div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

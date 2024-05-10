@@ -8,11 +8,12 @@ import styles from "./searchform.module.css";
 function SearchForm() {
   const [keyword, setKeyword] = React.useState("");
   const [place, setPlace] = React.useState("");
-  const [history, setHistory] = React.useState(
-    JSON.parse(localStorage.getItem("historySearch")) || []
-  );
+  const localStorageKey = "historySearch";
+  const initialHistory =
+    JSON.parse(localStorage.getItem(localStorageKey)) || [];
+  const [history, setHistory] = React.useState(initialHistory);
   console.log(history);
-  let historySearch = JSON.parse(localStorage.getItem("historySearch")) || [];
+  let historySearch = initialHistory;
 
   const navigate = useNavigate();
   const handleSubmitButtonClick = (e) => {
