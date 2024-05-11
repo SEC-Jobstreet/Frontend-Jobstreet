@@ -130,6 +130,28 @@ textarea {
   border-radius: 4px;
 }
 
+.noti-banner {
+  display: flex;
+  background-color: #def0fc;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+  padding-block: 20px;
+  padding-left: 40px;
+  padding-right: 20px;
+
+  background-image: url("../../assets/svg/light_icon.svg");
+  background-repeat: no-repeat;
+  background-position: 15px 15px;
+}
+
+.noti-banner div {
+  text-align: left;
+  margin-left: 0.5rem;
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+}
+
 @media only screen and (max-width: 1024px) {
   .my-profile {
     max-width: 100%;
