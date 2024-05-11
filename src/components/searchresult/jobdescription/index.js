@@ -50,6 +50,15 @@ function JobDescription({ data }) {
     workShift = JSON.parse(data.work_shift);
   }
 
+  // const handleApplyClick = (e) => {
+  //   e.preventDefault();
+  //   if (user?.email === "") {
+  //     navigate("/login");
+  //   } else {
+  //     navigate(e.target.href);
+  //   }
+  // };
+
   console.log(data);
 
   return (
