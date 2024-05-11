@@ -122,24 +122,24 @@ function JobDescription({ data }) {
                   <strong>Tóm tắt yêu cầu công việc:</strong>
                 </p>
                 <ul>
-                  <li>
-                    Đang tìm các ứng viên có thể làm việc vào các ngày
-                    <br />
-                    <ul style={{ fontSize: "1.4rem" }}>
-                      {data.work_whenever
-                        ? Object.keys(days).map((idx) => (
-                            <li>{`${days[idx]}: Sáng, Chiều, Tối`}</li>
-                          ))
-                        : Object.keys(days).map(
-                            (idx) =>
-                              (workShift[0][idx] ||
-                                workShift[1][idx] ||
-                                workShift[2][idx]) && (
-                                <li>{`${days[idx]}: ${workShift[0][idx] ? `${sessions[0]}` : ""}${workShift[1][idx] ? `, ${sessions[1]}` : ""}${workShift[2][idx] ? `, ${sessions[2]}` : ""}`}</li>
-                              )
-                          )}
-                    </ul>
-                  </li>
+                  {data.work_whenever ? (
+                    <li>Giờ làm việc linh hoạt</li>
+                  ) : (
+                    <li>
+                      Đang tìm các ứng viên có thể làm việc vào các ngày
+                      <br />
+                      <ul style={{ fontSize: "1.4rem" }}>
+                        {Object.keys(days).map(
+                          (idx) =>
+                            (workShift[0][idx] ||
+                              workShift[1][idx] ||
+                              workShift[2][idx]) && (
+                              <li>{`${days[idx]}: ${workShift[0][idx] ? `${sessions[0]}` : ""}${workShift[1][idx] ? `, ${sessions[1]}` : ""}${workShift[2][idx] ? `, ${sessions[2]}` : ""}`}</li>
+                            )
+                        )}
+                      </ul>
+                    </li>
+                  )}
                   <li>
                     {data.experience === 1 &&
                       "Không yêu cầu kinh nghiệm làm việc cho vị trí này"}
