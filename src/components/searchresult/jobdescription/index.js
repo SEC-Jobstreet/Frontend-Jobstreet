@@ -6,6 +6,22 @@ import FacetLinks from "../facetlinks";
 
 import styles from "./jobdescription.module.css";
 
+const days = {
+  0: "Thứ hai",
+  1: "Thứ ba",
+  2: "Thứ tư",
+  3: "Thứ năm",
+  4: "Thứ sáu",
+  5: "Thứ bảy",
+  6: "Chủ nhật",
+};
+
+const sessions = {
+  0: "Sáng",
+  1: "Chiều",
+  2: "Tối",
+};
+
 function JobDescription({ data }) {
   const { savedJobs, setSaveJobs } = useJobsState();
 
@@ -16,6 +32,7 @@ function JobDescription({ data }) {
 
   let postedTimeByDay;
   let postedTimebyHour;
+  let workShift;
 
   if (data != null) {
     postedTimeByDay = Math.round(
@@ -29,7 +46,11 @@ function JobDescription({ data }) {
         new Date(parseInt(data.CreatedAt, 10) * 1000).getTime()) /
         (1000 * 3600)
     );
+
+    workShift = JSON.parse(data.work_shift);
   }
+
+  console.log(data);
 
   return (
     <Container className={styles.wrapper}>
@@ -95,6 +116,48 @@ function JobDescription({ data }) {
               className={styles.descriptionContent}
               dangerouslySetInnerHTML={{ __html: data.description }}
             />
+            {!data.crawl && (
+              <div>
+                <p>
+                  <strong>Tóm tắt yêu cầu công việc:</strong>
+                </p>
+                <ul>
+                  <li>
+                    Đang tìm các ứng viên có thể làm việc vào các ngày
+                    <br />
+                    <ul style={{ fontSize: "1.4rem" }}>
+                      {data.work_whenever
+                        ? Object.keys(days).map((idx) => (
+                            <li>{`${days[idx]}: Sáng, Chiều, Tối`}</li>
+                          ))
+                        : Object.keys(days).map(
+                            (idx) =>
+                              (workShift[0][idx] ||
+                                workShift[1][idx] ||
+                                workShift[2][idx]) && (
+                                <li>{`${days[idx]}: ${workShift[0][idx] ? `${sessions[0]}` : ""}${workShift[1][idx] ? `, ${sessions[1]}` : ""}${workShift[2][idx] ? `, ${sessions[2]}` : ""}`}</li>
+                              )
+                          )}
+                    </ul>
+                  </li>
+                  <li>
+                    {data.experience === 1 &&
+                      "Không yêu cầu kinh nghiệm làm việc cho vị trí này"}
+                    {data.experience === 2 &&
+                      "Yêu cầu 1 năm kinh nghiệm làm việc có liên quan cho vị trí này"}
+                    {data.experience === 3 &&
+                      "Yêu cầu 2-3 năm kinh nghiệm làm việc có liên quan cho vị trí này"}
+                    {data.experience === 4 &&
+                      "Yêu cầu 4 năm kinh nghiệm làm việc trở lên có liên quan cho vị trí này"}
+                  </li>
+                  <li>
+                    {data.visa
+                      ? "Visa làm việc có thể được cung cấp cho vị trí này"
+                      : "Cần visa làm việc cho vị trí này"}
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       )}
