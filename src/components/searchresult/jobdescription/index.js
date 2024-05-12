@@ -1,6 +1,8 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
+import { getProfile } from "../../../services/configAPI";
 import { useJobsState } from "../context";
 import FacetLinks from "../facetlinks";
 
@@ -23,6 +25,7 @@ const sessions = {
 };
 
 function JobDescription({ data }) {
+  const navigate = useNavigate();
   const { savedJobs, setSaveJobs } = useJobsState();
 
   const handleSaveButtonClick = (id) => {
@@ -50,16 +53,16 @@ function JobDescription({ data }) {
     workShift = JSON.parse(data.work_shift);
   }
 
-  // const handleApplyClick = (e) => {
-  //   e.preventDefault();
-  //   if (user?.email === "") {
-  //     navigate("/login");
-  //   } else {
-  //     navigate(e.target.href);
-  //   }
-  // };
+  const handleQuickApply = async (e, href) => {
+    e.preventDefault();
 
-  console.log(data);
+    const response = await getProfile();
+    if (response.status === 200) {
+      navigate(href);
+    } else {
+      navigate(`/account/profile/edit?redirect=${encodeURIComponent(href)}`);
+    }
+  };
 
   return (
     <Container className={styles.wrapper}>
@@ -96,6 +99,12 @@ function JobDescription({ data }) {
                     className={styles.applyButton}
                     href={`/apply?job_id=${data.id}&name=${data.title}&address=${data.enterprise_address.split(", ").pop()}`}
                     rel="noreferrer"
+                    onClick={(e) =>
+                      handleQuickApply(
+                        e,
+                        `/apply?job_id=${data.id}&name=${data.title}&address=${data.enterprise_address.split(", ").pop()}`
+                      )
+                    }
                   >
                     Nộp đơn nhanh
                   </a>

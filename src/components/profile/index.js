@@ -66,9 +66,8 @@ function ProfileEdit() {
   const [maxDate, setMaxDate] = useState("");
 
   const location = useLocation();
-  const isApplying = location.state !== null;
-
-  console.log(location);
+  const redirect = new URLSearchParams(location.search).get("redirect");
+  const isApplying = redirect !== null;
 
   useEffect(() => {
     const newDate = new Date().toISOString().split("T")[0];
@@ -213,7 +212,7 @@ function ProfileEdit() {
         console.log(response);
         if (response.status === 200) {
           if (isApplying) {
-            navigate(location.state.from);
+            navigate(redirect);
           } else {
             navigate("/account/profile");
           }

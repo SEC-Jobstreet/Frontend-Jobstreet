@@ -29,6 +29,8 @@ function AppRouter() {
   const user = useSelector(selectUser);
   const location = useLocation();
 
+  // const redirect = new URLSearchParams(location.search).get("redirect");
+
   return (
     <Routes>
       <Route exact path="/" element={<Homepage />} />
@@ -38,7 +40,7 @@ function AppRouter() {
         element={
           <ProtectedRoute
             isAllowed={!user?.email}
-            redirectPath={location.state ? location.state.from : "/"}
+            redirectPath={location.state?.from || "/"}
           />
         }
       >

@@ -35,7 +35,6 @@ function Profile() {
   useEffect(() => {
     const getCandidateProfile = async () => {
       const response = await getProfile();
-      console.log(response);
       if (response.status === 200) {
         const temp = response.data;
         temp.WorkShift = JSON.parse(temp.WorkShift);
