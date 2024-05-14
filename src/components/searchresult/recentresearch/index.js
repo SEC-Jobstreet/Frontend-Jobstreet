@@ -1,28 +1,35 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import styles from "./recentresearch.module.css";
 
 function RecentResearch() {
   const historySearch = JSON.parse(localStorage.getItem("historySearch")) || [];
-  const data = historySearch.map((item) => {
+  const data = historySearch.map((item, index) => {
     let title = "";
     if (item.keyword === "" && item.location === "") {
       title = "Tất cả việc làm";
     } else if (item.keyword === "") {
       title = item.location;
+    } else if (item.location === "") {
+      title = item.keyword;
     } else {
       title = `${item.keyword} - ${item.location}`;
     }
+    title += index.toString();
     return {
       title,
       keyword: item.keyword,
       location: item.location,
     };
   });
+  const [history, setHistory] = useState(data);
+
   const handleClearButtonClick = () => {
     localStorage.removeItem("historySearch");
-    window.location.reload();
+    setHistory([]);
   };
+
   const localStorageEmpty = data.length === 0;
   return (
     <div>
@@ -38,7 +45,7 @@ function RecentResearch() {
               Xoá
             </button>
           </div>
-          {data.map((item) => (
+          {history.map((item) => (
             <Link
               to={`/search?keyword=${item.keyword}&location=${item.location}`}
               className={styles.recentResearch}

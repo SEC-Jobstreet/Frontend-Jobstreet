@@ -8,18 +8,16 @@ import styles from "./searchform.module.css";
 function SearchForm() {
   const [keyword, setKeyword] = React.useState("");
   const [place, setPlace] = React.useState("");
-  const localStorageKey = "historySearch";
-  const initialHistory =
-    JSON.parse(localStorage.getItem(localStorageKey)) || [];
-  const [history, setHistory] = React.useState(initialHistory);
-  console.log(history);
-  let historySearch = initialHistory;
 
   const navigate = useNavigate();
   const handleSubmitButtonClick = (e) => {
-    historySearch = [...historySearch, { keyword, location: place }];
-    localStorage.setItem("historySearch", JSON.stringify(historySearch));
-    setHistory(historySearch);
+    let historySearch = JSON.parse(localStorage.getItem("historySearch")) || [];
+    historySearch = [{ keyword, location: place }, ...historySearch];
+    localStorage.setItem(
+      "historySearch",
+      JSON.stringify(historySearch.slice(0, 5))
+    );
+
     e.preventDefault();
     navigate(`/search?keyword=${keyword}&location=${place}`);
   };
