@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { getProfile } from "../../../services/configAPI";
 import { useJobsState } from "../context";
@@ -124,9 +124,13 @@ function JobDescription({ data }) {
                 >
                   {savedJobs[data.id] === true ? "Đã lưu lại" : "Lưu việc"}
                 </Button>
-                <a className={styles.openNewTab} href="/#">
+                <Link
+                  to="/job-detail"
+                  className={styles.openNewTab}
+                  target="_blank"
+                >
                   Mở trang mới
-                </a>
+                </Link>
               </div>
               <hr className="m-0" />
             </div>

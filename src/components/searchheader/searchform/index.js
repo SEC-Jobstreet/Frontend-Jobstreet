@@ -11,10 +11,16 @@ function SearchForm() {
 
   const navigate = useNavigate();
   const handleSubmitButtonClick = (e) => {
+    let historySearch = JSON.parse(localStorage.getItem("historySearch")) || [];
+    historySearch = [{ keyword, location: place }, ...historySearch];
+    localStorage.setItem(
+      "historySearch",
+      JSON.stringify(historySearch.slice(0, 5))
+    );
+
     e.preventDefault();
     navigate(`/search?keyword=${keyword}&location=${place}`);
   };
-
   return (
     <Form className={styles.wrapper} onSubmit={handleSubmitButtonClick}>
       <Form.Group className={`${styles.keyInput} ${styles.input}`}>
