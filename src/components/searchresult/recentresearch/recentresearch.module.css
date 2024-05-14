@@ -24,7 +24,7 @@
 .recentResearch:hover {
   text-decoration: underline;
   text-decoration-color: #1c1c1c;
-  text-decoration-thickness: 1.5px;
+  text-decoration-thickness: 1px;
 }
 
 .title {
@@ -37,4 +37,22 @@
   font-size: 1.4rem;
   font-weight: bold;
   text-transform: uppercase;
+}
+
+.historySearchHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clearButton {
+  font-size: 1.4rem;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 2.6rem;
+  background-color: #dedede;
+}
+
+.clearButton:hover {
+  background-color: #a4a4a4;
 }
