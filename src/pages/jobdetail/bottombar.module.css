@@ -56,7 +56,13 @@
   background-image: url(../../assets/svg/save_icon.svg);
 }
 
-.saveBtn.saved{
+.saveBtn.saved {
   background-image: url(../../assets/svg/saved_icon.svg);
   border-color: #0e8136 !important;
+}
+
+@media only screen and (min-width: 993px) {
+  .wrapper {
+    display: none;
+  }
 }

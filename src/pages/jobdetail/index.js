@@ -3,6 +3,7 @@ import { Button, Container, Modal } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
+import SearchForm from "../../components/searchheader/searchform";
 import { getJob } from "../../services/api";
 import { getProfile } from "../../services/configAPI";
 
@@ -86,7 +87,9 @@ function JobDetail() {
 
     // handle savejob
     setSaveJob(false);
+  }, []);
 
+  useEffect(() => {
     // handle time display
     if (data.length !== 0) {
       let timeText = "";
@@ -115,9 +118,11 @@ function JobDetail() {
       }
       setPostedTime(timeText);
 
+      console.log(timeText);
+
       setWorkShift(JSON.parse(data.work_shift));
     }
-  }, []);
+  }, [data]);
 
   // handle quick apply button click
   const handleQuickApply = async (e, href) => {
@@ -147,6 +152,11 @@ function JobDetail() {
           Trợ Lý Nghiên Cứu job at Viện Nghiên cứu Kinh doanh in | JobStreet
         </title>
       </Helmet>
+      <div className={`seachForm ${styles.mobileHidden}`}>
+        <div className="formWrapper">
+          <SearchForm />
+        </div>
+      </div>
       <div className="jobDetailCont">
         <Container className={styles.wrapper}>
           {data !== null && (
