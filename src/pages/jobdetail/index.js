@@ -149,7 +149,9 @@ function JobDetail() {
     <>
       <Helmet>
         <title>
-          Trợ Lý Nghiên Cứu job at Viện Nghiên cứu Kinh doanh in | JobStreet
+          {data !== null
+            ? `${data.title} | JobStreet`
+            : "Tìm kiếm việc làm | JobStreet"}
         </title>
       </Helmet>
       <div className={`seachForm ${styles.mobileHidden}`}>
