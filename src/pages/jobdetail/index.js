@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Container, Modal } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -8,6 +8,7 @@ import { getProfile } from "../../services/configAPI";
 
 import "./index.css";
 import "../../components/profile/workshift/checkbox.css";
+import stylesBar from "./bottombar.module.css";
 import styles from "./jobdescription.module.css";
 
 const emailIcon = require("../../assets/svg/email_icon.svg").default;
@@ -44,6 +45,8 @@ function JobDetail() {
 
   const [postedTime, setPostedTime] = useState("");
   const [workShift, setWorkShift] = useState("");
+
+  const emailInputRef = useRef();
 
   // Handle dialog first hidden
   const handleClose = () => {
@@ -128,7 +131,14 @@ function JobDetail() {
     }
   };
 
-  console.log(workShift);
+  const handleSaveJob = () => {
+    setSaveJob((prev) => !prev);
+  };
+
+  const scrollToEmailInput = () => {
+    emailInputRef.current.scrollIntoView();
+    emailInputRef.current.focus();
+  };
 
   return (
     <>
@@ -276,7 +286,7 @@ function JobDetail() {
                 )}
                 <Button
                   className={`${styles.saveButton} ${styles.mobileHidden}`}
-                  onClick={() => setSaveJob((prev) => !prev)}
+                  onClick={handleSaveJob}
                 >
                   {saveJob === true ? "Đã lưu lại" : "Lưu việc"}
                 </Button>
@@ -317,6 +327,7 @@ function JobDetail() {
                   placeholder="Nhập email của bạn"
                   className="inpEmail"
                   required
+                  ref={emailInputRef}
                 />
                 <label htmlFor="checkboxMail" className="checkbox-custom">
                   <input
@@ -410,6 +421,49 @@ function JobDetail() {
             </p>
           </div>
         </Modal>
+        <div className={stylesBar.wrapper}>
+          <div className={stylesBar.inner}>
+            <div className={stylesBar.applyBtn}>
+              {!data.crawl ? (
+                <a
+                  target="_blank"
+                  className={styles.applyButton}
+                  href={`/apply?job_id=${data.id}&name=${data.title}&address=${data.enterprise_address?.split(", ").pop()}`}
+                  rel="noreferrer"
+                  onClick={(e) =>
+                    handleQuickApply(
+                      e,
+                      `/apply?job_id=${data.id}&name=${data.title}&address=${data.enterprise_address?.split(", ").pop()}`
+                    )
+                  }
+                >
+                  Nộp đơn nhanh
+                </a>
+              ) : (
+                <a
+                  target="_blank"
+                  className={styles.applyButton}
+                  href={data.job_source_url}
+                  rel="noreferrer"
+                >
+                  Xem thêm hoặc nộp hồ sơ
+                </a>
+              )}
+            </div>
+            <div>
+              <Button
+                className={`${stylesBar.emailBtn} ${stylesBar.iconBtn}`}
+                onClick={scrollToEmailInput}
+              />
+            </div>
+            <div>
+              <Button
+                className={`${stylesBar.saveBtn} ${stylesBar.iconBtn} ${saveJob ? stylesBar.saved : ""}`}
+                onClick={handleSaveJob}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

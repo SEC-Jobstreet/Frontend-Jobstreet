@@ -151,7 +151,7 @@ hr {
     margin: 0 !important;
   }
   .mobileHidden {
-    display: none;
+    display: none !important;
   }
   .applyButton {
     width: 100%;

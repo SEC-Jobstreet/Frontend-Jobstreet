@@ -1,0 +1,62 @@
+.wrapper {
+  bottom: 0;
+  left: 0;
+  padding-bottom: 0.8rem;
+  padding-top: 0.8rem;
+  position: fixed;
+  right: 0;
+  border-top: 1px solid var(--border-line, #dedede);
+  background-color: var(--bg-body, #fff);
+  width: 100%;
+  max-height: 70px;
+  padding-inline: 2rem;
+}
+
+.inner {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  column-gap: 10px;
+}
+
+.iconBtn {
+  height: 4.8rem;
+  width: 4.8rem;
+  background-repeat: no-repeat;
+  background-color: transparent !important;
+  background-position: 50% 50%;
+  border: 1px solid #dedede !important;
+  border-radius: 100% !important;
+  background-size: 50%;
+}
+
+.iconBtn:focus {
+  background-color: #dedede;
+}
+
+.iconBtn:hover {
+  background-color: #dedede !important;
+  border: 1px solid #dedede !important;
+}
+
+.applyBtn {
+  width: -webkit-fill-available;
+}
+
+.applyBtn a {
+  display: block;
+  width: 100%;
+}
+
+.emailBtn {
+  background-image: url(../../assets/svg/email_icon.svg);
+}
+
+.saveBtn {
+  background-image: url(../../assets/svg/save_icon.svg);
+}
+
+.saveBtn.saved{
+  background-image: url(../../assets/svg/saved_icon.svg);
+  border-color: #0e8136 !important;
+}
