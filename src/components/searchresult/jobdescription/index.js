@@ -125,7 +125,7 @@ function JobDescription({ data }) {
                   {savedJobs[data.id] === true ? "Đã lưu lại" : "Lưu việc"}
                 </Button>
                 <Link
-                  to="/job-detail"
+                  to={`/job-detail?job_id=${data.id}`}
                   className={styles.openNewTab}
                   target="_blank"
                 >

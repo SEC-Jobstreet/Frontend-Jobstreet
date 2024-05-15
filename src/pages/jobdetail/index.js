@@ -1,13 +1,36 @@
-import { useState } from "react";
-import { Modal } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Container, Modal } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
+import { getJob } from "../../services/api";
+import { getProfile } from "../../services/configAPI";
 
 import "./index.css";
+import "../../components/profile/workshift/checkbox.css";
+import styles from "./jobdescription.module.css";
 
 const emailIcon = require("../../assets/svg/email_icon.svg").default;
-const clockIcon = require("../../assets/svg/clock_icon.svg").default;
+
+const days = {
+  0: "Thứ hai",
+  1: "Thứ ba",
+  2: "Thứ tư",
+  3: "Thứ năm",
+  4: "Thứ sáu",
+  5: "Thứ bảy",
+  6: "Chủ nhật",
+};
+const sessions = {
+  0: "Sáng",
+  1: "Chiều",
+  2: "Tối",
+};
 
 function JobDetail() {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
   // State get value to toggle dialog
   const [saveJob, setSaveJob] = useState(false);
   const [showNofJob, setShowNofJob] = useState(false);
@@ -16,10 +39,11 @@ function JobDetail() {
   const [nofEmail, setNofEmail] = useState(true); // State toggle notification Email after commit email
   const [email, setEmail] = useState(""); // State get value email
 
-  // Handle dialog first appear
-  const handleOpenViewOtherJob = () => {
-    setShow(!show);
-  };
+  const jobId = searchParams.get("job_id");
+  const [data, setData] = useState([]);
+
+  const [postedTime, setPostedTime] = useState("");
+  const [workShift, setWorkShift] = useState("");
 
   // Handle dialog first hidden
   const handleClose = () => {
@@ -39,17 +63,73 @@ function JobDetail() {
     }
   };
 
-  // Save Job code in here
-  const hanldeSaveJobClick = () => {
-    setSaveJob(!saveJob);
-  };
-
   // Handle dialog second appear
   const handleViewOtherJobs = () => {
     window.open("https://jobsgo.vn/");
     setShowNofJob(!showNofJob);
     setShow(!show);
   };
+
+  useEffect(() => {
+    const getJobDetail = async (id) => {
+      const response = await getJob({ id });
+      if (response.status === 200) {
+        console.log(response);
+        setData(response.data.job);
+      }
+    };
+
+    getJobDetail(jobId);
+
+    // handle savejob
+    setSaveJob(false);
+
+    // handle time display
+    if (data.length !== 0) {
+      let timeText = "";
+
+      const postedTimeByDay = Math.round(
+        (new Date().getTime() -
+          new Date(parseInt(data.CreatedAt, 10) * 1000).getTime()) /
+          (1000 * 3600 * 24)
+      );
+
+      const postedTimebyHour = Math.round(
+        (new Date().getTime() -
+          new Date(parseInt(data.CreatedAt, 10) * 1000).getTime()) /
+          (1000 * 3600)
+      );
+
+      if (postedTimebyHour < 24) {
+        timeText += `${postedTimebyHour} giờ trước, từ `;
+      } else {
+        timeText += `${postedTimeByDay} ngày trước, từ `;
+      }
+      if (data.crawl) {
+        timeText += data.job_source_name;
+      } else {
+        timeText += "JobStreet Vietnam";
+      }
+      setPostedTime(timeText);
+
+      setWorkShift(JSON.parse(data.work_shift));
+    }
+  }, []);
+
+  // handle quick apply button click
+  const handleQuickApply = async (e, href) => {
+    e.preventDefault();
+
+    const response = await getProfile();
+    if (response.status === 200) {
+      navigate(href);
+    } else {
+      navigate(`/account/profile/edit?redirect=${encodeURIComponent(href)}`);
+    }
+  };
+
+  console.log(workShift);
+
   return (
     <>
       <Helmet>
@@ -58,90 +138,159 @@ function JobDetail() {
         </title>
       </Helmet>
       <div className="jobDetailCont">
-        <div className="jobDetailContLeft">
-          <div className="cont-jobdetail">
-            <h3 className="title-jobDetail">
-              [Quận 1 - HCM] Japanese Receptionist - Tiếng Nhật N3 + Tiếng Anh
-              Giao Tiếp - Up To 12M Gross
-            </h3>
-            <p className="company-jobDetail">
-              Công Ty TNHH Một Thành Viên Wacontre – Hồ Chí Minh
-            </p>
-            <p className="status-jobDetail">
-              <span>
-                <img
-                  src={clockIcon}
-                  alt="logo-jobstreet"
-                  style={{ width: "17px", height: "17px", margin: "0 4px" }}
-                />
-                Toàn thời gian
-              </span>
-            </p>
-            <p className="time-jobDetail">3 ngày trước, từ JobsGo</p>
-            <div>
-              <button
-                type="button"
-                className="btnView-jobDetail"
-                onClick={handleOpenViewOtherJob}
-              >
-                Xem thêm hoặc nộp hồ sơ
-              </button>
-              {saveJob ? (
-                <button
-                  type="button"
-                  className="btnSave-jobDetail"
-                  onClick={hanldeSaveJobClick}
+        <Container className={styles.wrapper}>
+          {data !== null && (
+            <div className={styles.jobDescription}>
+              <div className={styles.JDHeader}>
+                <h3 className={styles.headingXXLarge}>{data.title}</h3>
+                <div
+                  className="d-flex flex-nowrap"
+                  style={{ marginBottom: "1.6rem" }}
                 >
-                  Lưu việc
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="btnSave-jobDetail"
-                  onClick={hanldeSaveJobClick}
+                  <span className={styles.company}>{data.enterprise_name}</span>
+                  <span className={styles.divider}>–</span>
+                  <span className={styles.location}>
+                    {data.enterprise_address?.split(", ").pop()}
+                  </span>
+                </div>
+                <div className={`${styles.badge} `}>
+                  <i className={styles.clockIcon} />
+                  <span>Toàn thời gian</span>
+                </div>
+                <div style={{ fontSize: "1.4rem", paddingBottom: "2.4rem" }}>
+                  {postedTime}
+                </div>
+                <div
+                  className={`${styles.actionsContainer} ${styles.mobileHidden}`}
+                  style={{ paddingBottom: "2.4rem" }}
                 >
-                  Đã lưu lại
-                </button>
+                  {!data.crawl ? (
+                    <a
+                      target="_blank"
+                      className={styles.applyButton}
+                      href={`/apply?job_id=${data.id}&name=${data.title}&address=${data.enterprise_address?.split(", ").pop()}`}
+                      rel="noreferrer"
+                      onClick={(e) =>
+                        handleQuickApply(
+                          e,
+                          `/apply?job_id=${data.id}&name=${data.title}&address=${data.enterprise_address?.split(", ").pop()}`
+                        )
+                      }
+                    >
+                      Nộp đơn nhanh
+                    </a>
+                  ) : (
+                    <a
+                      target="_blank"
+                      className={styles.applyButton}
+                      href={data.job_source_url}
+                      rel="noreferrer"
+                    >
+                      Xem thêm hoặc nộp hồ sơ
+                    </a>
+                  )}
+                  <Button
+                    className={styles.saveButton}
+                    onClick={() => setSaveJob((prev) => !prev)}
+                  >
+                    {saveJob === true ? "Đã lưu lại" : "Lưu việc"}
+                  </Button>
+                </div>
+                <hr className="m-0" />
+              </div>
+              <div
+                className={styles.descriptionContent}
+                dangerouslySetInnerHTML={{ __html: data.description }}
+              />
+              {!data.crawl && (
+                <div>
+                  <p>
+                    <strong>Tóm tắt yêu cầu công việc:</strong>
+                  </p>
+                  <ul>
+                    {data.work_whenever ? (
+                      <li>Giờ làm việc linh hoạt</li>
+                    ) : (
+                      <li>
+                        Đang tìm các ứng viên có thể làm việc vào các ngày
+                        <br />
+                        <ul style={{ fontSize: "1.4rem" }}>
+                          {workShift &&
+                            Object.keys(days).map(
+                              (idx) =>
+                                (workShift[0][idx] ||
+                                  workShift[1][idx] ||
+                                  workShift[2][idx]) && (
+                                  <li>{`${days[idx]}: ${workShift[0][idx] ? `${sessions[0]}` : ""}${workShift[1][idx] ? `, ${sessions[1]}` : ""}${workShift[2][idx] ? `, ${sessions[2]}` : ""}`}</li>
+                                )
+                            )}
+                        </ul>
+                      </li>
+                    )}
+                    <li>
+                      {data.experience === 1 &&
+                        "Không yêu cầu kinh nghiệm làm việc cho vị trí này"}
+                      {data.experience === 2 &&
+                        "Yêu cầu 1 năm kinh nghiệm làm việc có liên quan cho vị trí này"}
+                      {data.experience === 3 &&
+                        "Yêu cầu 2-3 năm kinh nghiệm làm việc có liên quan cho vị trí này"}
+                      {data.experience === 4 &&
+                        "Yêu cầu 4 năm kinh nghiệm làm việc trở lên có liên quan cho vị trí này"}
+                    </li>
+                    <li>
+                      {data.visa
+                        ? "Visa làm việc có thể được cung cấp cho vị trí này"
+                        : "Cần visa làm việc cho vị trí này"}
+                    </li>
+                  </ul>
+                </div>
               )}
+              <div
+                className={styles.actionsContainer}
+                style={{ marginTop: "20px", marginBottom: "1.6rem" }}
+              >
+                {!data.crawl ? (
+                  <a
+                    target="_blank"
+                    className={styles.applyButton}
+                    href={`/apply?job_id=${data.id}&name=${data.title}&address=${data.enterprise_address?.split(", ").pop()}`}
+                    rel="noreferrer"
+                    onClick={(e) =>
+                      handleQuickApply(
+                        e,
+                        `/apply?job_id=${data.id}&name=${data.title}&address=${data.enterprise_address?.split(", ").pop()}`
+                      )
+                    }
+                  >
+                    Nộp đơn nhanh
+                  </a>
+                ) : (
+                  <a
+                    target="_blank"
+                    className={styles.applyButton}
+                    href={data.job_source_url}
+                    rel="noreferrer"
+                  >
+                    Xem thêm hoặc nộp hồ sơ
+                  </a>
+                )}
+                <Button
+                  className={`${styles.saveButton} ${styles.mobileHidden}`}
+                  onClick={() => setSaveJob((prev) => !prev)}
+                >
+                  {saveJob === true ? "Đã lưu lại" : "Lưu việc"}
+                </Button>
+              </div>
+              <p className="note-jobDetail">
+                Hãy cẩn thận - Đừng cung cấp tài khoản ngân hàng hoặc số thẻ tín
+                dụng của bạn khi ứng tuyển. Đừng chuyển tiền để ứng tuyển hay
+                làm các khảo sát trực tuyến đáng ngờ. Nếu bạn thấy khả nghi, xin
+                vui lòng <a href="/#">thông báo việc này với chúng tôi.</a>
+              </p>
+              <hr className={styles.mobileHidden} />
             </div>
-          </div>
-          <div>
-            JobDescription
-            {/* JobDescription code in here */}
-          </div>
-          <div className="footer-detailjob">
-            <p className="note-jobDetail">
-              Hãy cẩn thận - Đừng cung cấp tài khoản ngân hàng hoặc số thẻ tín
-              dụng của bạn khi ứng tuyển. Đừng chuyển tiền để ứng tuyển hay làm
-              các khảo sát trực tuyến đáng ngờ. Nếu bạn thấy khả nghi, xin vui
-              lòng <a href="/#">thông báo việc này với chúng tôi.</a>
-            </p>
-            <button
-              type="button"
-              className="btnView-jobDetail"
-              onClick={handleOpenViewOtherJob}
-            >
-              Xem thêm hoặc nộp hồ sơ
-            </button>
-            {saveJob ? (
-              <button
-                type="button"
-                className="btnSave-jobDetail"
-                onClick={hanldeSaveJobClick}
-              >
-                Lưu việc
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="btnSave-jobDetail"
-                onClick={hanldeSaveJobClick}
-              >
-                Đã lưu lại
-              </button>
-            )}
-          </div>
-        </div>
+          )}
+        </Container>
         {/* Contain send Email to find job */}
         <div className="jobDetailContRight">
           <div className="contContact">
@@ -169,13 +318,15 @@ function JobDetail() {
                   className="inpEmail"
                   required
                 />
-                <label htmlFor="checkboxMail">
+                <label htmlFor="checkboxMail" className="checkbox-custom">
                   <input
                     type="checkbox"
                     id="checkboxMail"
                     name="checkboxMail"
                   />
-                  <span>Gửi thư báo việc hàng ngày cho các việc tương tự</span>
+                  <span style={{ alignContent: "center", marginLeft: "10px" }}>
+                    Gửi thư báo việc hàng ngày cho các việc tương tự
+                  </span>
                 </label>
                 <button type="submit" className="btnSubmit">
                   Gửi email việc
