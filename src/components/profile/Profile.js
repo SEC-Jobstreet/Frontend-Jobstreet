@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCountryCallingCode } from "react-phone-number-input";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import CheckMark from "../../assets/svg/check-mark-black.svg";
 import Citizen from "../../assets/svg/citizen-id-icon-black.svg";
@@ -29,18 +29,18 @@ function getFirstCharacter(str) {
 
 function Profile() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState(null);
 
   useEffect(() => {
     const getCandidateProfile = async () => {
       const response = await getProfile();
-      console.log(response);
       if (response.status === 200) {
         const temp = response.data;
         temp.WorkShift = JSON.parse(temp.WorkShift);
         setData(temp);
       } else {
-        navigate("/account/profile/edit");
+        navigate("/account/profile/edit", { state: { from: location } });
       }
     };
     getCandidateProfile();

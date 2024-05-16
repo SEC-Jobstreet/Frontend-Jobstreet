@@ -1,9 +1,20 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import "./myaccount-style.css";
 
 function MyAccount(props) {
   const { children } = props;
+  const location = useLocation();
+  const redirect = new URLSearchParams(location.search).get("redirect");
+
+  if (redirect !== null) {
+    return (
+      <div className="account-page">
+        <div className="main-content">{children}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="account-page">
       <div className="container-page">

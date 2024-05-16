@@ -13,7 +13,7 @@ export const getJobList = (data) => {
 
 export const getJob = (data) => {
   try {
-    return axios.post(
+    return axios.get(
       `${process.env.REACT_APP_JOB_SERVICE}/api/v1/job/${data.id}`
     );
   } catch (error) {

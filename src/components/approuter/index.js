@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import Account from "../../pages/account/account";
 import ApplyPage from "../../pages/apply";
@@ -27,18 +27,32 @@ import "../login/login-style.css";
 
 function AppRouter() {
   const user = useSelector(selectUser);
+  const location = useLocation();
+
+  // const redirect = new URLSearchParams(location.search).get("redirect");
 
   return (
     <Routes>
       <Route exact path="/" element={<Homepage />} />
       <Route path="search" element={<Search />} />
       <Route path="job-detail" element={<JobDetail />} />
-      <Route element={<ProtectedRoute isAllowed={!user?.email} />}>
+      <Route
+        element={
+          <ProtectedRoute
+            isAllowed={!user?.email}
+            redirectPath={location.state?.from || "/"}
+          />
+        }
+      >
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<Register />} />
       </Route>
 
-      <Route element={<ProtectedRoute isAllowed={!!user?.email} />}>
+      <Route
+        element={
+          <ProtectedRoute isAllowed={!!user?.email} redirectPath="/login" />
+        }
+      >
         <Route path="apply" element={<ApplyPage />} />
         <Route path="account" element={<Account />}>
           <Route path="settings" element={<Setting />} />

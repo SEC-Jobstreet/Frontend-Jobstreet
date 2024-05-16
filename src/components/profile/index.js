@@ -6,7 +6,7 @@ import PhoneInput, {
   isPossiblePhoneNumber,
   parsePhoneNumber,
 } from "react-phone-number-input";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 
 import {
@@ -64,6 +64,10 @@ function ProfileEdit() {
 
   const [aboutMe, setAboutMe] = useState("");
   const [maxDate, setMaxDate] = useState("");
+
+  const location = useLocation();
+  const redirect = new URLSearchParams(location.search).get("redirect");
+  const isApplying = redirect !== null;
 
   useEffect(() => {
     const newDate = new Date().toISOString().split("T")[0];
@@ -207,7 +211,11 @@ function ProfileEdit() {
         const response = await createProfile(request);
         console.log(response);
         if (response.status === 200) {
-          navigate("/account/profile");
+          if (isApplying) {
+            navigate(redirect);
+          } else {
+            navigate("/account/profile");
+          }
         }
         window.scrollTo(0, 0);
       }
@@ -231,6 +239,13 @@ function ProfileEdit() {
       </Helmet>
       <div className={cx("my-profile")}>
         <h2 className={cx("my-profile-tilte")}>Tạo hồ sơ</h2>
+        {isApplying && (
+          <div className={cx("noti-banner")}>
+            <div className="row" style={{}}>
+              Hãy tạo hồ sơ cá nhân để ứng tuyển
+            </div>
+          </div>
+        )}
         <form id="myProfile" onSubmit={handleSubmit}>
           <div className={cx("basic-info")}>
             <Input

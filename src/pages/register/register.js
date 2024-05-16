@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useDispatch } from "react-redux";
-import { autoSignIn, signUp } from "aws-amplify/auth";
+import { autoSignIn, fetchAuthSession, signUp } from "aws-amplify/auth";
 
 import { setNotification } from "../../store/notification";
 import { loginAccount } from "../../store/user";
@@ -49,6 +49,8 @@ function Register() {
 
         const signInOutput = await autoSignIn();
         if (signInOutput.isSignedIn) {
+          const { tokens } = await fetchAuthSession({ forceRefresh: true });
+          console.log(tokens);
           dispatch(loginAccount({ email, email_verified: false }));
           dispatch(setNotification(notiRegister));
         }

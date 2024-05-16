@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
+import { getProfile } from "../../../services/configAPI";
 import { useJobsState } from "../context";
 import FacetLinks from "../facetlinks";
 
@@ -24,6 +25,7 @@ const sessions = {
 };
 
 function JobDescription({ data }) {
+  const navigate = useNavigate();
   const { savedJobs, setSaveJobs } = useJobsState();
 
   const handleSaveButtonClick = (id) => {
@@ -51,7 +53,16 @@ function JobDescription({ data }) {
     workShift = JSON.parse(data.work_shift);
   }
 
-  console.log(data);
+  const handleQuickApply = async (e, href) => {
+    e.preventDefault();
+
+    const response = await getProfile();
+    if (response.status === 200) {
+      navigate(href);
+    } else {
+      navigate(`/account/profile/edit?redirect=${encodeURIComponent(href)}`);
+    }
+  };
 
   return (
     <Container className={styles.wrapper}>
@@ -88,6 +99,12 @@ function JobDescription({ data }) {
                     className={styles.applyButton}
                     href={`/apply?job_id=${data.id}&name=${data.title}&address=${data.enterprise_address.split(", ").pop()}`}
                     rel="noreferrer"
+                    onClick={(e) =>
+                      handleQuickApply(
+                        e,
+                        `/apply?job_id=${data.id}&name=${data.title}&address=${data.enterprise_address.split(", ").pop()}`
+                      )
+                    }
                   >
                     Nộp đơn nhanh
                   </a>
@@ -108,7 +125,7 @@ function JobDescription({ data }) {
                   {savedJobs[data.id] === true ? "Đã lưu lại" : "Lưu việc"}
                 </Button>
                 <Link
-                  to="/job-detail"
+                  to={`/job-detail?job_id=${data.id}`}
                   className={styles.openNewTab}
                   target="_blank"
                 >
@@ -127,24 +144,24 @@ function JobDescription({ data }) {
                   <strong>Tóm tắt yêu cầu công việc:</strong>
                 </p>
                 <ul>
-                  <li>
-                    Đang tìm các ứng viên có thể làm việc vào các ngày
-                    <br />
-                    <ul style={{ fontSize: "1.4rem" }}>
-                      {data.work_whenever
-                        ? Object.keys(days).map((idx) => (
-                            <li>{`${days[idx]}: Sáng, Chiều, Tối`}</li>
-                          ))
-                        : Object.keys(days).map(
-                            (idx) =>
-                              (workShift[0][idx] ||
-                                workShift[1][idx] ||
-                                workShift[2][idx]) && (
-                                <li>{`${days[idx]}: ${workShift[0][idx] ? `${sessions[0]}` : ""}${workShift[1][idx] ? `, ${sessions[1]}` : ""}${workShift[2][idx] ? `, ${sessions[2]}` : ""}`}</li>
-                              )
-                          )}
-                    </ul>
-                  </li>
+                  {data.work_whenever ? (
+                    <li>Giờ làm việc linh hoạt</li>
+                  ) : (
+                    <li>
+                      Đang tìm các ứng viên có thể làm việc vào các ngày
+                      <br />
+                      <ul style={{ fontSize: "1.4rem" }}>
+                        {Object.keys(days).map(
+                          (idx) =>
+                            (workShift[0][idx] ||
+                              workShift[1][idx] ||
+                              workShift[2][idx]) && (
+                              <li>{`${days[idx]}: ${workShift[0][idx] ? `${sessions[0]}` : ""}${workShift[1][idx] ? `, ${sessions[1]}` : ""}${workShift[2][idx] ? `, ${sessions[2]}` : ""}`}</li>
+                            )
+                        )}
+                      </ul>
+                    </li>
+                  )}
                   <li>
                     {data.experience === 1 &&
                       "Không yêu cầu kinh nghiệm làm việc cho vị trí này"}
