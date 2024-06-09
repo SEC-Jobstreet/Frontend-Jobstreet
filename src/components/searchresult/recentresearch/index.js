@@ -1,11 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
+import { getNewJobNumber } from "../../../services/api";
 
 import styles from "./recentresearch.module.css";
 
+function NewJobNumber({ keyword, address }) {
+  const [number, setNumber] = useState(0);
+  useEffect(() => {
+    const loadNewJobNumber = async () => {
+      const respone = await getNewJobNumber({
+        keyword,
+        address,
+      });
+      if (respone.status === 200) {
+        setNumber(respone.data.total);
+      }
+    };
+    loadNewJobNumber();
+  }, []);
+  return <div className={styles.number}>{number}</div>;
+}
+
 function RecentResearch() {
   const historySearch = JSON.parse(localStorage.getItem("historySearch")) || [];
-  const data = historySearch.map((item, index) => {
+  const data = historySearch.map((item) => {
     let title = "";
     if (item.keyword === "" && item.location === "") {
       title = "Tất cả việc làm";
@@ -16,7 +35,6 @@ function RecentResearch() {
     } else {
       title = `${item.keyword} - ${item.location}`;
     }
-    title += index.toString();
     return {
       title,
       keyword: item.keyword,
@@ -31,6 +49,7 @@ function RecentResearch() {
   };
 
   const localStorageEmpty = data.length === 0;
+
   return (
     <div>
       {!localStorageEmpty && ( // Conditionally render based on localStorageEmpty
@@ -52,7 +71,7 @@ function RecentResearch() {
               key={item.title} // Add a unique key for each link
             >
               <div className={styles.title}>{item.title}</div>
-              <div className={styles.number}>123</div>
+              <NewJobNumber keyword={item.keyword} address={item.location} />
             </Link>
           ))}
         </div>

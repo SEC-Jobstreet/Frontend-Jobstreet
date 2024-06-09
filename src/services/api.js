@@ -21,3 +21,25 @@ export const getJob = (data) => {
     return error;
   }
 };
+
+export const getJobNumber = () => {
+  try {
+    return axios.get(
+      `${process.env.REACT_APP_JOB_SERVICE}/api/v1/number_of_job`
+    );
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const getNewJobNumber = ({ keyword, address }) => {
+  try {
+    return axios.get(
+      `${process.env.REACT_APP_JOB_SERVICE}/api/v1/number_of_new_job?keyword=${keyword}&address=${address}`
+    );
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
