@@ -17,14 +17,14 @@ jobs:
       with:
         node-version: 18
 
-    - name: Install-Dependencies
-      run: npm install & npm install --save-dev @babel/plugin-proposal-private-property-in-object
+    # - name: Install-Dependencies
+    #   run: npm install & npm install --save-dev @babel/plugin-proposal-private-property-in-object
 
     # - name: Test
     #   run: npm run test
 
-    - name: Build
-      run: CI=false npm run build
+    # - name: Build
+    #   run: CI=false npm run build
       
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
