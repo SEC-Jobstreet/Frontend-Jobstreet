@@ -18,8 +18,7 @@ jobs:
         node-version: 18
 
     - name: Install-Dependencies
-    - run: npm install --save-dev @babel/plugin-proposal-private-property-in-object
-    - run: npm install
+      run: npm install & npm install --save-dev @babel/plugin-proposal-private-property-in-object
 
     # - name: Test
     #   run: npm run test
