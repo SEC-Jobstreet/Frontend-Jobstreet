@@ -13,7 +13,7 @@ WORKDIR /app
 COPY package.json .
 RUN npm install --production
 COPY . .
-RUN npm run build
+RUN CI=false npm run build
 
 # Bundle static assets with nginx
 FROM nginx:1.21.0-alpine as production
