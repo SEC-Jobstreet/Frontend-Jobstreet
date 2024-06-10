@@ -64,11 +64,11 @@ function RecentResearch() {
               Xoá
             </button>
           </div>
-          {history.map((item) => (
+          {history.map((item, index) => (
             <Link
               to={`/search?keyword=${item.keyword}&location=${item.location}`}
               className={styles.recentResearch}
-              key={item.title} // Add a unique key for each link
+              key={`${item.title + index}`} // Add a unique key for each link
             >
               <div className={styles.title}>{item.title}</div>
               <NewJobNumber keyword={item.keyword} address={item.location} />

@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import axiosConfig from "./axiosConfig";
+
 export const getJobList = (data) => {
   try {
     return axios.get(
@@ -37,6 +39,29 @@ export const getNewJobNumber = ({ keyword, address }) => {
   try {
     return axios.get(
       `${process.env.REACT_APP_JOB_SERVICE}/api/v1/number_of_new_job?keyword=${keyword}&address=${address}`
+    );
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const getSavedJob = () => {
+  try {
+    return axiosConfig.get(
+      `${process.env.REACT_APP_CANDIDATE_SERVICE}/api/v1/saved_job_list`
+    );
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const saveJob = ({ id }) => {
+  try {
+    return axiosConfig.post(
+      `${process.env.REACT_APP_CANDIDATE_SERVICE}/api/v1/save_job`,
+      { job_id: id }
     );
   } catch (error) {
     console.log(error);

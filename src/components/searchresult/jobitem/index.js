@@ -1,16 +1,26 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
 
+import { saveJob } from "../../../services/api";
 import { useJobsState } from "../context";
 
 import styles from "./jobItem.module.css";
 
 function JobItem({ data, activeItem, handleClick }) {
   const { savedJobs, setSaveJobs } = useJobsState();
+  const savedJob = savedJobs.includes(data.id);
 
-  const handleSaveButtonClick = (id) => {
-    const newValue = !savedJobs[id];
-    setSaveJobs((prev) => ({ ...prev, [id]: newValue }));
+  console.log(savedJobs);
+
+  const handleSaveButtonClick = async (id) => {
+    if (!savedJobs.includes(id)) {
+      const respone = await saveJob({ id });
+      if (respone) {
+        console.log(respone);
+      }
+      setSaveJobs((prev) => [...prev, id]);
+    }
+    // setSaveJobs((prev) => prev.filter((item) => item !== id));
   };
 
   const handleItemClick = (href, id) => {
@@ -79,12 +89,12 @@ function JobItem({ data, activeItem, handleClick }) {
               handleSaveButtonClick(data.id);
             }}
             className={
-              savedJobs[data.id] === true
+              savedJob
                 ? `${styles.saveButton} ${styles.savedStyle}`
                 : `${styles.saveButton}`
             }
           >
-            {savedJobs[data.id] === true ? "Đã lưu lại" : "Lưu lại"}
+            {savedJob ? "Đã lưu lại" : "Lưu lại"}
           </Button>
         </div>
       </Card.Body>

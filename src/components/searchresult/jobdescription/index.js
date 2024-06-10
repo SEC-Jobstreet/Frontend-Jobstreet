@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
+import { saveJob } from "../../../services/api";
 import { getProfile } from "../../../services/configAPI";
 import { useJobsState } from "../context";
 import FacetLinks from "../facetlinks";
@@ -27,10 +28,17 @@ const sessions = {
 function JobDescription({ data }) {
   const navigate = useNavigate();
   const { savedJobs, setSaveJobs } = useJobsState();
+  const savedJob = savedJobs.includes(data?.id);
 
-  const handleSaveButtonClick = (id) => {
-    const newValue = !savedJobs[id];
-    setSaveJobs((prev) => ({ ...prev, [id]: newValue }));
+  const handleSaveButtonClick = async (id) => {
+    if (!savedJobs.includes(id)) {
+      const respone = await saveJob({ id });
+      if (respone) {
+        console.log(respone);
+      }
+      setSaveJobs((prev) => [...prev, id]);
+    }
+    // setSaveJobs((prev) => prev.filter((item) => item !== id));
   };
 
   let postedTimeByDay;
@@ -122,7 +130,7 @@ function JobDescription({ data }) {
                   className={styles.saveButton}
                   onClick={() => handleSaveButtonClick(data.id)}
                 >
-                  {savedJobs[data.id] === true ? "Đã lưu lại" : "Lưu việc"}
+                  {savedJob ? "Đã lưu lại" : "Lưu việc"}
                 </Button>
                 <Link
                   to={`/job-detail?job_id=${data.id}`}

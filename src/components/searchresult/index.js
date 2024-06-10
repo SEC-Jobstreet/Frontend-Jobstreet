@@ -4,7 +4,6 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import { getJobList } from "../../services/api";
 
-import { StateProvider } from "./context";
 import EmailAlert from "./emailalert";
 import JobDescription from "./jobdescription";
 import JobItem from "./jobitem";
@@ -44,7 +43,6 @@ function JobListing() {
       pageSize: ITEM_PER_PAGE, // default
     };
     const response = await getJobList(request);
-    console.log(response);
     if (response.status === 200) {
       setAvticeJob(null);
       setJobsListed(response.data.jobs);
@@ -106,128 +104,126 @@ function JobListing() {
   };
 
   return (
-    <StateProvider>
-      <Container className={styles.wrapper}>
-        <Col>
-          <div className={styles.topPanel}>
-            <div
-              className="text-start"
-              style={{ fontSize: "1.54rem", marginBottom: "1rem" }}
-            >
-              <p style={{ fontSize: "1.6rem" }}>
-                <b>{totalCount} việc làm </b>–{" "}
-                {address === "" ? (
-                  "tất cả"
-                ) : (
-                  <>
-                    tại <b>{address}</b>
-                  </>
-                )}
-              </p>
-              <p>
-                Trang
-                <b> {pages.current + 1} </b>
-                của
-                <b> {pages.total}</b>
-              </p>
-            </div>
-            <div className={styles.personalizedTags}>
-              {PersonalizedTags.map((tag) => (
-                <Button
-                  className={
-                    activeTag === tag.tagName
-                      ? `${styles.tagButton} ${styles.active}`
-                      : `${styles.tagButton}`
-                  }
-                  onClick={handleTagButtonClick}
-                  key={tag.tagName}
-                >
-                  {tag.tagName}
-                </Button>
-              ))}
-            </div>
+    <Container className={styles.wrapper}>
+      <Col>
+        <div className={styles.topPanel}>
+          <div
+            className="text-start"
+            style={{ fontSize: "1.54rem", marginBottom: "1rem" }}
+          >
+            <p style={{ fontSize: "1.6rem" }}>
+              <b>{totalCount} việc làm </b>–{" "}
+              {address === "" ? (
+                "tất cả"
+              ) : (
+                <>
+                  tại <b>{address}</b>
+                </>
+              )}
+            </p>
+            <p>
+              Trang
+              <b> {pages.current + 1} </b>
+              của
+              <b> {pages.total}</b>
+            </p>
           </div>
-          <div className={styles.jobList}>
-            {jobsListed.map((job, index) => {
-              if ((index + 1) % 6 === 0) {
-                return (
-                  <Fragment key={job.id * -1}>
-                    <EmailAlert />
-                    <Fragment key={job.id}>
-                      <JobItem
-                        data={job}
-                        activeItem={activeJob}
-                        handleClick={handleJobItemClick}
-                      />
-                    </Fragment>
-                  </Fragment>
-                );
-              }
+          <div className={styles.personalizedTags}>
+            {PersonalizedTags.map((tag) => (
+              <Button
+                className={
+                  activeTag === tag.tagName
+                    ? `${styles.tagButton} ${styles.active}`
+                    : `${styles.tagButton}`
+                }
+                onClick={handleTagButtonClick}
+                key={tag.tagName}
+              >
+                {tag.tagName}
+              </Button>
+            ))}
+          </div>
+        </div>
+        <div className={styles.jobList}>
+          {jobsListed.map((job, index) => {
+            if ((index + 1) % 6 === 0) {
               return (
-                <Fragment key={job.id}>
-                  <JobItem
-                    data={job}
-                    activeItem={activeJob}
-                    handleClick={handleJobItemClick}
-                  />
+                <Fragment key={job.id * -1}>
+                  <EmailAlert />
+                  <Fragment key={job.id}>
+                    <JobItem
+                      data={job}
+                      activeItem={activeJob}
+                      handleClick={handleJobItemClick}
+                    />
+                  </Fragment>
+                </Fragment>
+              );
+            }
+            return (
+              <Fragment key={job.id}>
+                <JobItem
+                  data={job}
+                  activeItem={activeJob}
+                  handleClick={handleJobItemClick}
+                />
+              </Fragment>
+            );
+          })}
+        </div>
+        <Pagination className={styles.paginationContainer}>
+          <div className={styles.fullPagination}>
+            <Pagination.Prev
+              onClick={handlePreviousButtonClick}
+              className={pages.current === 0 ? "visually-hidden" : ""}
+            >
+              <b>Trước</b>
+            </Pagination.Prev>
+            {[...Array(pages.end - pages.start)].map((item, index) => {
+              const page = pages.start + index + 1;
+              return (
+                <Fragment key={page}>
+                  <Pagination.Item
+                    onClick={handlePageNumberClick}
+                    className={
+                      page === pages.current + 1
+                        ? `${styles.pageCurrent} ${styles.pageItem}`
+                        : `${styles.pageItem}`
+                    }
+                  >
+                    {page}
+                  </Pagination.Item>
                 </Fragment>
               );
             })}
+            <Pagination.Next
+              onClick={handleNextButtonClick}
+              className={
+                pages.current === pages.total - 1 ? "visually-hidden" : ""
+              }
+            >
+              <b>Kế tiếp</b>
+            </Pagination.Next>
           </div>
-          <Pagination className={styles.paginationContainer}>
-            <div className={styles.fullPagination}>
-              <Pagination.Prev
-                onClick={handlePreviousButtonClick}
-                className={pages.current === 0 ? "visually-hidden" : ""}
-              >
-                <b>Trước</b>
-              </Pagination.Prev>
-              {[...Array(pages.end - pages.start)].map((item, index) => {
-                const page = pages.start + index + 1;
-                return (
-                  <Fragment key={page}>
-                    <Pagination.Item
-                      onClick={handlePageNumberClick}
-                      className={
-                        page === pages.current + 1
-                          ? `${styles.pageCurrent} ${styles.pageItem}`
-                          : `${styles.pageItem}`
-                      }
-                    >
-                      {page}
-                    </Pagination.Item>
-                  </Fragment>
-                );
-              })}
-              <Pagination.Next
-                onClick={handleNextButtonClick}
-                className={
-                  pages.current === pages.total - 1 ? "visually-hidden" : ""
-                }
-              >
-                <b>Kế tiếp</b>
-              </Pagination.Next>
-            </div>
-            <div className={styles.smallPagination} style={{ display: "none" }}>
-              <Pagination.Next onClick={handleNextButtonClick}>
-                <b>Kế tiếp</b>
-              </Pagination.Next>
-            </div>
-          </Pagination>
-          <RecentResearch />
-          <RelatedResearch />
-        </Col>
-        <Col style={{ alignSelf: "stretch" }} className={styles.jobDescription}>
-          <JobDescription
-            data={
-              activeJob === null
-                ? null
-                : jobsListed.find((e) => e.id === activeJob)
-            }
-          />
-        </Col>
-      </Container>
-    </StateProvider>
+          <div className={styles.smallPagination} style={{ display: "none" }}>
+            <Pagination.Next onClick={handleNextButtonClick}>
+              <b>Kế tiếp</b>
+            </Pagination.Next>
+          </div>
+        </Pagination>
+        <RecentResearch />
+        <RelatedResearch />
+      </Col>
+      <Col style={{ alignSelf: "stretch" }} className={styles.jobDescription}>
+        <JobDescription
+          data={
+            activeJob === null
+              ? null
+              : jobsListed.find((e) => e.id === activeJob)
+          }
+        />
+      </Col>
+    </Container>
   );
 }
 

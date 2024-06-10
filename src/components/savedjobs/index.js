@@ -1,13 +1,34 @@
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 
-import JobCard from "./job";
+import { getSavedJob } from "../../services/api";
+import { StateProvider } from "../searchresult/context";
+import JobItem from "../searchresult/jobitem";
 
 import "./index.css";
 
 function SavedJobs() {
-  const check = true; // check API my list job null
+  const [jobs, setJobs] = useState([]);
+  const check = jobs === null || jobs.length === 0; // check API my list job null
+
+  useEffect(() => {
+    const loadSavedJobs = async () => {
+      // logged in
+      const respone = await getSavedJob();
+      if (respone.status === 200) {
+        console.log(respone);
+        if (respone.data.jobs === null) {
+          setJobs([]);
+        } else {
+          setJobs(respone.data.jobs);
+        }
+      }
+    };
+    loadSavedJobs();
+  }, []);
+
   return (
-    <>
+    <StateProvider>
       <Helmet>
         <title>Việc đã lưu | JobStreet</title>
       </Helmet>
@@ -22,12 +43,21 @@ function SavedJobs() {
           </div>
         ) : (
           <div>
-            <JobCard />
-            <JobCard />
+            {jobs.map((job) => (
+              <div key={job.id}>
+                <JobItem
+                  data={job}
+                  activeItem=""
+                  handleClick={(id) => {
+                    console.log(id);
+                  }}
+                />
+              </div>
+            ))}
           </div>
         )}
       </div>
-    </>
+    </StateProvider>
   );
 }
 
