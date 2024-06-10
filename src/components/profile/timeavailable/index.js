@@ -26,7 +26,7 @@ function TimeAvailable(props) {
             Sáng
           </div>
           {particularTime[0].map((value, index) => (
-            <div className="item" key={index.toString()}>
+            <div className="item" key={`A${index.toString()}`}>
               <div className={`check -${value.toString()}`} />
             </div>
           ))}
@@ -39,7 +39,7 @@ function TimeAvailable(props) {
             Chiều
           </div>
           {particularTime[1].map((value, index) => (
-            <div className="item" key={index.toString()}>
+            <div className="item" key={`A${index.toString()}`}>
               <div className={`check -${value.toString()}`} />
             </div>
           ))}
@@ -52,7 +52,7 @@ function TimeAvailable(props) {
             Tối
           </div>
           {particularTime[2].map((value, index) => (
-            <div className="item" key={index.toString()}>
+            <div className="item" key={`A${index.toString()}`}>
               <div className={`check -${value.toString()}`} />
             </div>
           ))}
