@@ -16,7 +16,7 @@ jobs:
           node-version: 18
 
       - name: Install SSH client
-        run: sudo apt-get update && sudo apt-get install -y openssh-client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client && sudo apt-get install make
         
       - name: Setup remote server
         run: |
