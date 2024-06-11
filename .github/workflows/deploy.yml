@@ -72,10 +72,10 @@ jobs:
           # Create the .env file and add content from GitHub secrets
           echo "$ENV_JOBSTREET_FRONTEND" > .env
 
-          # Build the Docker image
-          make build_prod
+          # # Build the Docker image
+          # make build_prod
 
-          # Run docker
-          make run_prod
+          # # Run docker
+          # make run_prod
           
           ENDSSH
