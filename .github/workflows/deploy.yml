@@ -67,10 +67,11 @@ jobs:
           fi
 
           # Navigate to the cloned repository directory
-          cd frontend-jobstreet
+          cd ~/jobstreet-sourcecode/frontend-jobstreet
 
           # Create the .env file and add content from GitHub secrets
           echo "$ENV_JOBSTREET_FRONTEND" > .env
+          cat .env
 
           # # Build the Docker image
           # make build_prod
