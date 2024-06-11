@@ -68,3 +68,15 @@ export const saveJob = ({ id }) => {
     return error;
   }
 };
+
+export const unsaveJob = ({ id }) => {
+  try {
+    return axiosConfig.post(
+      `${process.env.REACT_APP_CANDIDATE_SERVICE}/api/v1/unsave_job`,
+      { job_id: id }
+    );
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

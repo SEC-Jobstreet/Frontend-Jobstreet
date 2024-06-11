@@ -52,7 +52,7 @@ export const applyJob = async (data) => {
   // data: {job_id: ""}
   try {
     const res = await axiosConfig.post(
-      `${process.env.REACT_APP_APPLICATION_SERVICE}/api/v1/apply_job`,
+      `${process.env.REACT_APP_CANDIDATE_SERVICE}/api/v1/apply_job`,
       data
     );
     return res;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
 
-import { saveJob } from "../../../services/api";
+import { saveJob, unsaveJob } from "../../../services/api";
 import { useJobsState } from "../context";
 
 import styles from "./jobItem.module.css";
@@ -13,14 +13,20 @@ function JobItem({ data, activeItem, handleClick }) {
   console.log(savedJobs);
 
   const handleSaveButtonClick = async (id) => {
-    if (!savedJobs.includes(id)) {
+    const isSaved = savedJobs.includes(id);
+    if (isSaved) {
+      const respone = await unsaveJob({ id });
+      if (respone) {
+        console.log(respone);
+      }
+      setSaveJobs((prev) => prev.filter((item) => item !== id));
+    } else {
       const respone = await saveJob({ id });
       if (respone) {
         console.log(respone);
       }
       setSaveJobs((prev) => [...prev, id]);
     }
-    // setSaveJobs((prev) => prev.filter((item) => item !== id));
   };
 
   const handleItemClick = (href, id) => {
