@@ -57,18 +57,25 @@ jobs:
           cd jobstreet-sourcecode
 
           # Clone the source code repository
-          rm -rf frontend-jobstreet
-          git clone https://github.com/SEC-Jobstreet/frontend-jobstreet.git
+          if [ ! -d "frontend-jobstreet" ]; then
+            git clone git@github.com:SEC-Jobstreet/frontend-jobstreet.git
+            git checkout main
+            git pull -f
+          else
+            cd frontend-jobstreet
+            git checkout main
+            git stash
+            git pull -f
+            cd ..
+          fi
+
           cd frontend-jobstreet
-          git stash
-          git checkout main
-          git pull -f
           echo "${{ secrets.ENV_JOBSTREET_FRONTEND }}" > .env
 
           # Build the Docker image
-          make build_prod
+          npm install --save
 
           # Run docker
-          make run_prod
+          npm run start
           
           ENDSSH
