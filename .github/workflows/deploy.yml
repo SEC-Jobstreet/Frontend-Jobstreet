@@ -63,8 +63,7 @@ jobs:
           git stash
           git checkout main
           git pull -f
-          echo "$ENV_JOBSTREET_FRONTEND" > .env
-          cat .env
+          echo "${{ secrets.ENV_JOBSTREET_FRONTEND }}" > .env
 
           # # Build the Docker image
           # make build_prod
