@@ -57,19 +57,12 @@ jobs:
           cd jobstreet-sourcecode
 
           # Clone the source code repository
-          if [ ! -d "frontend-jobstreet" ]; then
-            git clone https://github.com/SEC-Jobstreet/frontend-jobstreet.git
-          else
-            cd frontend-jobstreet
-            git checkout main
-            git pull -f
-            cd ..
-          fi
-
-          # Navigate to the cloned repository directory
-          cd ~/jobstreet-sourcecode/frontend-jobstreet
-
-          # Create the .env file and add content from GitHub secrets
+          rm -rf frontend-jobstreet
+          git clone https://github.com/SEC-Jobstreet/frontend-jobstreet.git
+          cd frontend-jobstreet
+          git stash
+          git checkout main
+          git pull -f
           echo "$ENV_JOBSTREET_FRONTEND" > .env
           cat .env
 
