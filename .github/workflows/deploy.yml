@@ -31,6 +31,24 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.FRONTEND_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
           # Update package
           sudo apt-get update && sudo apt-get install make
+
+          # Install Docker Compose if not already installed
+          if ! command -v docker-compose &> /dev/null && ! command -v docker compose &> /dev/null; then
+            sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose || true
+          fi
+
+          # Check if Docker Compose is installed as 'docker-compose' or 'docker compose'
+          DOCKER_COMPOSE_COMMAND=""
+          if command -v docker-compose &> /dev/null; then
+            DOCKER_COMPOSE_COMMAND="docker-compose"
+          elif command -v docker compose &> /dev/null; then
+            DOCKER_COMPOSE_COMMAND="docker compose"
+          else
+            echo "Docker Compose is not installed"
+            exit 1
+          fi
           
           # Create directory if not exists
           mkdir -p ~/jobstreet-sourcecode
