@@ -7,60 +7,55 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  build-jobstreet-frontend:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
-    # - name: Install-Dependencies
-    #   run: npm install & npm install --save-dev @babel/plugin-proposal-private-property-in-object
-
-    # - name: Test
-    #   run: npm run test
-
-    # - name: Build
-    #   run: CI=false npm run build
-      
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-      
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
         
-    - name: Build and push
-      uses: docker/build-push-action@v5.3.0
-      with:
-        context: .
-        push: true
-        tags: nguyenthuanit265/frontend-jobstreet:latest
+      - name: Setup remote server
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
 
-    - name: Setup remote server
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-      
-    - name: Run remove docker container jobstreet-frontend-prod
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.FRONTEND_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
-        docker stop jobstreet-frontend-prod
-        docker rm -f jobstreet-frontend-prod
-        docker rmi -f nguyenthuanit265/frontend-jobstreet:latest
-        ENDSSH
+      - name: SSH into remote server and setup environment
+        env:
+          ENV_JOBSTREET_FRONTEND: ${{ secrets.ENV_JOBSTREET_FRONTEND }}
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.FRONTEND_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
+          
+          # Create directory if not exists
+          mkdir -p ~/jobstreet-sourcecode
+          
+          # Navigate to the directory
+          cd jobstreet-sourcecode
 
-    - name: Run docker container jobstreet-frontend-prod
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.FRONTEND_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
-        docker run -p 3000:3000 --name jobstreet-frontend-prod -e ${{ secrets.ENV_JOBSTREET_FRONTEND }} -d nguyenthuanit265/frontend-jobstreet:latest
-        ENDSSH
+          # Clone the source code repository
+          if [ ! -d "frontend-jobstreet" ]; then
+            git clone https://github.com/SEC-Jobstreet/frontend-jobstreet.git
+          else
+            cd frontend-jobstreet
+            git checkout main
+            git pull -f
+            cd ..
+          fi
+
+          # Navigate to the cloned repository directory
+          cd frontend-jobstreet
+
+          # Create the .env file and add content from GitHub secrets
+          echo "$ENV_JOBSTREET_FRONTEND" > .env
+
+          # Build the Docker image
+          make build_prod
+
+          # Run docker
+          make run_prod
+          
+          ENDSSH
