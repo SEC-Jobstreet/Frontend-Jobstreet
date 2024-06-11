@@ -16,71 +16,112 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install SSH client
-        run: sudo apt-get update && sudo apt-get install -y openssh-client
+      # SOLUTION 1
+      # - name: Install SSH client
+      #   run: sudo apt-get update && sudo apt-get install -y openssh-client
         
-      - name: Setup remote server
+      # - name: Setup remote server
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+
+      # - name: SSH into remote server and setup environment
+      #   env:
+      #     ENV_JOBSTREET_FRONTEND: ${{ secrets.ENV_JOBSTREET_FRONTEND }}
+      #   run: |
+      #     ssh -o StrictHostKeyChecking=no ${{ secrets.FRONTEND_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
+      #     # Update package
+      #     sudo apt-get update && sudo apt-get install make && sudo apt-get install npm
+
+      #     # # Install Docker Compose if not already installed
+      #     # if ! command -v docker-compose &> /dev/null && ! command -v docker compose &> /dev/null; then
+      #     #   sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      #     #   sudo chmod +x /usr/local/bin/docker-compose
+      #     #   sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose || true
+      #     # fi
+
+      #     # # Check if Docker Compose is installed as 'docker-compose' or 'docker compose'
+      #     # DOCKER_COMPOSE_COMMAND=""
+      #     # if command -v docker-compose &> /dev/null; then
+      #     #   DOCKER_COMPOSE_COMMAND="docker-compose"
+      #     # elif command -v docker compose &> /dev/null; then
+      #     #   DOCKER_COMPOSE_COMMAND="docker compose"
+      #     # else
+      #     #   echo "Docker Compose is not installed"
+      #     #   exit 1
+      #     # fi
+          
+      #     # Create directory if not exists
+      #     mkdir -p ~/jobstreet-sourcecode
+          
+      #     # Navigate to the directory
+      #     cd jobstreet-sourcecode
+
+      #     # Clone the source code repository
+      #     if [ ! -d "frontend-jobstreet" ]; then
+      #       git clone git@github.com:SEC-Jobstreet/frontend-jobstreet.git
+      #       git checkout main
+      #       git pull -f
+      #     else
+      #       cd frontend-jobstreet
+      #       git checkout main
+      #       git stash
+      #       git pull -f
+      #       cd ..
+      #     fi
+
+      #     cd frontend-jobstreet
+      #     echo "${{ secrets.ENV_JOBSTREET_FRONTEND }}" > .env
+
+      #     # Build the Docker image
+      #     docker rmi -f nguyenthuanit265/frontend-jobstreet:latest
+      #     docker build -t nguyenthuanit265/frontend-jobstreet:latest .
+
+      #     # Stop any existing container
+      #     docker stop frontend-jobstreet-prod || true
+      #     docker rm -f frontend-jobstreet-prod || true
+
+      #     # Run the Docker container
+      #     docker run -d -p 3000:3000 --name frontend-jobstreet-prod nguyenthuanit265/frontend-jobstreet:latest
+      #     ENDSSH
+
+      # SOLUTION 2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: Build and push
+        uses: docker/build-push-action@v5.3.0
+        with:
+          context: .
+          push: true
+          tags: nguyenthuanit265/frontend-jobstreet:latest
+  
+      - name: Transfer Docker image to remote server
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
-      - name: SSH into remote server and setup environment
-        env:
-          ENV_JOBSTREET_FRONTEND: ${{ secrets.ENV_JOBSTREET_FRONTEND }}
+        
+      - name: Run remove docker container frontend-jobstreet
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.FRONTEND_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
-          # Update package
-          sudo apt-get update && sudo apt-get install make && sudo apt-get install npm
-
-          # # Install Docker Compose if not already installed
-          # if ! command -v docker-compose &> /dev/null && ! command -v docker compose &> /dev/null; then
-          #   sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          #   sudo chmod +x /usr/local/bin/docker-compose
-          #   sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose || true
-          # fi
-
-          # # Check if Docker Compose is installed as 'docker-compose' or 'docker compose'
-          # DOCKER_COMPOSE_COMMAND=""
-          # if command -v docker-compose &> /dev/null; then
-          #   DOCKER_COMPOSE_COMMAND="docker-compose"
-          # elif command -v docker compose &> /dev/null; then
-          #   DOCKER_COMPOSE_COMMAND="docker compose"
-          # else
-          #   echo "Docker Compose is not installed"
-          #   exit 1
-          # fi
-          
-          # Create directory if not exists
-          mkdir -p ~/jobstreet-sourcecode
-          
-          # Navigate to the directory
-          cd jobstreet-sourcecode
-
-          # Clone the source code repository
-          if [ ! -d "frontend-jobstreet" ]; then
-            git clone git@github.com:SEC-Jobstreet/frontend-jobstreet.git
-            git checkout main
-            git pull -f
-          else
-            cd frontend-jobstreet
-            git checkout main
-            git stash
-            git pull -f
-            cd ..
-          fi
-
-          cd frontend-jobstreet
-          echo "${{ secrets.ENV_JOBSTREET_FRONTEND }}" > .env
-
-          # Build the Docker image
+          docker stop frontend-jobstreet-prod
+          docker rm -f frontend-jobstreet-prod
           docker rmi -f nguyenthuanit265/frontend-jobstreet:latest
-          docker build -t nguyenthuanit265/frontend-jobstreet:latest .
-
-          # Stop any existing container
-          docker stop frontend-jobstreet-prod || true
-          docker rm -f frontend-jobstreet-prod || true
-
-          # Run the Docker container
+          ENDSSH
+  
+      - name: Run docker container frontend-jobstreet
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.FRONTEND_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
           docker run -d -p 3000:3000 --name frontend-jobstreet-prod nguyenthuanit265/frontend-jobstreet:latest
           ENDSSH
