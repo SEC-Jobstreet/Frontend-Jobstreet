@@ -16,7 +16,7 @@ jobs:
           node-version: 18
 
       - name: Install SSH client
-        run: sudo apt-get update && sudo apt-get install -y openssh-client && sudo apt-get install make
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
         
       - name: Setup remote server
         run: |
@@ -29,6 +29,8 @@ jobs:
           ENV_JOBSTREET_FRONTEND: ${{ secrets.ENV_JOBSTREET_FRONTEND }}
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.FRONTEND_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
+          # Update package
+          sudo apt-get update && sudo apt-get install make
           
           # Create directory if not exists
           mkdir -p ~/jobstreet-sourcecode
