@@ -30,7 +30,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.FRONTEND_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
           # Update package
-          sudo apt-get update && sudo apt-get install make
+          sudo apt-get update && sudo apt-get install make && sudo apt-get install npm
 
           # Install Docker Compose if not already installed
           if ! command -v docker-compose &> /dev/null && ! command -v docker compose &> /dev/null; then
