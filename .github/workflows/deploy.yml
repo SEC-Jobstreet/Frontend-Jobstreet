@@ -39,15 +39,15 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
       
-      - name: Run remove docker container backend-candidate-service
+      - name: Run remove docker container frontend-jobstreet-prod
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.FRONT_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.FRONTEND_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
           docker stop frontend-jobstreet-prod || true
           docker rm -f frontend-jobstreet-prod || true
           docker rmi -f nguyenthuanit265/frontend-jobstreet:latest
           ENDSSH
 
-      - name: Run docker container backend-candidate-service
+      - name: Run docker container frontend-jobstreet-prod
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.FRONT_REMOTE_SERVER_USERNAME }}@${{ secrets.FRONTEND_REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
           docker run -d -p 3000:3000 --name frontend-jobstreet-prod nguyenthuanit265/frontend-jobstreet:latest
