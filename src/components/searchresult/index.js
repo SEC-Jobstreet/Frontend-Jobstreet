@@ -13,7 +13,7 @@ import RelatedResearch from "./relatedsearches";
 
 import styles from "./joblisting.module.css";
 
-const ITEM_PER_PAGE = 4;
+const ITEM_PER_PAGE = 10;
 const MAX_PAGES_LISTED = 7;
 
 function JobListing() {

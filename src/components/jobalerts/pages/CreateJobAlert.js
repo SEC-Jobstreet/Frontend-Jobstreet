@@ -1,9 +1,14 @@
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Helmet } from "react-helmet-async";
+import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import { getCurrentUser } from "aws-amplify/auth";
 
 import Email from "../../../assets/svg/email_icon.svg";
+import { createAlert } from "../../../services/api";
+import { selectUser } from "../../../store/user";
 
 import "./styles.css";
 
@@ -46,12 +51,37 @@ const JobtypeData = [
 
 export default function CreateJobAlert() {
   const navigate = useNavigate();
-  const onSubmitHandler = (event) => {
+  const user = useSelector(selectUser);
+  const [keyword, setKeyword] = useState("");
+  const [city, setCity] = useState("");
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
+    const res = await getCurrentUser();
+    const data = {
+      keyword,
+      city,
+      radius: 10,
+      userName: res.username,
+      email: user?.email,
+    };
+    const res1 = await createAlert(data);
+    console.log(res1);
+    navigate("/account/job-alerts");
   };
   const onCancelHandler = () => {
     navigate("/account/job-alerts");
   };
+
+  const handleKeywordChange = (e) => {
+    e.preventDefault(); // prevent the default action
+    setKeyword(e.target.value); // set name to e.target.value (event)
+  };
+
+  const handleCityChange = (e) => {
+    e.preventDefault(); // prevent the default action
+    setCity(e.target.value); // set name to e.target.value (event)
+  };
+
   return (
     <>
       <Helmet>
@@ -73,6 +103,8 @@ export default function CreateJobAlert() {
               className="email-alert"
               placeholder="Tên việc, công ty, từ khóa"
               type="text"
+              value={keyword}
+              onChange={handleKeywordChange}
               id="email-alert-query"
             />
           </Form.Group>
@@ -83,6 +115,8 @@ export default function CreateJobAlert() {
               className="email-alert"
               placeholder="Thành phố, quận, huyện"
               type="text"
+              value={city}
+              onChange={handleCityChange}
               id="email-alert-location"
             />
           </Form.Group>

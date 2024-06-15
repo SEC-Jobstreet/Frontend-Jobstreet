@@ -1,23 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
+import { getCurrentUser } from "aws-amplify/auth";
 
-import JobAlertData from "../../temp/samplejobalertdata";
+import { getAlert } from "../../services/api";
 
 import JobAlert from "./components/JobAlert";
 import JobAlertEmpty from "./components/JobAlertEmpty";
-import UnComfirmAlert from "./components/UnComfirmAlert";
 
 import "./index.css";
 
 function JobsAlerts() {
-  const [jobData, setJobData] = useState(JobAlertData || []);
-  const [isConfirmEmail, setIsConfirmEmail] = useState(false);
+  const [jobData, setJobData] = useState([]);
   const navigate = useNavigate();
 
-  const uncomfirmHandler = (value) => {
-    setIsConfirmEmail(value);
-  };
   const onChangeJobAlertHandler = (id, identifier) => {
     if (identifier === "discard") {
       setJobData((preState) => preState.filter((item) => item.id !== id));
@@ -37,6 +33,28 @@ function JobsAlerts() {
     }
   };
 
+  useEffect(() => {
+    const getAlerts = async () => {
+      const res = await getCurrentUser();
+      const response = await getAlert(res);
+      if (response.status === 200) {
+        let temp = [];
+        for (let i = 0; i < response.data.alertList.length; i += 1) {
+          const alert = {
+            id: response.data.alertList[i].id,
+            status: response.data.alertList[i].on,
+            title: response.data.alertList[i].keyword[0],
+            city: response.data.alertList[i].city,
+          };
+          temp = [...temp, alert];
+        }
+        setJobData(temp);
+      }
+      console.log(response);
+    };
+    getAlerts();
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -44,33 +62,29 @@ function JobsAlerts() {
       </Helmet>
       <div className="my-account-content grid-content">
         {/* show when email is unconfirm */}
-        {!isConfirmEmail && (
-          <UnComfirmAlert uncomfirmHandler={uncomfirmHandler} />
-        )}
-        {/* show job alert when email is confirmed */}
-        {isConfirmEmail && jobData.length === 0 && <JobAlertEmpty />}
-        {isConfirmEmail && jobData.length !== 0 && (
+
+        {jobData.length === 0 && <JobAlertEmpty />}
+        {jobData.length !== 0 && (
           <div id="email-alerts">
             {jobData.map((item) => (
               <JobAlert
                 key={item.id}
                 id={item.id}
                 title={item.title}
+                city={item.city}
                 status={item.status}
                 onChangeJobAlertHandler={onChangeJobAlertHandler}
               />
             ))}
           </div>
         )}
-        {isConfirmEmail && (
-          <button
-            type="button"
-            className="create-alert-button -primary"
-            onClick={() => navigate("new")}
-          >
-            Tạo thông báo việc làm ngay
-          </button>
-        )}
+        <button
+          type="button"
+          className="create-alert-button -primary"
+          onClick={() => navigate("new")}
+        >
+          Tạo thông báo việc làm ngay
+        </button>
       </div>
     </>
   );

@@ -1,14 +1,14 @@
 import { NavLink } from "react-router-dom";
 
 export default function JobAlert(props) {
-  const { id, title, status, onChangeJobAlertHandler } = props;
+  const { id, title, city, status, onChangeJobAlertHandler } = props;
   const onChangeHandler = (identifier) => {
     onChangeJobAlertHandler(id, identifier);
   };
   return (
     <div className="alert-item">
       <NavLink to="/" className="alert-title -link-highlight">
-        {title}
+        {title} - {city}
       </NavLink>
       <div className="alert-info">
         <span className="alert-frequency">Hằng ngày</span>

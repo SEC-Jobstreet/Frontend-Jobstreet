@@ -1,21 +1,40 @@
 import { useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { getCurrentUser } from "aws-amplify/auth";
 
 import Info from "../../../assets/svg/circle_info_icon.svg";
 import Dismiss from "../../../assets/svg/dismiss_icon.svg";
 import Email from "../../../assets/svg/email_icon.svg";
 import Location from "../../../assets/svg/location_icon.svg";
 import Search from "../../../assets/svg/search_icon.svg";
+import { createAlert } from "../../../services/api";
+import { selectUser } from "../../../store/user";
 import Model from "../model/Model";
 
 import "../index.css";
 
 export default function CreateJobAlertModel(props) {
+  const user = useSelector(selectUser);
   const { onHideModelHandler } = props;
   const [inputKeyWords, setInputKeyWords] = useState("");
   const [inputLocation, setInputLocation] = useState("");
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await getCurrentUser();
+    const data = {
+      keyword: inputKeyWords,
+      city: inputLocation,
+      radius: 10,
+      userName: res.username,
+      email: user?.email,
+    };
+    const res1 = await createAlert(data);
+    console.log(res1);
+    onHideModelHandler();
+  };
   return (
     <Model onHideModelHandler={onHideModelHandler}>
       <div
@@ -36,6 +55,7 @@ export default function CreateJobAlertModel(props) {
           id="email_alert_form"
           method="post"
           style={{ marginBottom: "0px" }}
+          onSubmit={handleSubmit}
         >
           {/* từ khoá */}
           <Form.Group

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Email from "../../../assets/svg/email_icon.svg";
+import { cancelAlert } from "../../../services/api";
 import ReasonItem from "../components/ReasonItem";
 
 import "./styles.css";
@@ -47,13 +48,17 @@ const ReasonData = [
 ];
 export default function CancelJobAlert() {
   const navigate = useNavigate();
-  const [currentSelected, setCurrentSelected] = useState("");
+  const { id } = useParams();
 
+  const [currentSelected, setCurrentSelected] = useState("");
+  console.log(id);
   const onCheckedHandler = (value) => {
     setCurrentSelected(value);
   };
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
+    const res = await cancelAlert({ id });
+    console.log(res);
     navigate("/cancel-reason");
   };
 

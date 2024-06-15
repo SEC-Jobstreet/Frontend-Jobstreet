@@ -80,3 +80,44 @@ export const unsaveJob = ({ id }) => {
     return error;
   }
 };
+
+export const createAlert = async (data) => {
+  try {
+    const res = await axios.post("http://35.198.229.191:4002/api/v1/alert", {
+      keyword: [data.keyword],
+      city: data.city === "" ? "Tất cả" : data.city,
+      on: true,
+      radius: data.radius,
+      userName: data.userName,
+      email: data.email,
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const getAlert = async (data) => {
+  try {
+    const res = await axios.get(
+      `http://35.198.229.191:4002/api/v1/alert/${data.username}`
+    );
+    return res;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const cancelAlert = async (data) => {
+  try {
+    const res = await axios.delete(`http://35.198.229.191:4002/api/v1/alert`, {
+      data,
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

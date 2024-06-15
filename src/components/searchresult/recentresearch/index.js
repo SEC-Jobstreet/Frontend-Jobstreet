@@ -19,7 +19,7 @@ function NewJobNumber({ keyword, address }) {
     };
     loadNewJobNumber();
   }, []);
-  return <div className={styles.number}>{number}</div>;
+  return <div className={styles.number}>{number} Mới</div>;
 }
 
 function RecentResearch() {
